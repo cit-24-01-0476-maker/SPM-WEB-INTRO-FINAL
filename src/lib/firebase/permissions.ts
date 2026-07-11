@@ -18,6 +18,7 @@ const ROUTE_ROLES: Array<{ prefix: string; roles: AppRole[] | null }> = [
   { prefix: "/admin/media", roles: ["super_admin", "content_editor"] },
   { prefix: "/admin/inquiries", roles: ["super_admin", "inquiry_manager"] },
   { prefix: "/admin/analytics", roles: ["super_admin", "analytics_viewer"] },
+  { prefix: "/admin/live-visitors", roles: ["super_admin", "analytics_viewer"] },
   { prefix: "/admin/locations", roles: ["super_admin", "analytics_viewer"] },
   { prefix: "/admin/navigation", roles: ["super_admin"] },
   { prefix: "/admin/hero", roles: ["super_admin"] },

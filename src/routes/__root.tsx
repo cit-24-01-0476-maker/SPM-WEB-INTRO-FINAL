@@ -8,7 +8,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -19,6 +19,8 @@ import { PublicSettingsProvider } from "@/lib/cms/PublicSettings";
 import { ThemeProvider } from "@/lib/use-theme";
 import { Toaster } from "@/components/ui/sonner";
 import { trackPageView, initScrollTracking, resetScrollTracking } from "@/lib/analytics";
+import { startPresence, type PresenceHandle } from "@/lib/analytics/presence";
+import { setActivePresence } from "@/lib/analytics/presence-instance";
 
 function NotFoundComponent() {
   return (
@@ -97,7 +99,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "smart parking Sri Lanka, parking management system, ANPR parking system, number plate recognition parking, dynamic parking pricing, QR parking payment, retail parking management, Colombo parking solution, automated parking system, parking operator dashboard",
       },
       { name: "author", content: "SPM ECO System" },
-      { property: "og:title", content: "SPM ECO System | Smart Parking Management System Sri Lanka" },
+      {
+        property: "og:title",
+        content: "SPM ECO System | Smart Parking Management System Sri Lanka",
+      },
       {
         property: "og:description",
         content:
@@ -148,6 +153,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const bare = isBareRoute(pathname);
+  const presenceRef = useRef<PresenceHandle | null>(null);
 
   // Public-site analytics (skip admin/auth surfaces).
   useEffect(() => {
@@ -156,6 +162,28 @@ function RootComponent() {
     void trackPageView(pathname);
     const cleanup = initScrollTracking();
     return cleanup;
+  }, [pathname, bare]);
+
+  // Real live-visitor presence (Firebase Realtime Database) — public site only.
+  useEffect(() => {
+    if (bare || typeof window === "undefined") return;
+    const handle = startPresence(window.location.pathname, document.title);
+    presenceRef.current = handle;
+    setActivePresence(handle);
+    return () => {
+      handle.stop();
+      presenceRef.current = null;
+      setActivePresence(null);
+    };
+  }, [bare]);
+
+  // Update the current page on client navigation without restarting presence.
+  useEffect(() => {
+    if (bare) return;
+    presenceRef.current?.updatePage(
+      pathname,
+      typeof document !== "undefined" ? document.title : "",
+    );
   }, [pathname, bare]);
 
   return (

@@ -27,6 +27,7 @@ import { Route as AdminPagesRouteImport } from './routes/admin.pages'
 import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminMediaRouteImport } from './routes/admin.media'
 import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
+import { Route as AdminLiveVisitorsRouteImport } from './routes/admin.live-visitors'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 import { Route as AdminHeroRouteImport } from './routes/admin.hero'
@@ -38,6 +39,7 @@ import { Route as AdminContactInfoRouteImport } from './routes/admin.contact-inf
 import { Route as AdminBackupRouteImport } from './routes/admin.backup'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as ApiPublicVisitorContextRouteImport } from './routes/api/public/visitor-context'
 import { Route as ApiPublicTrackRouteImport } from './routes/api/public/track'
 import { Route as ApiPublicContactNotifyRouteImport } from './routes/api/public/contact-notify'
 import { Route as ApiMediaDriveUploadRouteImport } from './routes/api/media.drive-upload'
@@ -132,6 +134,11 @@ const AdminLocationsRoute = AdminLocationsRouteImport.update({
   path: '/locations',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLiveVisitorsRoute = AdminLiveVisitorsRouteImport.update({
+  id: '/live-visitors',
+  path: '/live-visitors',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   id: '/integrations',
   path: '/integrations',
@@ -187,6 +194,11 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
+const ApiPublicVisitorContextRoute = ApiPublicVisitorContextRouteImport.update({
+  id: '/api/public/visitor-context',
+  path: '/api/public/visitor-context',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTrackRoute = ApiPublicTrackRouteImport.update({
   id: '/api/public/track',
   path: '/api/public/track',
@@ -222,6 +234,7 @@ export interface FileRoutesByFullPath {
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -236,6 +249,7 @@ export interface FileRoutesByFullPath {
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
+  '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -255,6 +269,7 @@ export interface FileRoutesByTo {
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -269,6 +284,7 @@ export interface FileRoutesByTo {
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
+  '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -290,6 +306,7 @@ export interface FileRoutesById {
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
   '/admin/navigation': typeof AdminNavigationRoute
@@ -304,6 +321,7 @@ export interface FileRoutesById {
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
+  '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -326,6 +344,7 @@ export interface FileRouteTypes {
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
     | '/admin/navigation'
@@ -340,6 +359,7 @@ export interface FileRouteTypes {
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
+    | '/api/public/visitor-context'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -359,6 +379,7 @@ export interface FileRouteTypes {
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
     | '/admin/navigation'
@@ -373,6 +394,7 @@ export interface FileRouteTypes {
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
+    | '/api/public/visitor-context'
   id:
     | '__root__'
     | '/'
@@ -393,6 +415,7 @@ export interface FileRouteTypes {
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
     | '/admin/navigation'
@@ -407,6 +430,7 @@ export interface FileRouteTypes {
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
+    | '/api/public/visitor-context'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -422,6 +446,7 @@ export interface RootRouteChildren {
   ApiMediaDriveUploadRoute: typeof ApiMediaDriveUploadRoute
   ApiPublicContactNotifyRoute: typeof ApiPublicContactNotifyRoute
   ApiPublicTrackRoute: typeof ApiPublicTrackRoute
+  ApiPublicVisitorContextRoute: typeof ApiPublicVisitorContextRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -552,6 +577,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLocationsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/live-visitors': {
+      id: '/admin/live-visitors'
+      path: '/live-visitors'
+      fullPath: '/admin/live-visitors'
+      preLoaderRoute: typeof AdminLiveVisitorsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/integrations': {
       id: '/admin/integrations'
       path: '/integrations'
@@ -629,6 +661,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/api/public/visitor-context': {
+      id: '/api/public/visitor-context'
+      path: '/api/public/visitor-context'
+      fullPath: '/api/public/visitor-context'
+      preLoaderRoute: typeof ApiPublicVisitorContextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/track': {
       id: '/api/public/track'
       path: '/api/public/track'
@@ -665,6 +704,7 @@ interface AdminRouteChildren {
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
+  AdminLiveVisitorsRoute: typeof AdminLiveVisitorsRoute
   AdminLocationsRoute: typeof AdminLocationsRoute
   AdminMediaRoute: typeof AdminMediaRoute
   AdminNavigationRoute: typeof AdminNavigationRoute
@@ -688,6 +728,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminHeroRoute: AdminHeroRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
+  AdminLiveVisitorsRoute: AdminLiveVisitorsRoute,
   AdminLocationsRoute: AdminLocationsRoute,
   AdminMediaRoute: AdminMediaRoute,
   AdminNavigationRoute: AdminNavigationRoute,
@@ -714,6 +755,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiMediaDriveUploadRoute: ApiMediaDriveUploadRoute,
   ApiPublicContactNotifyRoute: ApiPublicContactNotifyRoute,
   ApiPublicTrackRoute: ApiPublicTrackRoute,
+  ApiPublicVisitorContextRoute: ApiPublicVisitorContextRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

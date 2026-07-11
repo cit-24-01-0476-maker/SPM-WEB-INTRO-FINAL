@@ -188,3 +188,46 @@ Then set **Build Command** to `npm run build` and leave the **Output Directory**
 empty (Nitro's Vercel preset writes the standard `.vercel/output`). Do **not**
 add SPA rewrites or a `vercel.json` that routes everything to `index.html` —
 that breaks the app's server routes. Redeploy after changing env vars.
+
+---
+
+## Live Visitor Analytics (Firebase Realtime Database)
+
+Real-time presence on `/admin/live-visitors` uses the Firebase **Realtime
+Database** (separate from Firestore). Historical analytics and the public site
+work without it — only live presence requires this setup.
+
+1. **Enable Realtime Database** — Firebase Console → Build → Realtime Database →
+   Create Database (choose a region, start in *locked mode*).
+2. **Copy the Database URL** — e.g.
+   `https://<project>-default-rtdb.firebaseio.com`.
+3. **Add `VITE_FIREBASE_DATABASE_URL`** to Vercel (Development, Preview,
+   Production) with that URL, and to your local `.env`.
+4. **Publish `database.rules.json`** — Firebase Console → Realtime Database →
+   Rules → paste the contents of `database.rules.json` → Publish. These rules
+   let anonymous visitors write only their own presence node and restrict
+   reads to authenticated admins.
+5. **Publish `firestore.rules`** — Firestore → Rules → paste `firestore.rules`.
+6. **Authorized Domains** — Authentication → Settings → add your Vercel
+   production and preview domains.
+7. **App Check (optional, start in monitoring)** — set
+   `VITE_FIREBASE_APPCHECK_SITE_KEY` (reCAPTCHA v3). Keep App Check in
+   *monitoring* mode until you confirm traffic passes, then enforce.
+8. **Add `ANALYTICS_HASH_SALT`** (server-only, no `VITE_` prefix) to Vercel for
+   salted visitor hashing in `/api/public/visitor-context`.
+9. **Redeploy** after any environment-variable change.
+
+### Verifying live presence
+
+1. Open the public site in an incognito window.
+2. In `/admin/live-visitors` confirm one visitor appears.
+3. Navigate to another public page — the **Current Page** updates.
+4. Start the contact form — the row shows **Form started**; submit it — it shows
+   **Converted**.
+5. Close the incognito tab — the visitor disappears within ~90 seconds (or
+   instantly via `onDisconnect`).
+
+Approximate country/region/city come from Vercel edge headers
+(`x-vercel-ip-*`) and are only available on the deployed Vercel site, not on
+`localhost`. Location is estimated from network information and may not be exact.
+Raw IP addresses are never stored or shown.

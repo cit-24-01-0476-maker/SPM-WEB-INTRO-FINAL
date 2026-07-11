@@ -7,6 +7,10 @@ import { trackEvent } from "@/lib/analytics";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
 import { contactWhatsappLink, telLink, visibleContacts, type ContactPerson } from "@/lib/cms/model";
 import { submitInquiry, mapInquiryError } from "@/lib/cms/inquiries";
+import {
+  presenceMarkContactStarted,
+  presenceMarkContactSubmitted,
+} from "@/lib/analytics/presence-instance";
 
 const FACILITY_TYPES = [
   "Shopping Mall",
@@ -216,6 +220,7 @@ export function Contact() {
 
       setLastSubmit(Date.now());
       setReference(id);
+      presenceMarkContactSubmitted();
       formEl.reset();
       setErrors({});
 
@@ -340,6 +345,7 @@ export function Contact() {
             ) : (
               <form
                 onSubmit={handleSubmit}
+                onFocusCapture={() => presenceMarkContactStarted()}
                 noValidate
                 className="grid gap-4 rounded-3xl border border-border bg-card p-6 shadow-card sm:p-8"
               >

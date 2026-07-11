@@ -1,0 +1,47 @@
+{
+  "rules": {
+    "presence": {
+      ".read": "auth != null",
+      "$tabId": {
+        ".write": "$tabId.matches(/^t_[-A-Za-z0-9_]+$/) && newData.exists() ? newData.child('tabId').val() == $tabId : true",
+        ".validate": "!newData.exists() || (newData.hasChildren(['tabId', 'visitorId', 'sessionId', 'pagePath', 'lastSeenAt']))",
+        "tabId": { ".validate": "newData.isString() && newData.val().length <= 80" },
+        "visitorId": { ".validate": "newData.isString() && newData.val().length <= 80" },
+        "sessionId": { ".validate": "newData.isString() && newData.val().length <= 80" },
+        "pagePath": { ".validate": "newData.isString() && newData.val().length <= 300" },
+        "pageTitle": { ".validate": "newData.isString() && newData.val().length <= 300" },
+        "entryPath": { ".validate": "newData.isString() && newData.val().length <= 300" },
+        "status": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "lastEvent": { ".validate": "newData.isString() && newData.val().length <= 60" },
+        "deviceType": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "browser": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "operatingSystem": { ".validate": "newData.isString() && newData.val().length <= 40" },
+        "language": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "referrer": { ".validate": "newData.isString() && newData.val().length <= 400" },
+        "trafficSource": { ".validate": "newData.isString() && newData.val().length <= 30" },
+        "country": { ".validate": "newData.isString() || newData.val() == null" },
+        "countryCode": { ".validate": "newData.isString() || newData.val() == null" },
+        "region": { ".validate": "newData.isString() || newData.val() == null" },
+        "city": { ".validate": "newData.isString() || newData.val() == null" },
+        "maskedIp": { ".validate": "newData.isString() && newData.val().length <= 60" },
+        "visitorHash": { ".validate": "newData.isString() || newData.val() == null" },
+        "latitude": { ".validate": "newData.isNumber() || newData.val() == null" },
+        "longitude": { ".validate": "newData.isNumber() || newData.val() == null" },
+        "startedAt": { ".validate": "newData.isNumber() || newData.val() == now" },
+        "lastSeenAt": { ".validate": "newData.isNumber() || newData.val() == now" },
+        "contactFormStarted": { ".validate": "newData.isBoolean()" },
+        "contactFormSubmitted": { ".validate": "newData.isBoolean()" },
+        "isReturning": { ".validate": "newData.isBoolean()" },
+        "screenWidth": { ".validate": "newData.isNumber()" },
+        "screenHeight": { ".validate": "newData.isNumber()" },
+        "utmSource": { ".validate": "newData.isString() || newData.val() == null" },
+        "utmMedium": { ".validate": "newData.isString() || newData.val() == null" },
+        "utmCampaign": { ".validate": "newData.isString() || newData.val() == null" },
+        "timezone": { ".validate": "newData.isString() || newData.val() == null" },
+        "$other": { ".validate": false }
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}

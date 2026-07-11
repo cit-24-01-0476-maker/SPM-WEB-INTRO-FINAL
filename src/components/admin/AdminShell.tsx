@@ -15,6 +15,7 @@ import {
   Inbox,
   BarChart3,
   MapPin,
+  Radio,
   Search,
   Palette,
   ShieldCheck,
@@ -117,6 +118,12 @@ const NAV: NavGroup[] = [
         label: "Analytics",
         to: "/admin/analytics",
         icon: BarChart3,
+        roles: ["super_admin", "analytics_viewer"],
+      },
+      {
+        label: "Live Visitors",
+        to: "/admin/live-visitors",
+        icon: Radio,
         roles: ["super_admin", "analytics_viewer"],
       },
       {
