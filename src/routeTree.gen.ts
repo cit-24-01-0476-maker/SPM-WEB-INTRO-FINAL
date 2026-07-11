@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SolutionRouteImport } from './routes/solution'
+import { Route as RoiCalculatorRouteImport } from './routes/roi-calculator'
 import { Route as ProblemRouteImport } from './routes/problem'
 import { Route as FeaturesRouteImport } from './routes/features'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -28,10 +29,12 @@ import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
 import { Route as AdminMediaRouteImport } from './routes/admin.media'
 import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
 import { Route as AdminLiveVisitorsRouteImport } from './routes/admin.live-visitors'
+import { Route as AdminLanguagesRouteImport } from './routes/admin.languages'
 import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 import { Route as AdminHeroRouteImport } from './routes/admin.hero'
 import { Route as AdminFaqRouteImport } from './routes/admin.faq'
+import { Route as AdminEconomicFeasibilityRouteImport } from './routes/admin.economic-feasibility'
 import { Route as AdminDesignRouteImport } from './routes/admin.design'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
@@ -47,6 +50,11 @@ import { Route as ApiMediaDriveUploadRouteImport } from './routes/api/media.driv
 const SolutionRoute = SolutionRouteImport.update({
   id: '/solution',
   path: '/solution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoiCalculatorRoute = RoiCalculatorRouteImport.update({
+  id: '/roi-calculator',
+  path: '/roi-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProblemRoute = ProblemRouteImport.update({
@@ -139,6 +147,11 @@ const AdminLiveVisitorsRoute = AdminLiveVisitorsRouteImport.update({
   path: '/live-visitors',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLanguagesRoute = AdminLanguagesRouteImport.update({
+  id: '/languages',
+  path: '/languages',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
   id: '/integrations',
   path: '/integrations',
@@ -159,6 +172,12 @@ const AdminFaqRoute = AdminFaqRouteImport.update({
   path: '/faq',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminEconomicFeasibilityRoute =
+  AdminEconomicFeasibilityRouteImport.update({
+    id: '/economic-feasibility',
+    path: '/economic-feasibility',
+    getParentRoute: () => AdminRoute,
+  } as any)
 const AdminDesignRoute = AdminDesignRouteImport.update({
   id: '/design',
   path: '/design',
@@ -222,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/problem': typeof ProblemRoute
+  '/roi-calculator': typeof RoiCalculatorRoute
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -230,10 +250,12 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminContentRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/economic-feasibility': typeof AdminEconomicFeasibilityRoute
   '/admin/faq': typeof AdminFaqRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/languages': typeof AdminLanguagesRoute
   '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
@@ -257,6 +279,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/problem': typeof ProblemRoute
+  '/roi-calculator': typeof RoiCalculatorRoute
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -265,10 +288,12 @@ export interface FileRoutesByTo {
   '/admin/content': typeof AdminContentRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/economic-feasibility': typeof AdminEconomicFeasibilityRoute
   '/admin/faq': typeof AdminFaqRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/languages': typeof AdminLanguagesRoute
   '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
@@ -294,6 +319,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/problem': typeof ProblemRoute
+  '/roi-calculator': typeof RoiCalculatorRoute
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -302,10 +328,12 @@ export interface FileRoutesById {
   '/admin/content': typeof AdminContentRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/design': typeof AdminDesignRoute
+  '/admin/economic-feasibility': typeof AdminEconomicFeasibilityRoute
   '/admin/faq': typeof AdminFaqRoute
   '/admin/hero': typeof AdminHeroRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/integrations': typeof AdminIntegrationsRoute
+  '/admin/languages': typeof AdminLanguagesRoute
   '/admin/live-visitors': typeof AdminLiveVisitorsRoute
   '/admin/locations': typeof AdminLocationsRoute
   '/admin/media': typeof AdminMediaRoute
@@ -332,6 +360,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/problem'
+    | '/roi-calculator'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -340,10 +369,12 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/dashboard'
     | '/admin/design'
+    | '/admin/economic-feasibility'
     | '/admin/faq'
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/languages'
     | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
@@ -367,6 +398,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/problem'
+    | '/roi-calculator'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -375,10 +407,12 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/dashboard'
     | '/admin/design'
+    | '/admin/economic-feasibility'
     | '/admin/faq'
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/languages'
     | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
@@ -403,6 +437,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/problem'
+    | '/roi-calculator'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -411,10 +446,12 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/dashboard'
     | '/admin/design'
+    | '/admin/economic-feasibility'
     | '/admin/faq'
     | '/admin/hero'
     | '/admin/inquiries'
     | '/admin/integrations'
+    | '/admin/languages'
     | '/admin/live-visitors'
     | '/admin/locations'
     | '/admin/media'
@@ -440,6 +477,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   FeaturesRoute: typeof FeaturesRoute
   ProblemRoute: typeof ProblemRoute
+  RoiCalculatorRoute: typeof RoiCalculatorRoute
   SolutionRoute: typeof SolutionRoute
   AdminForgotPasswordRoute: typeof AdminForgotPasswordRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -456,6 +494,13 @@ declare module '@tanstack/react-router' {
       path: '/solution'
       fullPath: '/solution'
       preLoaderRoute: typeof SolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roi-calculator': {
+      id: '/roi-calculator'
+      path: '/roi-calculator'
+      fullPath: '/roi-calculator'
+      preLoaderRoute: typeof RoiCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/problem': {
@@ -584,6 +629,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLiveVisitorsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/languages': {
+      id: '/admin/languages'
+      path: '/languages'
+      fullPath: '/admin/languages'
+      preLoaderRoute: typeof AdminLanguagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/integrations': {
       id: '/admin/integrations'
       path: '/integrations'
@@ -610,6 +662,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/admin/faq'
       preLoaderRoute: typeof AdminFaqRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/economic-feasibility': {
+      id: '/admin/economic-feasibility'
+      path: '/economic-feasibility'
+      fullPath: '/admin/economic-feasibility'
+      preLoaderRoute: typeof AdminEconomicFeasibilityRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/design': {
@@ -700,10 +759,12 @@ interface AdminRouteChildren {
   AdminContentRoute: typeof AdminContentRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDesignRoute: typeof AdminDesignRoute
+  AdminEconomicFeasibilityRoute: typeof AdminEconomicFeasibilityRoute
   AdminFaqRoute: typeof AdminFaqRoute
   AdminHeroRoute: typeof AdminHeroRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminIntegrationsRoute: typeof AdminIntegrationsRoute
+  AdminLanguagesRoute: typeof AdminLanguagesRoute
   AdminLiveVisitorsRoute: typeof AdminLiveVisitorsRoute
   AdminLocationsRoute: typeof AdminLocationsRoute
   AdminMediaRoute: typeof AdminMediaRoute
@@ -724,10 +785,12 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminContentRoute: AdminContentRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDesignRoute: AdminDesignRoute,
+  AdminEconomicFeasibilityRoute: AdminEconomicFeasibilityRoute,
   AdminFaqRoute: AdminFaqRoute,
   AdminHeroRoute: AdminHeroRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminIntegrationsRoute: AdminIntegrationsRoute,
+  AdminLanguagesRoute: AdminLanguagesRoute,
   AdminLiveVisitorsRoute: AdminLiveVisitorsRoute,
   AdminLocationsRoute: AdminLocationsRoute,
   AdminMediaRoute: AdminMediaRoute,
@@ -749,6 +812,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   FeaturesRoute: FeaturesRoute,
   ProblemRoute: ProblemRoute,
+  RoiCalculatorRoute: RoiCalculatorRoute,
   SolutionRoute: SolutionRoute,
   AdminForgotPasswordRoute: AdminForgotPasswordRoute,
   AdminLoginRoute: AdminLoginRoute,

@@ -4,7 +4,9 @@ import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { CmsButton } from "./CmsButton";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { safeNavHref, type NavItem } from "@/lib/cms/model";
 
 /**
@@ -15,7 +17,8 @@ import { safeNavHref, type NavItem } from "@/lib/cms/model";
  * safe fallback before Firestore data arrives.
  */
 export function Navbar() {
-  const { navigation, site } = usePublicSettings();
+  const { navigation, site, economicFeasibility } = usePublicSettings();
+  const { config: langConfig, switcherEnabled, t, tx, lang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -53,8 +56,27 @@ export function Navbar() {
     to === "/" ? pathname === "/" : to.startsWith("/") && pathname.startsWith(to);
 
   const items = (navigation.items ?? []).filter((i) => i.enabled);
-  const desktopItems = items.filter((i) => i.desktopVisible);
-  const mobileItems = items.filter((i) => i.mobileVisible);
+
+  // Inject the admin-controlled ROI Calculator item from the economic
+  // feasibility settings (label is localized, visibility & order are managed
+  // in the Economic Feasibility admin page).
+  const roiItem: NavItem | null =
+    economicFeasibility.enabled && economicFeasibility.navEnabled
+      ? {
+          id: "roi-calculator",
+          label: tx(economicFeasibility.navLabel, "ROI Calculator"),
+          shortLabel: "ROI",
+          linkType: "internal",
+          to: "/roi-calculator",
+          enabled: true,
+          desktopVisible: economicFeasibility.navDesktopVisible,
+          mobileVisible: economicFeasibility.navMobileVisible,
+          newTab: false,
+        }
+      : null;
+  const allItems = roiItem ? [...items, roiItem] : items;
+  const desktopItems = allItems.filter((i) => i.desktopVisible);
+  const mobileItems = allItems.filter((i) => i.mobileVisible);
 
   const linkTarget = (item: NavItem) =>
     item.newTab ? { target: "_blank", rel: "noopener noreferrer" as const } : {};
@@ -62,9 +84,21 @@ export function Navbar() {
   const logoText = navigation.logoText || site.siteName || "SPM ECO System";
   const logoSubtitle = navigation.logoSubtitle || "Smart Parking";
 
+  // Localize the Request Demo CTA: custom labels are respected, but the default
+  // English label is translated for Sinhala visitors via the UI dictionary.
+  const ctaText =
+    lang === "en" || !navigation.ctaLabel || navigation.ctaLabel === "Request Demo"
+      ? t("nav.requestDemo")
+      : navigation.ctaLabel;
+  const showHeaderSwitcher = switcherEnabled && langConfig.showInHeader;
+  const showMobileSwitcher = switcherEnabled && langConfig.showInMobileMenu;
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4">
-      <nav className="relative mx-auto w-full max-w-6xl">
+      <nav
+        className="relative mx-auto w-full max-w-[1440px]"
+        style={{ paddingInline: "clamp(0px, 1vw, 8px)" }}
+      >
         {/* Ambient glow behind the floating island */}
         <div className="pointer-events-none absolute -z-10 left-1/4 top-1/2 h-24 w-32 -translate-y-1/2 rounded-full bg-primary/20 blur-[60px]" />
         <div className="pointer-events-none absolute -z-10 right-1/4 top-1/2 h-24 w-32 -translate-y-1/2 rounded-full bg-cyan/25 blur-[60px]" />
@@ -72,7 +106,7 @@ export function Navbar() {
         {/* Floating navbar container */}
         <div
           className={cn(
-            "relative flex items-center justify-between gap-4 rounded-2xl border px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3",
+            "relative flex items-center justify-between gap-3 rounded-2xl border px-4 py-2.5 transition-all duration-500 sm:px-6 sm:py-3 lg:gap-4",
             scrolled
               ? "glass border-border/50 shadow-card ring-1 ring-foreground/5"
               : "glass border-white/25 shadow-glow ring-1 ring-white/10",
@@ -104,22 +138,42 @@ export function Navbar() {
           </a>
 
           {/* Pill navigation (desktop) */}
-          <div className="hidden items-center rounded-full border border-border/50 bg-secondary/50 p-1.5 lg:flex">
+          <div
+            className="hidden min-w-0 shrink items-center rounded-full border border-border/50 bg-secondary/50 p-1 xl:flex"
+            style={{ columnGap: "clamp(0px, 0.3vw, 4px)" }}
+          >
             {desktopItems.map((l) => {
               const active = isActive(l.to);
+              const hasShort = l.shortLabel && l.shortLabel !== l.label;
+              // Long labels (e.g. the Sinhala "ROI Calculator") only expand to the
+              // full form at the widest breakpoint; shorter labels expand at xl.
+              const longLabel = (l.label?.length ?? 0) > 14;
               return (
                 <a
                   key={l.id}
                   href={safeNavHref(l.to)}
                   {...linkTarget(l)}
                   className={cn(
-                    "relative rounded-full px-4 py-2 text-sm font-semibold transition-all duration-300",
+                    "relative shrink-0 whitespace-nowrap rounded-full py-2 font-semibold leading-none transition-all duration-300",
                     active
                       ? "bg-card text-foreground shadow-sm ring-1 ring-border/60"
                       : "text-muted-foreground hover:text-foreground",
                   )}
+                  style={{
+                    paddingInline: "clamp(9px, 0.9vw, 16px)",
+                    fontSize: "clamp(13px, 0.9vw, 15px)",
+                  }}
                 >
-                  {l.label}
+                  {hasShort ? (
+                    <>
+                      <span className={longLabel ? "2xl:hidden" : "xl:hidden"}>{l.shortLabel}</span>
+                      <span className={longLabel ? "hidden 2xl:inline" : "hidden xl:inline"}>
+                        {l.label}
+                      </span>
+                    </>
+                  ) : (
+                    l.label
+                  )}
                 </a>
               );
             })}
@@ -128,21 +182,24 @@ export function Navbar() {
           {/* CTA section */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {navigation.showThemeToggle ? <ThemeToggle /> : null}
+            {showHeaderSwitcher ? (
+              <LanguageSwitcher variant="dropdown" className="hidden sm:block" />
+            ) : null}
             {navigation.ctaEnabled ? (
               <CmsButton
                 variant="primary"
                 href={safeNavHref(navigation.ctaLink)}
                 target={navigation.ctaNewTab ? "_blank" : undefined}
                 rel={navigation.ctaNewTab ? "noopener noreferrer" : undefined}
-                className="hidden min-h-[44px] text-sm font-bold uppercase tracking-wider sm:inline-flex"
+                className="hidden min-h-[44px] shrink-0 whitespace-nowrap text-sm font-bold uppercase tracking-wider sm:inline-flex"
               >
-                {navigation.ctaLabel}
+                {ctaText}
               </CmsButton>
             ) : null}
             <button
               onClick={() => setOpen((v) => !v)}
-              className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:bg-secondary lg:hidden"
-              aria-label={open ? "Close menu" : "Open menu"}
+              className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:bg-secondary xl:hidden"
+              aria-label={open ? t("nav.closeMenu") : t("nav.openMenu")}
               aria-expanded={open}
             >
               {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -161,7 +218,7 @@ export function Navbar() {
         {/* Mobile menu */}
         <div
           className={cn(
-            "mt-2 overflow-hidden rounded-2xl transition-[max-height,opacity] duration-500 ease-in-out lg:hidden",
+            "mt-2 overflow-hidden rounded-2xl transition-[max-height,opacity] duration-500 ease-in-out xl:hidden",
             open
               ? "glass max-h-[80vh] border border-border/50 opacity-100 shadow-card"
               : "max-h-0 opacity-0",
@@ -195,8 +252,16 @@ export function Navbar() {
                 {...(navigation.ctaNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                 className="mt-1 flex min-h-[48px] items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-center text-sm font-bold uppercase tracking-wider text-white shadow-glow"
               >
-                {navigation.ctaLabel}
+                {ctaText}
               </a>
+            ) : null}
+            {showMobileSwitcher ? (
+              <div className="mt-2 border-t border-border/50 pt-2">
+                <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  {t("nav.language")}
+                </p>
+                <LanguageSwitcher variant="list" onSelect={() => setOpen(false)} />
+              </div>
             ) : null}
           </div>
         </div>

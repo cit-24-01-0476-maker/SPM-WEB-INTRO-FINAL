@@ -8,6 +8,15 @@
 // into published. Safe defaults below are used whenever a document or field is
 // missing so the public website never renders undefined values or crashes.
 
+import {
+  DEFAULT_EF_INPUTS,
+  DEFAULT_EF_SCENARIOS,
+  DEFAULT_EF_THRESHOLDS,
+  type EFInputs,
+  type EFScenarios,
+  type EFThresholds,
+} from "@/lib/roi/calc";
+
 /* ------------------------------------------------------------------ *
  * DESIGN — colors                                                     *
  * ------------------------------------------------------------------ */
@@ -1027,3 +1036,187 @@ export const PREVIEW_DEVICES = [
   { id: "small", label: "Small Mobile", width: 320 },
 ] as const;
 export type PreviewDeviceId = (typeof PREVIEW_DEVICES)[number]["id"];
+
+/* ------------------------------------------------------------------ *
+ * LANGUAGES — bilingual (English / Sinhala) public language system.   *
+ * The public website reads publicSettings/languages; the admin edits  *
+ * adminDrafts/languages via the standard draft/publish lifecycle.     *
+ * ------------------------------------------------------------------ */
+
+export type LanguageCode = "en" | "si";
+
+export const LANGUAGE_CODES: LanguageCode[] = ["en", "si"];
+
+/**
+ * A localized text value. `en` is required and is the final fallback; `si`
+ * (Sinhala) is optional so drafts can be saved before translation is complete.
+ * A plain string is also accepted anywhere a Localized value is expected and is
+ * treated as English (used for backward compatibility with existing content).
+ */
+export interface Localized {
+  en: string;
+  si?: string;
+}
+
+export type MaybeLocalized = Localized | string | null | undefined;
+
+export type LanguageSwitcherVariant = "compact" | "full" | "pill";
+
+export interface LanguageStyle {
+  variant: LanguageSwitcherVariant;
+  showIcon: boolean;
+  showLanguageCode: boolean;
+  showLanguageName: boolean;
+}
+
+export interface LanguageSettings {
+  languageSwitcherEnabled: boolean;
+  defaultLanguage: LanguageCode;
+  enabledLanguages: LanguageCode[];
+  labels: Record<LanguageCode, string>;
+  shortLabels: Record<LanguageCode, string>;
+  rememberPreference: boolean;
+  autoDetectBrowserLanguage: boolean;
+  showInHeader: boolean;
+  showInMobileMenu: boolean;
+  showInFooter: boolean;
+  style: LanguageStyle;
+}
+
+export const DEFAULT_LANGUAGES: LanguageSettings = {
+  languageSwitcherEnabled: true,
+  defaultLanguage: "en",
+  enabledLanguages: ["en", "si"],
+  labels: { en: "English", si: "සිංහල" },
+  shortLabels: { en: "EN", si: "සිං" },
+  rememberPreference: true,
+  autoDetectBrowserLanguage: false,
+  showInHeader: true,
+  showInMobileMenu: true,
+  showInFooter: false,
+  style: {
+    variant: "compact",
+    showIcon: true,
+    showLanguageCode: true,
+    showLanguageName: false,
+  },
+};
+
+/**
+ * Resolve a localized value for the active language with safe English fallback.
+ * Never returns undefined and never throws:
+ *   1. Sinhala value when active language is "si" and it is non-empty
+ *   2. English value
+ *   3. the provided fallback (default "")
+ * A plain string is treated as English.
+ */
+export function getLocalizedText(
+  value: MaybeLocalized,
+  lang: LanguageCode,
+  fallback = "",
+): string {
+  if (value == null) return fallback;
+  if (typeof value === "string") return value;
+  if (typeof value === "object") {
+    const active = value[lang];
+    if (typeof active === "string" && active.trim() !== "") return active;
+    if (typeof value.en === "string" && value.en.trim() !== "") return value.en;
+  }
+  return fallback;
+}
+
+/** True when a localized value has a non-empty translation for `lang`. */
+export function hasTranslation(value: MaybeLocalized, lang: LanguageCode): boolean {
+  if (value == null) return false;
+  if (typeof value === "string") return lang === "en" && value.trim() !== "";
+  const v = value[lang];
+  return typeof v === "string" && v.trim() !== "";
+}
+
+/** Normalize any value into a Localized object. */
+export function toLocalized(value: MaybeLocalized): Localized {
+  if (value == null) return { en: "", si: "" };
+  if (typeof value === "string") return { en: value, si: "" };
+  return { en: value.en ?? "", si: value.si ?? "" };
+}
+
+/* ------------------------------------------------------------------ *
+ * ECONOMIC FEASIBILITY & ROI CALCULATOR settings.                     *
+ * Published:  publicSettings/economicFeasibility                       *
+ * Draft:      adminDrafts/economicFeasibility                          *
+ * The public /roi-calculator page reads ONLY the published document.   *
+ * ------------------------------------------------------------------ */
+
+export interface EconomicFeasibilitySettings {
+  /** Master switch: when off, the public /roi-calculator page shows a notice. */
+  enabled: boolean;
+  /** Show the ROI Calculator navigation item. */
+  navEnabled: boolean;
+  navLabel: Localized;
+  navOrder: number;
+  navDesktopVisible: boolean;
+  navMobileVisible: boolean;
+  navFooterVisible: boolean;
+
+  title: Localized;
+  description: Localized;
+
+  defaultCurrency: string;
+  defaults: EFInputs;
+  scenarios: EFScenarios;
+  thresholds: EFThresholds;
+
+  disclaimer: Localized;
+  ctaLabel: Localized;
+  ctaLink: string;
+
+  showCharts: boolean;
+  showScenarios: boolean;
+  showSensitivity: boolean;
+  showExport: boolean;
+  showLeadForm: boolean;
+
+  seoTitle: string;
+  seoDescription: string;
+}
+
+export const DEFAULT_ECONOMIC: EconomicFeasibilitySettings = {
+  enabled: true,
+  navEnabled: true,
+  navLabel: { en: "ROI Calculator", si: "ආයෝජන ප්‍රතිලාභ ගණකය" },
+  navOrder: 60,
+  navDesktopVisible: true,
+  navMobileVisible: true,
+  navFooterVisible: true,
+
+  title: {
+    en: "Economic Feasibility & ROI Calculator",
+    si: "ආර්ථික ශක්‍යතා සහ ආයෝජන ප්‍රතිලාභ ගණකය",
+  },
+  description: {
+    en: "Estimate how quickly the SPM ECO System pays back your investment from parking revenue and automation savings.",
+    si: "රථගාල ආදායම සහ ස්වයංක්‍රීයකරණ ඉතිරිකිරීම් මගින් SPM ECO පද්ධතිය ඔබගේ ආයෝජනය කෙතරම් ඉක්මනින් නැවත ලබාදෙයිද යන්න ඇස්තමේන්තු කරන්න.",
+  },
+
+  defaultCurrency: "LKR",
+  defaults: DEFAULT_EF_INPUTS,
+  scenarios: DEFAULT_EF_SCENARIOS,
+  thresholds: DEFAULT_EF_THRESHOLDS,
+
+  disclaimer: {
+    en: "Results are estimates based on the values you enter. Actual outcomes vary by facility, pricing, and usage.",
+    si: "ප්‍රතිඵල ඔබ ඇතුළත් කරන අගයන් මත පදනම් ඇස්තමේන්තු වේ. සැබෑ ප්‍රතිඵල පහසුකම, මිලකරණය සහ භාවිතය අනුව වෙනස් වේ.",
+  },
+  ctaLabel: { en: "Request a Detailed Feasibility Study", si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න" },
+  ctaLink: "/contact",
+
+  showCharts: true,
+  showScenarios: true,
+  showSensitivity: true,
+  showExport: true,
+  showLeadForm: true,
+
+  seoTitle: "ROI Calculator | SPM ECO System",
+  seoDescription:
+    "Calculate the return on investment and payback period for the SPM ECO smart parking system based on your facility's revenue and automation savings.",
+};

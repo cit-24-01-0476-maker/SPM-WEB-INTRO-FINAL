@@ -372,3 +372,12 @@
   .cms-btn { transition: none !important; }
   .cms-btn:hover, .cms-btn:active { transform: none !important; }
 }
+
+/* Sinhala glyph support — applied to any element explicitly marked lang="si".
+   Falls back to the site body font for Latin characters within Sinhala text. */
+:lang(si) {
+  font-family: "Noto Sans Sinhala", var(--font-body, "Manrope"), system-ui, sans-serif;
+}
+html[lang="si"] body {
+  font-family: "Noto Sans Sinhala", var(--font-body, "Manrope"), system-ui, sans-serif;
+}

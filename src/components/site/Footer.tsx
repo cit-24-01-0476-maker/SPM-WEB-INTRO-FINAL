@@ -1,7 +1,9 @@
 import { ParkingSquare, Mail, Phone } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Container } from "./primitives";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const LINKS = [
   { label: "Home", to: "/" },
@@ -13,9 +15,22 @@ const LINKS = [
 ] as const;
 
 export function Footer() {
-  const { site, contact } = usePublicSettings();
+  const { site, contact, economicFeasibility } = usePublicSettings();
+  const { config: langConfig, switcherEnabled, tt, tx } = useLanguage();
+  const showFooterSwitcher = switcherEnabled && langConfig.showInFooter;
+  const links =
+    economicFeasibility.enabled &&
+    economicFeasibility.navEnabled &&
+    economicFeasibility.navFooterVisible
+      ? [
+          ...LINKS.slice(0, 5),
+          { label: tx(economicFeasibility.navLabel, "ROI Calculator"), to: "/roi-calculator" as const },
+          LINKS[5],
+        ]
+      : LINKS;
   return (
     <footer className="bg-gradient-navy py-14 text-white">
+      {/* language switcher (footer) rendered below when enabled */}
       <Container>
         <div className="grid gap-10 md:grid-cols-[1.6fr_1fr]">
           <div>
@@ -23,38 +38,54 @@ export function Footer() {
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-white">
                 <ParkingSquare className="h-5 w-5" />
               </span>
-              <span className="text-base font-bold">{site.siteName}</span>
+              <span className="text-base font-bold">{tt(site.siteName)}</span>
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">
-              A smart parking platform that combines real-time booking, ANPR gate automation, dynamic pricing, QR
-              payment, retail parking control, and operator analytics for modern parking facilities in Sri Lanka.
+              {tt(
+                "A smart parking platform that combines real-time booking, ANPR gate automation, dynamic pricing, QR payment, retail parking control, and operator analytics for modern parking facilities in Sri Lanka.",
+              )}
             </p>
             <div className="mt-5 flex flex-col gap-2 text-sm text-white/70">
-              <a href={`mailto:${contact.primaryEmail}`} className="inline-flex items-center gap-2 hover:text-cyan">
+              <a
+                href={`mailto:${contact.primaryEmail}`}
+                className="inline-flex items-center gap-2 hover:text-cyan"
+              >
                 <Mail className="h-4 w-4 text-cyan" />
                 {contact.primaryEmail}
               </a>
-              <a href={`tel:${contact.primaryPhone}`} className="inline-flex items-center gap-2 hover:text-cyan">
+              <a
+                href={`tel:${contact.primaryPhone}`}
+                className="inline-flex items-center gap-2 hover:text-cyan"
+              >
                 <Phone className="h-4 w-4 text-cyan" />
                 {contact.primaryPhone}
               </a>
             </div>
           </div>
           <div>
-            <p className="text-sm font-semibold text-white">Explore</p>
+            <p className="text-sm font-semibold text-white">{tt("Explore")}</p>
             <ul className="mt-4 grid grid-cols-2 gap-2">
-              {LINKS.map((l) => (
+              {links.map((l) => (
                 <li key={l.to}>
-                  <Link to={l.to} className="text-sm text-white/60 transition-colors hover:text-cyan">
-                    {l.label}
+                  <Link
+                    to={l.to}
+                    className="text-sm text-white/60 transition-colors hover:text-cyan"
+                  >
+                    {tt(l.label)}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
         </div>
+        {showFooterSwitcher ? (
+          <div className="mt-8 flex justify-center [&_button]:border-white/20 [&_button]:bg-white/5 [&_button]:text-white">
+            <LanguageSwitcher variant="dropdown" />
+          </div>
+        ) : null}
         <div className="mt-10 border-t border-white/10 pt-6 text-center text-xs text-white/50">
-          © {new Date().getFullYear()} SPM ECO System — A University Technology Challenge Competition Project. All rights reserved.
+          © {new Date().getFullYear()} SPM ECO System —{" "}
+          {tt("A University Technology Challenge Competition Project. All rights reserved.")}
         </div>
       </Container>
     </footer>

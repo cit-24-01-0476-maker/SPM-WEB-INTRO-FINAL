@@ -61,7 +61,12 @@ export function SectionHeading({
         {title}
       </h2>
       {subtitle ? (
-        <p className={cn("text-base leading-relaxed md:text-lg", invert ? "text-white/70" : "text-muted-foreground")}>
+        <p
+          className={cn(
+            "text-base leading-relaxed md:text-lg",
+            invert ? "text-white/70" : "text-muted-foreground",
+          )}
+        >
           {subtitle}
         </p>
       ) : null}
@@ -90,4 +95,3 @@ export function Container({
     </div>
   );
 }
-

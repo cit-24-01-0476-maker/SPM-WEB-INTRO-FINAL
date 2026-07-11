@@ -92,7 +92,8 @@ service cloud.firestore {
             "design",
             "hero",
             "contact",
-            "navigation"
+            "navigation",
+            "languages"
           ]
         );
 

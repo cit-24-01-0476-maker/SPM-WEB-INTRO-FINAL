@@ -1,6 +1,7 @@
 import garageImg from "@/assets/garage.jpg";
 import { Container, SectionHeading, Reveal } from "./primitives";
 import { CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const OUTCOMES = [
   "A fully functional smart parking mobile application",
@@ -29,6 +30,7 @@ const DEMO = [
 ];
 
 export function Outcomes() {
+  const { tt } = useLanguage();
   return (
     <section id="outcomes" className="relative overflow-hidden bg-gradient-navy py-24 text-white">
       <div className="pointer-events-none absolute right-0 top-1/3 h-80 w-80 rounded-full bg-primary/30 blur-[140px]" />
@@ -38,9 +40,11 @@ export function Outcomes() {
             <Reveal>
               <SectionHeading
                 align="left"
-                eyebrow="Outcomes"
-                title="Expected Project Outcomes"
-                subtitle="What SPM ECO System delivers as a complete software + hardware solution."
+                eyebrow={tt("Outcomes")}
+                title={tt("Expected Project Outcomes")}
+                subtitle={tt(
+                  "What SPM ECO System delivers as a complete software + hardware solution.",
+                )}
                 invert
               />
             </Reveal>
@@ -53,7 +57,7 @@ export function Outcomes() {
                   className="flex items-start gap-2.5 text-sm text-white/85"
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />
-                  {o}
+                  {tt(o)}
                 </Reveal>
               ))}
             </ul>
@@ -70,11 +74,15 @@ export function Outcomes() {
                 className="h-56 w-full object-cover sm:h-64"
               />
             </Reveal>
-            <Reveal delay={120} className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm">
-              <h3 className="text-lg font-bold">Prototype Demonstration Plan</h3>
+            <Reveal
+              delay={120}
+              className="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-6 backdrop-blur-sm"
+            >
+              <h3 className="text-lg font-bold">{tt("Prototype Demonstration Plan")}</h3>
               <p className="mt-2 text-sm text-white/65">
-                The prototype demonstrates the full journey from driver booking to gate automation and operator
-                monitoring.
+                {tt(
+                  "The prototype demonstrates the full journey from driver booking to gate automation and operator monitoring.",
+                )}
               </p>
               <ol className="mt-4 space-y-2">
                 {DEMO.map((d, i) => (
@@ -82,7 +90,7 @@ export function Outcomes() {
                     <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gradient-primary text-[11px] font-bold text-white">
                       {i + 1}
                     </span>
-                    {d}
+                    {tt(d)}
                   </li>
                 ))}
               </ol>

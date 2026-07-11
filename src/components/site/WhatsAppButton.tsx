@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { contactWhatsappLink, visibleContacts, type ContactPerson } from "@/lib/cms/model";
 
 /**
@@ -23,6 +24,7 @@ function WhatsAppIcon({ className }: { className?: string }) {
 
 export function WhatsAppButton() {
   const { contact } = usePublicSettings();
+  const { tt } = useLanguage();
   const wa = contact.whatsapp;
   const waContacts = visibleContacts(contact.contacts).filter(
     (c) => c.whatsappEnabled && c.whatsappNumber,
@@ -75,14 +77,14 @@ export function WhatsAppButton() {
       {open && !single ? (
         <div
           role="menu"
-          aria-label="Choose a contact"
+          aria-label={tt("Choose a contact")}
           className={`absolute bottom-16 w-64 overflow-hidden rounded-2xl border border-border bg-card shadow-glow ${
             onLeft ? "left-0" : "right-0"
           }`}
         >
           <div className="border-b border-border bg-secondary/50 px-4 py-3">
-            <p className="text-sm font-bold text-foreground">Chat on WhatsApp</p>
-            <p className="text-xs text-muted-foreground">{wa.onlineLabel}</p>
+            <p className="text-sm font-bold text-foreground">{tt("Chat on WhatsApp")}</p>
+            <p className="text-xs text-muted-foreground">{tt(wa.onlineLabel)}</p>
           </div>
           <ul className="max-h-72 overflow-y-auto p-1.5">
             {waContacts.map((c) => (
@@ -116,7 +118,7 @@ export function WhatsAppButton() {
           href={contactWhatsappLink(single)}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`Chat with ${single.name} on WhatsApp`}
+          aria-label={`${tt("Chat with")} ${single.name}`}
           className={`group flex items-center gap-2 rounded-full px-3.5 shadow-[0_10px_30px_-8px_rgba(37,211,102,0.6)] transition-all duration-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40 active:scale-95 ${
             shown ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
           }`}
@@ -131,14 +133,14 @@ export function WhatsAppButton() {
             ) : null}
             <WhatsAppIcon className="relative h-7 w-7" />
           </span>
-          <span className="hidden pr-1 text-sm font-semibold sm:inline">{wa.label}</span>
+          <span className="hidden pr-1 text-sm font-semibold sm:inline">{tt(wa.label)}</span>
         </a>
       ) : (
         <button
           onClick={() => setOpen((o) => !o)}
           aria-haspopup="menu"
           aria-expanded={open}
-          aria-label={wa.tooltip}
+          aria-label={tt(wa.tooltip)}
           className={`group flex items-center gap-2 rounded-full px-3.5 shadow-[0_10px_30px_-8px_rgba(37,211,102,0.6)] transition-all duration-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/40 active:scale-95 ${
             shown ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
           }`}
@@ -153,7 +155,7 @@ export function WhatsAppButton() {
             ) : null}
             <WhatsAppIcon className="relative h-7 w-7" />
           </span>
-          <span className="hidden pr-1 text-sm font-semibold sm:inline">{wa.label}</span>
+          <span className="hidden pr-1 text-sm font-semibold sm:inline">{tt(wa.label)}</span>
         </button>
       )}
     </div>

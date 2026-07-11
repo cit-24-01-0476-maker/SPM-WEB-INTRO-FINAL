@@ -1,19 +1,50 @@
 import anprImg from "@/assets/anpr-camera.jpg";
-import { Camera, DoorClosed, Cpu, QrCode, Printer, CreditCard, Radar, MonitorSmartphone } from "lucide-react";
+import {
+  Camera,
+  DoorClosed,
+  Cpu,
+  QrCode,
+  Printer,
+  CreditCard,
+  Radar,
+  MonitorSmartphone,
+} from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const HARDWARE = [
   { icon: Camera, title: "ANPR Camera", body: "Captures number plates at entry and exit gates." },
-  { icon: DoorClosed, title: "Barrier Gate Controller", body: "Automatically opens and closes gates on system approval." },
-  { icon: Cpu, title: "Raspberry Pi / Edge Device", body: "Performs on-site ANPR processing and local communication." },
-  { icon: QrCode, title: "QR Scanner", body: "Scans booking confirmations, QR tickets, and payment codes." },
+  {
+    icon: DoorClosed,
+    title: "Barrier Gate Controller",
+    body: "Automatically opens and closes gates on system approval.",
+  },
+  {
+    icon: Cpu,
+    title: "Raspberry Pi / Edge Device",
+    body: "Performs on-site ANPR processing and local communication.",
+  },
+  {
+    icon: QrCode,
+    title: "QR Scanner",
+    body: "Scans booking confirmations, QR tickets, and payment codes.",
+  },
   { icon: Printer, title: "Thermal Printer", body: "Prints tickets and bills for walk-in users." },
   { icon: CreditCard, title: "Payment Terminal", body: "Supports card and QR-based payments." },
-  { icon: Radar, title: "Vehicle Detection Sensor", body: "Detects vehicle presence near the gate." },
-  { icon: MonitorSmartphone, title: "Operator Control Device", body: "Used by officers for manual approval and alert handling." },
+  {
+    icon: Radar,
+    title: "Vehicle Detection Sensor",
+    body: "Detects vehicle presence near the gate.",
+  },
+  {
+    icon: MonitorSmartphone,
+    title: "Operator Control Device",
+    body: "Used by officers for manual approval and alert handling.",
+  },
 ];
 
 export function Hardware() {
+  const { tt } = useLanguage();
   return (
     <section id="hardware" className="relative overflow-hidden bg-secondary/60 py-24">
       <Container>
@@ -33,9 +64,11 @@ export function Hardware() {
             <Reveal>
               <SectionHeading
                 align="left"
-                eyebrow="Hardware"
-                title="Smart Parking Hardware Integration"
-                subtitle="A complete on-site hardware stack that pairs with the SPM ECO software platform."
+                eyebrow={tt("Hardware")}
+                title={tt("Smart Parking Hardware Integration")}
+                subtitle={tt(
+                  "A complete on-site hardware stack that pairs with the SPM ECO software platform.",
+                )}
               />
             </Reveal>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -49,8 +82,10 @@ export function Hardware() {
                     <h.icon className="h-5 w-5" />
                   </span>
                   <div>
-                    <h3 className="text-sm font-bold text-foreground">{h.title}</h3>
-                    <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{h.body}</p>
+                    <h3 className="text-sm font-bold text-foreground">{tt(h.title)}</h3>
+                    <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                      {tt(h.body)}
+                    </p>
                   </div>
                 </Reveal>
               ))}

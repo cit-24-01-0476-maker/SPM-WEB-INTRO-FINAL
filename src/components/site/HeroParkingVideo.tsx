@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import posterImg from "@/assets/hero-parking-poster.jpg";
 import heroVideo from "@/assets/hero-parking.mp4.asset.json";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const CYCLE = 15; // seconds per demonstration loop
 
@@ -50,42 +51,37 @@ function useDemoTimeline(active: boolean, reduced: boolean) {
 }
 
 function LiveStatusBadge() {
+  const { tt } = useLanguage();
   return (
     <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-cyan backdrop-blur">
       <span className="relative flex h-1.5 w-1.5">
         <span className="live-ping absolute inline-flex h-full w-full rounded-full bg-success" />
         <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
       </span>
-      Live System Preview
+      {tt("Live System Preview")}
     </span>
   );
 }
 
-function StatusRow({
-  label,
-  value,
-  done,
-}: {
-  label: string;
-  value: string;
-  done: boolean;
-}) {
+function StatusRow({ label, value, done }: { label: string; value: string; done: boolean }) {
+  const { tt } = useLanguage();
   return (
     <div className="flex items-center justify-between gap-2 text-xs">
-      <span className="text-white/55">{label}</span>
+      <span className="text-white/55">{tt(label)}</span>
       <span
         className={`inline-flex items-center gap-1 font-semibold transition-colors duration-500 ${
           done ? "text-[#7ff0c0]" : "text-white/35"
         }`}
       >
         {done ? <CheckCircle2 className="h-3.5 w-3.5 shrink-0" /> : null}
-        {done ? value : "···"}
+        {done ? tt(value) : "···"}
       </span>
     </div>
   );
 }
 
 function LiveAnprCard({ t }: { t: number }) {
+  const { tt } = useLanguage();
   const scanning = t < 4;
   const plateDetected = t >= 4;
   const classified = t >= 6;
@@ -95,8 +91,12 @@ function LiveAnprCard({ t }: { t: number }) {
   return (
     <div className="glass-dark absolute left-3 top-3 w-[8.75rem] rounded-2xl border border-white/10 p-3 text-white shadow-[0_16px_44px_-20px_rgba(3,12,24,0.75)] sm:left-5 sm:top-5 sm:w-[13.5rem] sm:p-4">
       <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan sm:text-[11px]">
-        {scanning ? <ScanLine className="h-4 w-4 shrink-0" /> : <Camera className="h-4 w-4 shrink-0" />}
-        {scanning ? "Scanning Vehicle" : "ANPR Detected"}
+        {scanning ? (
+          <ScanLine className="h-4 w-4 shrink-0" />
+        ) : (
+          <Camera className="h-4 w-4 shrink-0" />
+        )}
+        {scanning ? tt("Scanning Vehicle") : tt("ANPR Detected")}
       </div>
 
       {/* Plate box with scanning line */}
@@ -127,7 +127,7 @@ function LiveAnprCard({ t }: { t: number }) {
           }`}
         />
         <span className={approved ? "text-white/80" : "text-white/40"}>
-          {approved ? "Barrier Opening" : "Awaiting Verification"}
+          {approved ? tt("Barrier Opening") : tt("Awaiting Verification")}
         </span>
       </div>
     </div>
@@ -135,6 +135,7 @@ function LiveAnprCard({ t }: { t: number }) {
 }
 
 function LiveOccupancyCard({ elapsed }: { elapsed: number }) {
+  const { tt } = useLanguage();
   const available = 138 - (Math.floor(elapsed / 5) % 3); // 138 / 137 / 136
   const total = 420;
   const occupied = 246;
@@ -143,13 +144,13 @@ function LiveOccupancyCard({ elapsed }: { elapsed: number }) {
   return (
     <div className="glass-dark absolute bottom-3 right-3 w-[8.75rem] rounded-2xl border border-white/10 p-3 text-white shadow-[0_16px_44px_-20px_rgba(3,12,24,0.75)] sm:bottom-5 sm:right-5 sm:w-[13rem] sm:p-4">
       <div className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-cyan sm:text-[11px]">
-        <LayoutDashboard className="h-4 w-4 shrink-0" /> Live Occupancy
+        <LayoutDashboard className="h-4 w-4 shrink-0" /> {tt("Live Occupancy")}
       </div>
 
       <p className="mt-2.5 text-xl font-bold tabular-nums sm:text-[1.6rem]">
-        {available} <span className="text-sm font-medium text-white/60">Available</span>
+        {available} <span className="text-sm font-medium text-white/60">{tt("Available")}</span>
       </p>
-      <p className="text-[11px] text-white/60 sm:text-xs">Colombo Fort · Zone A</p>
+      <p className="text-[11px] text-white/60 sm:text-xs">{tt("Colombo Fort · Zone A")}</p>
 
       <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/15">
         <div
@@ -161,20 +162,21 @@ function LiveOccupancyCard({ elapsed }: { elapsed: number }) {
       <div className="mt-3 grid grid-cols-3 gap-1 text-center text-[10px] sm:text-[11px]">
         <div>
           <p className="font-bold text-white">{total}</p>
-          <p className="text-white/50">Capacity</p>
+          <p className="text-white/50">{tt("Capacity")}</p>
         </div>
         <div>
           <p className="font-bold text-white">{occupied}</p>
-          <p className="text-white/50">Occupied</p>
+          <p className="text-white/50">{tt("Occupied")}</p>
         </div>
         <div>
           <p className="font-bold text-white">36</p>
-          <p className="text-white/50">Reserved</p>
+          <p className="text-white/50">{tt("Reserved")}</p>
         </div>
       </div>
 
       <p className="mt-2.5 flex items-center gap-1 text-[9px] leading-tight text-white/40 sm:text-[10px]">
-        <BadgeCheck className="h-3 w-3 shrink-0" /> Demonstration data — not verified live facility information.
+        <BadgeCheck className="h-3 w-3 shrink-0" />{" "}
+        {tt("Demonstration data — not verified live facility information.")}
       </p>
     </div>
   );
@@ -191,10 +193,9 @@ export function HeroParkingVideo() {
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setInView(entry.isIntersecting),
-      { threshold: 0.2 },
-    );
+    const obs = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), {
+      threshold: 0.2,
+    });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);

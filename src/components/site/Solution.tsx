@@ -11,6 +11,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const FEATURES = [
   { icon: MapPin, label: "Real-time Parking Availability" },
@@ -26,15 +27,18 @@ const FEATURES = [
 ];
 
 export function Solution() {
+  const { tt } = useLanguage();
   return (
     <section id="solution" className="relative overflow-hidden py-24">
       <div className="pointer-events-none absolute inset-0 bg-secondary/60" />
       <Container className="relative">
         <Reveal>
           <SectionHeading
-            eyebrow="The Solution"
-            title="What is SPM ECO System?"
-            subtitle="A smart parking management platform combining a mobile application, ANPR camera automation, dynamic pricing, QR payment, vehicle classification, retail parking control, and a web-based operator dashboard into one integrated ecosystem."
+            eyebrow={tt("The Solution")}
+            title={tt("What is SPM ECO System?")}
+            subtitle={tt(
+              "A smart parking management platform combining a mobile application, ANPR camera automation, dynamic pricing, QR payment, vehicle classification, retail parking control, and a web-based operator dashboard into one integrated ecosystem.",
+            )}
           />
         </Reveal>
 
@@ -48,7 +52,7 @@ export function Solution() {
               <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow transition-transform group-hover:scale-105">
                 <f.icon className="h-5 w-5" />
               </span>
-              <p className="text-sm font-semibold leading-snug text-foreground">{f.label}</p>
+              <p className="text-sm font-semibold leading-snug text-foreground">{tt(f.label)}</p>
             </Reveal>
           ))}
         </div>

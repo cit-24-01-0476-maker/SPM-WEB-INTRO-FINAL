@@ -1,4 +1,5 @@
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const STACK = [
   { area: "Mobile App", tech: "React Native for Android and iOS" },
@@ -14,14 +15,17 @@ const STACK = [
 ];
 
 export function TechStack() {
+  const { tt } = useLanguage();
   return (
     <section id="technology" className="py-24">
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Technology"
-            title="Technology Stack"
-            subtitle="A modern, scalable architecture spanning mobile, web, backend, computer vision, and cloud."
+            eyebrow={tt("Technology")}
+            title={tt("Technology Stack")}
+            subtitle={tt(
+              "A modern, scalable architecture spanning mobile, web, backend, computer vision, and cloud.",
+            )}
           />
         </Reveal>
 
@@ -32,8 +36,10 @@ export function TechStack() {
               delay={(i % 3) * 60}
               className="rounded-2xl border border-border bg-card p-5 shadow-card transition-all hover:-translate-y-1 hover:border-primary/30"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">{s.area}</p>
-              <p className="mt-2 text-sm font-medium text-foreground">{s.tech}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
+                {tt(s.area)}
+              </p>
+              <p className="mt-2 text-sm font-medium text-foreground">{tt(s.tech)}</p>
             </Reveal>
           ))}
         </div>

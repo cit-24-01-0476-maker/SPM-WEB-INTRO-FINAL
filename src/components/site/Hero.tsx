@@ -11,6 +11,7 @@ import { HeroParkingVideo } from "./HeroParkingVideo";
 import { Container } from "./primitives";
 import { CmsButton } from "./CmsButton";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const STATUS = [
   { icon: Clock3, label: "Real-Time Availability" },
@@ -22,6 +23,7 @@ const STATUS = [
 
 export function Hero() {
   const { hero } = usePublicSettings();
+  const { tt } = useLanguage();
   return (
     <section
       id="home"
@@ -46,30 +48,30 @@ export function Hero() {
           <div className="reveal is-visible flex flex-col gap-6">
             <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan backdrop-blur">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
-              {hero.eyebrow}
+              {tt(hero.eyebrow)}
             </span>
 
             <h1 className="text-[2.5rem] font-extrabold leading-[1.03] sm:text-6xl lg:text-[4.5rem]">
-              {hero.headline}
+              {tt(hero.headline)}
             </h1>
 
             <p className="max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
-              {hero.supporting}
+              {tt(hero.supporting)}
             </p>
 
             <div className="flex flex-wrap items-center gap-3 pt-1">
               <CmsButton variant="primary" href={hero.primaryCtaLink}>
-                {hero.primaryCtaLabel}
+                {tt(hero.primaryCtaLabel)}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
               </CmsButton>
               <CmsButton variant="secondary" onDark href={hero.secondaryCtaLink}>
-                {hero.secondaryCtaLabel}
+                {tt(hero.secondaryCtaLabel)}
               </CmsButton>
             </div>
 
             <p className="flex items-center gap-2 pt-1 text-xs text-white/55">
               <ShieldCheck className="h-4 w-4 text-cyan" />
-              {hero.trustStatement}
+              {tt(hero.trustStatement)}
             </p>
           </div>
 
@@ -86,7 +88,7 @@ export function Hero() {
                 className="inline-flex items-center gap-2 px-4 text-xs font-medium text-white/80 sm:px-6"
               >
                 <s.icon className="h-4 w-4 text-cyan" />
-                {s.label}
+                {tt(s.label)}
               </span>
             ))}
           </div>

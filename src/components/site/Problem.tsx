@@ -1,5 +1,6 @@
 import { Clock, CalendarX, ReceiptText, ShieldAlert, ShoppingCart } from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const PROBLEMS = [
   {
@@ -30,14 +31,17 @@ const PROBLEMS = [
 ];
 
 export function Problem() {
+  const { tt } = useLanguage();
   return (
     <section id="problem" className="py-24">
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="The Problem"
-            title="The Parking Problem in Urban Sri Lanka"
-            subtitle="Parking facilities in Colombo and commercial zones still depend heavily on manual and paper-based operations."
+            eyebrow={tt("The Problem")}
+            title={tt("The Parking Problem in Urban Sri Lanka")}
+            subtitle={tt(
+              "Parking facilities in Colombo and commercial zones still depend heavily on manual and paper-based operations.",
+            )}
           />
         </Reveal>
 
@@ -51,17 +55,19 @@ export function Problem() {
               <span className="grid h-12 w-12 place-items-center rounded-xl bg-destructive/10 text-destructive transition-colors group-hover:bg-destructive/15">
                 <p.icon className="h-6 w-6" />
               </span>
-              <h3 className="mt-5 text-lg font-bold text-foreground">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              <h3 className="mt-5 text-lg font-bold text-foreground">{tt(p.title)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tt(p.body)}</p>
             </Reveal>
           ))}
           <Reveal
             delay={350}
             className="flex flex-col justify-center rounded-2xl bg-gradient-navy p-6 text-white shadow-glow"
           >
-            <p className="text-3xl font-bold text-cyan">1 platform</p>
+            <p className="text-3xl font-bold text-cyan">{tt("1 platform")}</p>
             <p className="mt-2 text-sm text-white/75">
-              SPM ECO System replaces fragmented manual operations with one integrated, automated ecosystem.
+              {tt(
+                "SPM ECO System replaces fragmented manual operations with one integrated, automated ecosystem.",
+              )}
             </p>
           </Reveal>
         </div>

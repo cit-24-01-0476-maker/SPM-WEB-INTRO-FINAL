@@ -87,26 +87,39 @@ export function applyDesign(design: DesignSettings, target?: HTMLElement): void 
   const c = design.colors;
   const set = (k: string, v: string) => el.style.setProperty(k, v);
 
+  // The CMS design palette is the LIGHT theme. When dark mode is active the
+  // dark palette in styles.css (.dark) must win — but inline styles override
+  // class rules, so in dark mode we REMOVE these inline overrides instead of
+  // writing the light values (which previously clobbered dark mode everywhere).
+  const isDark =
+    el === (typeof document !== "undefined" ? document.documentElement : null) &&
+    el.classList.contains("dark");
+  const setColor = (k: string, v: string) => {
+    if (isDark) el.style.removeProperty(k);
+    else el.style.setProperty(k, v);
+  };
+
   // Core semantic tokens (consumed across the site + shadcn components).
-  set("--primary", c.techBlue);
-  set("--ring", c.techBlue);
-  set("--accent", c.cyanAccent);
-  set("--cyan", c.cyanAccent);
-  set("--navy", c.primaryNavy);
-  set("--deep", c.deepBlue);
-  set("--background", c.lightBackground);
-  set("--card", c.cardBackground);
-  set("--popover", c.cardBackground);
-  set("--foreground", c.mainText);
-  set("--card-foreground", c.mainText);
-  set("--muted-foreground", c.secondaryText);
-  set("--secondary-foreground", c.deepBlue);
-  set("--border", c.border);
-  set("--input", c.border);
-  set("--success", c.success);
-  set("--warning", c.warning);
-  set("--destructive", c.error);
-  set("--sidebar", c.adminSidebar);
+  setColor("--primary", c.techBlue);
+  setColor("--ring", c.techBlue);
+  setColor("--accent", c.cyanAccent);
+  setColor("--cyan", c.cyanAccent);
+  setColor("--navy", c.primaryNavy);
+  setColor("--deep", c.deepBlue);
+  setColor("--background", c.lightBackground);
+  setColor("--card", c.cardBackground);
+  setColor("--popover", c.cardBackground);
+  setColor("--foreground", c.mainText);
+  setColor("--card-foreground", c.mainText);
+  setColor("--muted-foreground", c.secondaryText);
+  setColor("--secondary-foreground", c.deepBlue);
+  setColor("--border", c.border);
+  setColor("--input", c.border);
+  setColor("--success", c.success);
+  setColor("--warning", c.warning);
+  setColor("--destructive", c.error);
+  setColor("--sidebar", c.adminSidebar);
+
 
   // Gradients + glows.
   set(

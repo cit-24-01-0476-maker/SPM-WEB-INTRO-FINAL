@@ -25,10 +25,19 @@ import {
   DEFAULT_HERO,
   DEFAULT_NAVIGATION,
   DEFAULT_SITE,
+  DEFAULT_LANGUAGES,
+  DEFAULT_ECONOMIC,
   mergeDefaults,
 } from "./model";
 
-export type SettingsKey = "site" | "design" | "hero" | "contact" | "navigation";
+export type SettingsKey =
+  | "site"
+  | "design"
+  | "hero"
+  | "contact"
+  | "navigation"
+  | "languages"
+  | "economicFeasibility";
 
 export const PUBLIC_COLLECTION = "publicSettings";
 export const DRAFT_COLLECTION = "adminDrafts";
@@ -228,9 +237,29 @@ const OLD_SOURCES: Record<
     flat: false,
     defaults: DEFAULT_NAVIGATION,
   },
+  languages: {
+    collection: "languageSettings",
+    id: "global",
+    flat: false,
+    defaults: DEFAULT_LANGUAGES,
+  },
+  economicFeasibility: {
+    collection: "economicFeasibilitySettings",
+    id: "global",
+    flat: false,
+    defaults: DEFAULT_ECONOMIC,
+  },
 };
 
-const KEYS: SettingsKey[] = ["site", "design", "hero", "contact", "navigation"];
+const KEYS: SettingsKey[] = [
+  "site",
+  "design",
+  "hero",
+  "contact",
+  "navigation",
+  "languages",
+  "economicFeasibility",
+];
 
 /** True when every publicSettings/{key} document already exists. */
 export async function settingsInitialized(): Promise<boolean> {

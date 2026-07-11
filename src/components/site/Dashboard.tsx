@@ -11,6 +11,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const WIDGETS = [
   { label: "Total Parking Slots", value: "1,240", sub: "across 6 branches" },
@@ -42,20 +43,26 @@ const OCCUPANCY = [
 ];
 
 export function Dashboard() {
+  const { tt } = useLanguage();
   return (
     <section id="dashboard" className="relative overflow-hidden bg-gradient-navy py-24 text-white">
       <div className="pointer-events-none absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-cyan/20 blur-[130px]" />
       <Container className="relative">
         <Reveal>
           <SectionHeading
-            eyebrow="Dashboard"
-            title="A Central Dashboard for Parking Operators"
-            subtitle="Manage every location, vehicle, payment, and alert in real time from one web dashboard."
+            eyebrow={tt("Dashboard")}
+            title={tt("A Central Dashboard for Parking Operators")}
+            subtitle={tt(
+              "Manage every location, vehicle, payment, and alert in real time from one web dashboard.",
+            )}
             invert
           />
         </Reveal>
 
-        <Reveal delay={120} className="mt-14 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm sm:p-6">
+        <Reveal
+          delay={120}
+          className="mt-14 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-sm sm:p-6"
+        >
           <div className="grid gap-6 lg:grid-cols-[190px_1fr]">
             {/* sidebar */}
             <aside className="hidden flex-col gap-1 rounded-2xl bg-navy/60 p-3 lg:flex">
@@ -67,7 +74,7 @@ export function Dashboard() {
                   }`}
                 >
                   <p.icon className="h-4 w-4" />
-                  {p.label}
+                  {tt(p.label)}
                 </span>
               ))}
             </aside>
@@ -76,10 +83,13 @@ export function Dashboard() {
               {/* KPI widgets */}
               <div className="grid gap-3 sm:grid-cols-3">
                 {WIDGETS.map((w) => (
-                  <div key={w.label} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="text-xs text-white/55">{w.label}</p>
+                  <div
+                    key={w.label}
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] p-4"
+                  >
+                    <p className="text-xs text-white/55">{tt(w.label)}</p>
                     <p className="mt-1 text-2xl font-bold text-white">{w.value}</p>
-                    <p className="text-[11px] text-cyan">{w.sub}</p>
+                    <p className="text-[11px] text-cyan">{tt(w.sub)}</p>
                   </div>
                 ))}
               </div>
@@ -88,7 +98,7 @@ export function Dashboard() {
                 {/* branch occupancy */}
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                   <div className="flex items-center gap-2 text-sm font-semibold">
-                    <TrendingUp className="h-4 w-4 text-cyan" /> Branch-wise Occupancy
+                    <TrendingUp className="h-4 w-4 text-cyan" /> {tt("Branch-wise Occupancy")}
                   </div>
                   <div className="mt-4 space-y-3">
                     {OCCUPANCY.map((o) => (
@@ -111,23 +121,23 @@ export function Dashboard() {
                 {/* alerts */}
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5">
                   <div className="flex items-center gap-2 text-sm font-semibold">
-                    <ShieldAlert className="h-4 w-4 text-destructive" /> Live Alerts
+                    <ShieldAlert className="h-4 w-4 text-destructive" /> {tt("Live Alerts")}
                   </div>
                   <div className="mt-4 space-y-2.5 text-xs">
                     <div className="flex items-center justify-between rounded-lg bg-destructive/15 px-3 py-2">
-                      <span className="text-white/85">Unauthorized vehicle · Gate 2</span>
-                      <span className="font-semibold text-destructive">Blocked</span>
+                      <span className="text-white/85">{tt("Unauthorized vehicle · Gate 2")}</span>
+                      <span className="font-semibold text-destructive">{tt("Blocked")}</span>
                     </div>
                     <div className="flex items-center justify-between rounded-lg bg-accent/15 px-3 py-2">
-                      <span className="text-white/85">Overstay · WP-CAB-4821</span>
+                      <span className="text-white/85">{tt("Overstay")} · WP-CAB-4821</span>
                       <span className="font-semibold text-cyan">2h 14m</span>
                     </div>
                     <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                      <span className="text-white/85">Peak-hour usage</span>
+                      <span className="text-white/85">{tt("Peak-hour usage")}</span>
                       <span className="font-semibold text-cyan">91%</span>
                     </div>
                     <div className="flex items-center justify-between rounded-lg bg-white/5 px-3 py-2">
-                      <span className="text-white/85">Overstay vehicles today</span>
+                      <span className="text-white/85">{tt("Overstay vehicles today")}</span>
                       <span className="font-semibold text-white">17</span>
                     </div>
                   </div>

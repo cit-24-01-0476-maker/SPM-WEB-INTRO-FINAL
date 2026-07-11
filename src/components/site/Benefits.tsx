@@ -1,5 +1,6 @@
 import { Car, Building2, Store, Check } from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const GROUPS = [
   {
@@ -42,14 +43,17 @@ const GROUPS = [
 ];
 
 export function Benefits() {
+  const { tt } = useLanguage();
   return (
     <section id="benefits" className="relative overflow-hidden bg-secondary/60 py-24">
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="Benefits"
-            title="Why SPM ECO System Matters"
-            subtitle="Clear value for everyone in the parking ecosystem — drivers, operators, and retailers."
+            eyebrow={tt("Benefits")}
+            title={tt("Why SPM ECO System Matters")}
+            subtitle={tt(
+              "Clear value for everyone in the parking ecosystem — drivers, operators, and retailers.",
+            )}
           />
         </Reveal>
 
@@ -63,12 +67,12 @@ export function Benefits() {
               <span className="grid h-12 w-12 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow">
                 <g.icon className="h-6 w-6" />
               </span>
-              <h3 className="mt-5 text-xl font-bold text-foreground">{g.title}</h3>
+              <h3 className="mt-5 text-xl font-bold text-foreground">{tt(g.title)}</h3>
               <ul className="mt-4 space-y-2.5">
                 {g.items.map((it) => (
                   <li key={it} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                    {it}
+                    {tt(it)}
                   </li>
                 ))}
               </ul>

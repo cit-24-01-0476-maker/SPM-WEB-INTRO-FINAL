@@ -23,6 +23,13 @@ function applyTheme(theme: Theme) {
   const root = document.documentElement;
   root.classList.toggle("dark", theme === "dark");
   root.style.colorScheme = theme;
+  // Let CMS design tokens re-apply so inline light-palette overrides are cleared
+  // in dark mode (inline styles otherwise beat the .dark class rules).
+  try {
+    window.dispatchEvent(new CustomEvent("spm-theme-change", { detail: theme }));
+  } catch {
+    /* ignore */
+  }
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

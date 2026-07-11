@@ -1,5 +1,6 @@
 import { CalendarCheck, IdCard, UserPlus, Truck, Ban } from "lucide-react";
 import { Container, SectionHeading, Reveal } from "./primitives";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const VEHICLES = [
   {
@@ -41,14 +42,17 @@ const toneMap: Record<string, string> = {
 };
 
 export function VehicleClassification() {
+  const { tt } = useLanguage();
   return (
     <section id="anpr" className="py-24">
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow="ANPR System"
-            title="Intelligent Vehicle Classification"
-            subtitle="SPM ECO System automatically classifies every vehicle at the gate and applies the correct access rule."
+            eyebrow={tt("ANPR System")}
+            title={tt("Intelligent Vehicle Classification")}
+            subtitle={tt(
+              "SPM ECO System automatically classifies every vehicle at the gate and applies the correct access rule.",
+            )}
           />
         </Reveal>
 
@@ -62,8 +66,8 @@ export function VehicleClassification() {
               <span className={`grid h-12 w-12 place-items-center rounded-xl ${toneMap[v.tone]}`}>
                 <v.icon className="h-6 w-6" />
               </span>
-              <h3 className="mt-4 text-base font-bold text-foreground">{v.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{v.body}</p>
+              <h3 className="mt-4 text-base font-bold text-foreground">{tt(v.title)}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tt(v.body)}</p>
             </Reveal>
           ))}
         </div>

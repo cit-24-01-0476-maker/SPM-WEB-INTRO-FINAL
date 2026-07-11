@@ -11,6 +11,7 @@ import {
   presenceMarkContactStarted,
   presenceMarkContactSubmitted,
 } from "@/lib/analytics/presence-instance";
+import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const FACILITY_TYPES = [
   "Shopping Mall",
@@ -70,6 +71,7 @@ function statusDot(status: ContactPerson["availabilityStatus"]) {
 }
 
 function ContactCard({ c }: { c: ContactPerson }) {
+  const { tt } = useLanguage();
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-card transition-all hover:-translate-y-0.5 hover:shadow-glow">
       <div className="flex items-center gap-4">
@@ -93,7 +95,7 @@ function ContactCard({ c }: { c: ContactPerson }) {
           <p className="truncate text-sm text-muted-foreground">{c.role}</p>
           <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
             <span className={`h-2 w-2 rounded-full ${statusDot(c.availabilityStatus)}`} />
-            {c.availabilityText || c.availabilityStatus}
+            {c.availabilityText ? tt(c.availabilityText) : tt(c.availabilityStatus)}
           </p>
         </div>
       </div>
@@ -104,10 +106,10 @@ function ContactCard({ c }: { c: ContactPerson }) {
         {c.callEnabled && c.phoneRaw ? (
           <a
             href={telLink(c.phoneRaw)}
-            aria-label={`Call ${c.name}`}
+            aria-label={`${tt("Call")} ${c.name}`}
             className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl border border-border bg-secondary px-4 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/70"
           >
-            <Phone className="h-4 w-4" /> Call {c.name}
+            <Phone className="h-4 w-4" /> {tt("Call")} {c.name}
           </a>
         ) : null}
         {c.whatsappEnabled && c.whatsappNumber ? (
@@ -115,18 +117,18 @@ function ContactCard({ c }: { c: ContactPerson }) {
             href={contactWhatsappLink(c)}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`Chat with ${c.name} on WhatsApp`}
+            aria-label={`${tt("Chat with")} ${c.name}`}
             onClick={() => void trackEvent("whatsapp_click", { contact: c.id })}
             className="inline-flex min-h-[48px] flex-1 items-center justify-center gap-2 rounded-xl px-4 text-sm font-semibold text-white transition-transform hover:brightness-110 active:scale-95"
             style={{ background: "#25D366" }}
           >
-            <MessageCircle className="h-4 w-4" /> WhatsApp
+            <MessageCircle className="h-4 w-4" /> {tt("WhatsApp")}
           </a>
         ) : null}
         {c.emailEnabled && c.email ? (
           <a
             href={`mailto:${c.email}`}
-            aria-label={`Email ${c.name}`}
+            aria-label={`${tt("Email")} ${c.name}`}
             className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-border bg-secondary px-4 text-sm font-semibold text-foreground transition-colors hover:bg-secondary/70 sm:flex-none"
           >
             <Mail className="h-4 w-4" />
@@ -141,6 +143,7 @@ type Errors = Record<string, string>;
 
 export function Contact() {
   const { contact } = usePublicSettings();
+  const { tt } = useLanguage();
   const cards = useMemo(() => visibleContacts(contact.contacts), [contact.contacts]);
   const [submitting, setSubmitting] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
@@ -157,7 +160,7 @@ export function Contact() {
 
     // Cooldown / duplicate protection.
     if (Date.now() - lastSubmit < COOLDOWN_MS) {
-      toast.message("Please wait a moment before submitting again.");
+      toast.message(tt("Please wait a moment before submitting again."));
       return;
     }
 
@@ -177,18 +180,19 @@ export function Contact() {
     const capacity = num("parkingCapacity");
     const locations = num("numberOfLocations");
 
-    if (!fullName) next.fullName = "Please enter your full name.";
-    if (!/.+@.+\..+/.test(email)) next.email = "Please enter a valid business email.";
-    if (!phone) next.phone = "Please enter a phone or WhatsApp number.";
-    if (!facilityType) next.facilityType = "Please select a facility type.";
-    if (!message) next.message = "Please tell us about your requirement.";
-    if (!consent) next.privacyConsent = "Please accept the privacy consent to continue.";
-    if (capacity !== null && capacity < 0) next.parkingCapacity = "Capacity cannot be negative.";
-    if (locations !== null && locations < 1) next.numberOfLocations = "Must be at least 1.";
+    if (!fullName) next.fullName = tt("Please enter your full name.");
+    if (!/.+@.+\..+/.test(email)) next.email = tt("Please enter a valid business email.");
+    if (!phone) next.phone = tt("Please enter a phone or WhatsApp number.");
+    if (!facilityType) next.facilityType = tt("Please select a facility type.");
+    if (!message) next.message = tt("Please tell us about your requirement.");
+    if (!consent) next.privacyConsent = tt("Please accept the privacy consent to continue.");
+    if (capacity !== null && capacity < 0)
+      next.parkingCapacity = tt("Capacity cannot be negative.");
+    if (locations !== null && locations < 1) next.numberOfLocations = tt("Must be at least 1.");
 
     setErrors(next);
     if (Object.keys(next).length > 0) {
-      toast.error("Please correct the highlighted fields.");
+      toast.error(tt("Please correct the highlighted fields."));
       return;
     }
 
@@ -262,13 +266,15 @@ export function Contact() {
         emailOk = false;
       }
 
-      toast.success("Inquiry submitted", {
+      toast.success(tt("Inquiry submitted"), {
         description: emailOk
-          ? "Thank you. Our team will contact you shortly."
-          : "Your inquiry was saved. Email notification is temporarily unavailable, but we've received it.",
+          ? tt("Thank you. Our team will contact you shortly.")
+          : tt(
+              "Your inquiry was saved. Email notification is temporarily unavailable, but we've received it.",
+            ),
       });
     } catch (err) {
-      toast.error("Could not submit inquiry", { description: mapInquiryError(err) });
+      toast.error(tt("Could not submit inquiry"), { description: mapInquiryError(err) });
     } finally {
       setSubmitting(false);
     }
@@ -279,9 +285,9 @@ export function Contact() {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow={contact.sectionEyebrow || "Contact"}
-            title={contact.sectionHeading}
-            subtitle={contact.sectionDescription}
+            eyebrow={tt(contact.sectionEyebrow || "Contact")}
+            title={tt(contact.sectionHeading)}
+            subtitle={tt(contact.sectionDescription)}
           />
         </Reveal>
 
@@ -298,8 +304,8 @@ export function Contact() {
         <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.6fr]">
           <Reveal className="flex flex-col gap-4">
             {[
-              { icon: Mail, label: "Email", value: contact.primaryEmail },
-              { icon: Phone, label: "Phone", value: contact.primaryPhone },
+              { icon: Mail, label: tt("Email"), value: contact.primaryEmail },
+              { icon: Phone, label: tt("Phone"), value: contact.primaryPhone },
             ]
               .filter((c) => c.value)
               .map((c) => (
@@ -317,9 +323,11 @@ export function Contact() {
                 </div>
               ))}
             <div className="rounded-2xl bg-gradient-navy p-5 text-white shadow-glow">
-              <p className="text-sm font-semibold">Software + Hardware Ecosystem</p>
+              <p className="text-sm font-semibold">{tt("Software + Hardware Ecosystem")}</p>
               <p className="mt-1 text-xs text-white/70">
-                We tailor the mobile app, ANPR gates, pricing rules, and dashboard to your facility.
+                {tt(
+                  "We tailor the mobile app, ANPR gates, pricing rules, and dashboard to your facility.",
+                )}
               </p>
             </div>
           </Reveal>
@@ -328,18 +336,20 @@ export function Contact() {
             {reference ? (
               <div className="flex flex-col items-center justify-center gap-4 rounded-3xl border border-border bg-card p-8 text-center shadow-card">
                 <CheckCircle2 className="h-12 w-12 text-emerald-500" />
-                <h3 className="text-xl font-bold text-foreground">Thank you</h3>
+                <h3 className="text-xl font-bold text-foreground">{tt("Thank you")}</h3>
                 <p className="max-w-md text-sm text-muted-foreground">
-                  Your inquiry has been submitted successfully. Our team will contact you shortly.
+                  {tt(
+                    "Your inquiry has been submitted successfully. Our team will contact you shortly.",
+                  )}
                 </p>
                 <p className="rounded-xl bg-secondary px-4 py-2 text-sm font-semibold text-foreground">
-                  Inquiry Reference: <span className="font-mono">{reference}</span>
+                  {tt("Inquiry Reference")}: <span className="font-mono">{reference}</span>
                 </p>
                 <button
                   onClick={() => setReference(null)}
                   className="text-sm font-semibold text-primary underline-offset-4 hover:underline"
                 >
-                  Submit another inquiry
+                  {tt("Submit another inquiry")}
                 </button>
               </div>
             ) : (
@@ -360,25 +370,30 @@ export function Contact() {
                 />
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label="Full Name" htmlFor="fullName" required error={errors.fullName}>
+                  <Field
+                    label={tt("Full Name")}
+                    htmlFor="fullName"
+                    required
+                    error={errors.fullName}
+                  >
                     <input
                       id="fullName"
                       name="fullName"
                       className={inputCls}
-                      placeholder="Your full name"
+                      placeholder={tt("Your full name")}
                       maxLength={200}
                     />
                   </Field>
-                  <Field label="Organization" htmlFor="organization">
+                  <Field label={tt("Organization")} htmlFor="organization">
                     <input
                       id="organization"
                       name="organization"
                       className={inputCls}
-                      placeholder="Company / facility name"
+                      placeholder={tt("Company / facility name")}
                       maxLength={200}
                     />
                   </Field>
-                  <Field label="Business Email" htmlFor="email" required error={errors.email}>
+                  <Field label={tt("Business Email")} htmlFor="email" required error={errors.email}>
                     <input
                       id="email"
                       type="email"
@@ -398,7 +413,7 @@ export function Contact() {
                     />
                   </Field>
                   <Field
-                    label="Facility Type"
+                    label={tt("Facility Type")}
                     htmlFor="facilityType"
                     required
                     error={errors.facilityType}
@@ -410,17 +425,17 @@ export function Contact() {
                       defaultValue=""
                     >
                       <option value="" disabled>
-                        Select type
+                        {tt("Select type")}
                       </option>
                       {FACILITY_TYPES.map((t) => (
                         <option key={t} value={t}>
-                          {t}
+                          {tt(t)}
                         </option>
                       ))}
                     </select>
                   </Field>
                   <Field
-                    label="Estimated Parking Capacity"
+                    label={tt("Estimated Parking Capacity")}
                     htmlFor="parkingCapacity"
                     error={errors.parkingCapacity}
                   >
@@ -434,7 +449,7 @@ export function Contact() {
                     />
                   </Field>
                   <Field
-                    label="Number of Locations"
+                    label={tt("Number of Locations")}
                     htmlFor="numberOfLocations"
                     error={errors.numberOfLocations}
                   >
@@ -447,7 +462,7 @@ export function Contact() {
                       placeholder="e.g. 1"
                     />
                   </Field>
-                  <Field label="Preferred Contact Person" htmlFor="preferredContactId">
+                  <Field label={tt("Preferred Contact Person")} htmlFor="preferredContactId">
                     <select
                       id="preferredContactId"
                       name="preferredContactId"
@@ -459,10 +474,10 @@ export function Contact() {
                           {c.name} — {c.role}
                         </option>
                       ))}
-                      <option value="none">No Preference</option>
+                      <option value="none">{tt("No Preference")}</option>
                     </select>
                   </Field>
-                  <Field label="Preferred Contact Method" htmlFor="preferredContactMethod">
+                  <Field label={tt("Preferred Contact Method")} htmlFor="preferredContactMethod">
                     <select
                       id="preferredContactMethod"
                       name="preferredContactMethod"
@@ -471,12 +486,12 @@ export function Contact() {
                     >
                       {CONTACT_METHODS.map((m) => (
                         <option key={m} value={m}>
-                          {m}
+                          {tt(m)}
                         </option>
                       ))}
                     </select>
                   </Field>
-                  <Field label="Project Requirement" htmlFor="projectRequirement">
+                  <Field label={tt("Project Requirement")} htmlFor="projectRequirement">
                     <input
                       id="projectRequirement"
                       name="projectRequirement"
@@ -487,13 +502,15 @@ export function Contact() {
                   </Field>
                 </div>
 
-                <Field label="Message" htmlFor="message" required error={errors.message}>
+                <Field label={tt("Message")} htmlFor="message" required error={errors.message}>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
                     className={inputCls}
-                    placeholder="Tell us about your parking facility and what you'd like to improve."
+                    placeholder={tt(
+                      "Tell us about your parking facility and what you'd like to improve.",
+                    )}
                     maxLength={5000}
                   />
                 </Field>
@@ -505,7 +522,7 @@ export function Contact() {
                     className="mt-0.5 h-4 w-4 shrink-0 rounded border-border accent-primary"
                   />
                   <span>
-                    {contact.privacyText}
+                    {tt(contact.privacyText)}
                     {errors.privacyConsent ? (
                       <span role="alert" className="block font-medium text-red-500">
                         {errors.privacyConsent}
@@ -521,17 +538,17 @@ export function Contact() {
                   className="mt-1 w-full sm:w-auto"
                 >
                   {submitting ? (
-                    "Sending..."
+                    tt("Sending...")
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      Send Inquiry
+                      {tt("Send Inquiry")}
                     </>
                   )}
                 </CmsButton>
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                  <ShieldCheck className="h-3.5 w-3.5" /> Your details are stored securely and never
-                  shared.
+                  <ShieldCheck className="h-3.5 w-3.5" />{" "}
+                  {tt("Your details are stored securely and never shared.")}
                 </p>
               </form>
             )}

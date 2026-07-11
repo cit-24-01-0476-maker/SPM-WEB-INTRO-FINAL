@@ -14,12 +14,16 @@ import { createContext, useContext, useEffect, useRef, useState, type ReactNode 
 import {
   DEFAULT_CONTACT,
   DEFAULT_DESIGN,
+  DEFAULT_ECONOMIC,
   DEFAULT_HERO,
+  DEFAULT_LANGUAGES,
   DEFAULT_NAVIGATION,
   DEFAULT_SITE,
   type ContactSettings,
   type DesignSettings,
+  type EconomicFeasibilitySettings,
   type HeroSettings,
+  type LanguageSettings,
   type NavigationSettings,
   type SiteSettings,
 } from "./model";
@@ -32,6 +36,8 @@ interface PublicSettings {
   hero: HeroSettings;
   site: SiteSettings;
   navigation: NavigationSettings;
+  languages: LanguageSettings;
+  economicFeasibility: EconomicFeasibilitySettings;
   loaded: boolean;
 }
 
@@ -41,6 +47,8 @@ const defaults: PublicSettings = {
   hero: DEFAULT_HERO,
   site: DEFAULT_SITE,
   navigation: DEFAULT_NAVIGATION,
+  languages: DEFAULT_LANGUAGES,
+  economicFeasibility: DEFAULT_ECONOMIC,
   loaded: false,
 };
 
@@ -60,6 +68,8 @@ interface CacheShape {
   hero?: CachedEntry<HeroSettings>;
   site?: CachedEntry<SiteSettings>;
   navigation?: CachedEntry<NavigationSettings>;
+  languages?: CachedEntry<LanguageSettings>;
+  economicFeasibility?: CachedEntry<EconomicFeasibilitySettings>;
 }
 
 function readCache(): CacheShape {
@@ -92,8 +102,19 @@ export function PublicSettingsProvider({ children }: { children: ReactNode }) {
     hero: -1,
     site: -1,
     navigation: -1,
+    languages: -1,
+    economicFeasibility: -1,
   });
   const cacheRef = useRef<CacheShape>({});
+  // Track the currently-applied design so we can re-apply it when the theme
+  // toggles (dark mode must clear the CMS light-palette inline overrides).
+  const designRef = useRef<DesignSettings>(DEFAULT_DESIGN);
+
+  useEffect(() => {
+    const onThemeChange = () => applyDesign(designRef.current);
+    window.addEventListener("spm-theme-change", onThemeChange);
+    return () => window.removeEventListener("spm-theme-change", onThemeChange);
+  }, []);
 
   useEffect(() => {
     // 1) Paint last-known-good cache immediately (version -1 so any snapshot wins).
@@ -106,9 +127,14 @@ export function PublicSettingsProvider({ children }: { children: ReactNode }) {
         hero: cache.hero?.value ?? prev.hero,
         site: cache.site?.value ?? prev.site,
         navigation: cache.navigation?.value ?? prev.navigation,
+        languages: cache.languages?.value ?? prev.languages,
+        economicFeasibility: cache.economicFeasibility?.value ?? prev.economicFeasibility,
         loaded: false,
       }));
-      if (cache.design?.value) applyDesign(cache.design.value);
+      if (cache.design?.value) {
+        designRef.current = cache.design.value;
+        applyDesign(cache.design.value);
+      }
     }
 
     // 2) Subscribe to live published documents. Firestore keeps every open tab
@@ -131,7 +157,10 @@ export function PublicSettingsProvider({ children }: { children: ReactNode }) {
 
     const unsubs = [
       subscribePublicDoc<DesignSettings>("design", DEFAULT_DESIGN, (v, ver) =>
-        apply("design", v, ver, applyDesign),
+        apply("design", v, ver, (d) => {
+          designRef.current = d;
+          applyDesign(d);
+        }),
       ),
       subscribePublicDoc<ContactSettings>("contact", DEFAULT_CONTACT, (v, ver) =>
         apply("contact", v, ver),
@@ -140,6 +169,14 @@ export function PublicSettingsProvider({ children }: { children: ReactNode }) {
       subscribePublicDoc<SiteSettings>("site", DEFAULT_SITE, (v, ver) => apply("site", v, ver)),
       subscribePublicDoc<NavigationSettings>("navigation", DEFAULT_NAVIGATION, (v, ver) =>
         apply("navigation", v, ver),
+      ),
+      subscribePublicDoc<LanguageSettings>("languages", DEFAULT_LANGUAGES, (v, ver) =>
+        apply("languages", v, ver),
+      ),
+      subscribePublicDoc<EconomicFeasibilitySettings>(
+        "economicFeasibility",
+        DEFAULT_ECONOMIC,
+        (v, ver) => apply("economicFeasibility", v, ver),
       ),
     ];
 
