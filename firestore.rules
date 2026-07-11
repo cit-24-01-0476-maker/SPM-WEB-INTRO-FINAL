@@ -1,0 +1,342 @@
+rules_version = '2';
+
+// SPM ECO System — Firestore Security Rules
+//
+// Publish these in: Firebase Console → Firestore Database → Rules.
+// Do NOT use `allow read, write: if true;` for protected data.
+//
+// Architecture:
+//   publicSettings/{key}  — PUBLISHED settings, world-readable, super_admin write.
+//   adminDrafts/{key}     — DRAFT settings, admin-only read, role-gated write.
+//   admins/{uid}          — admin profile; a signed-in user reads ONLY their own.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function approvedRole(role) {
+      return role == "super_admin"
+        || role == "content_editor"
+        || role == "analytics_viewer"
+        || role == "inquiry_manager";
+    }
+
+    function hasActiveAdminProfile() {
+      return signedIn()
+        && exists(
+          /databases/$(database)/documents/admins/$(request.auth.uid)
+        )
+        && get(
+          /databases/$(database)/documents/admins/$(request.auth.uid)
+        ).data.status == "active"
+        && approvedRole(
+          get(
+            /databases/$(database)/documents/admins/$(request.auth.uid)
+          ).data.role
+        );
+    }
+
+    function adminRole() {
+      return get(
+        /databases/$(database)/documents/admins/$(request.auth.uid)
+      ).data.role;
+    }
+
+    function isSuperAdmin() {
+      return hasActiveAdminProfile()
+        && adminRole() == "super_admin";
+    }
+
+    function isContentEditor() {
+      return hasActiveAdminProfile()
+        && adminRole() == "content_editor";
+    }
+
+    function isAnalyticsViewer() {
+      return hasActiveAdminProfile()
+        && adminRole() == "analytics_viewer";
+    }
+
+    function isInquiryManager() {
+      return hasActiveAdminProfile()
+        && adminRole() == "inquiry_manager";
+    }
+
+    match /admins/{adminId} {
+      allow get: if signedIn()
+        && request.auth.uid == adminId;
+
+      allow list: if false;
+      allow create, update, delete: if false;
+    }
+
+    match /publicSettings/{settingId} {
+      allow read: if true;
+
+      allow create, update, delete:
+        if isSuperAdmin();
+    }
+
+    match /adminDrafts/{settingId} {
+      allow read:
+        if hasActiveAdminProfile();
+
+      allow create, update:
+        if isSuperAdmin()
+        || (
+          isContentEditor()
+          && settingId in [
+            "site",
+            "design",
+            "hero",
+            "contact",
+            "navigation"
+          ]
+        );
+
+      allow delete:
+        if isSuperAdmin();
+    }
+
+    match /siteSettings/{documentId} {
+      allow read, write:
+        if isSuperAdmin();
+    }
+
+    match /designSettings/{documentId} {
+      allow read, write:
+        if isSuperAdmin();
+    }
+
+    match /heroSettings/{documentId} {
+      allow read, write:
+        if isSuperAdmin();
+    }
+
+    match /contactSettings/{documentId} {
+      allow read, write:
+        if isSuperAdmin();
+    }
+
+    match /mediaAssets/{assetId} {
+      allow read: if true;
+
+      allow create, update:
+        if isSuperAdmin()
+        || isContentEditor();
+
+      allow delete:
+        if isSuperAdmin();
+    }
+
+    match /inquiries/{inquiryId} {
+      // Admins who may read / manage inquiries.
+      function canManageInquiries() {
+        return isSuperAdmin() || isInquiryManager();
+      }
+
+      // Public form submissions may only CREATE, and only with the EXACT
+      // normalized payload the public contact form sends. Admin-only fields
+      // cannot be forged and no extra keys are permitted.
+      function validPublicInquiry() {
+        let d = request.resource.data;
+
+        return d.keys().hasAll([
+            "fullName",
+            "email",
+            "phone",
+            "facilityType",
+            "preferredContactMethod",
+            "message",
+            "privacyConsent",
+            "status",
+            "priority",
+            "assignedTo",
+            "internalNotes",
+            "createdAt",
+            "updatedAt",
+            "submissionVersion"
+          ])
+
+          && d.keys().hasOnly([
+            "fullName",
+            "organization",
+            "email",
+            "phone",
+            "facilityType",
+            "parkingCapacity",
+            "numberOfLocations",
+            "preferredContactId",
+            "preferredContactName",
+            "preferredContactMethod",
+            "projectRequirement",
+            "message",
+            "privacyConsent",
+            "sourcePage",
+            "sourceUrl",
+            "referrer",
+            "status",
+            "priority",
+            "assignedTo",
+            "internalNotes",
+            "createdAt",
+            "updatedAt",
+            "submissionVersion"
+          ])
+
+          && d.fullName is string
+          && d.fullName.size() >= 2
+          && d.fullName.size() <= 100
+
+          && d.email is string
+          && d.email.size() >= 3
+          && d.email.size() <= 254
+
+          && d.phone is string
+          && d.phone.size() >= 5
+          && d.phone.size() <= 30
+
+          && d.facilityType is string
+          && d.facilityType.size() >= 2
+          && d.facilityType.size() <= 60
+
+          && d.preferredContactMethod in [
+            "whatsapp",
+            "phone",
+            "email"
+          ]
+
+          && d.message is string
+          && d.message.size() >= 2
+          && d.message.size() <= 5000
+
+          && d.privacyConsent == true
+          && d.status == "new"
+          && d.priority == "normal"
+          && d.assignedTo == null
+
+          && d.internalNotes is list
+          && d.internalNotes.size() == 0
+
+          && d.createdAt == request.time
+          && d.updatedAt == request.time
+
+          && d.submissionVersion is int
+          && d.submissionVersion == 1
+
+          && (
+            !("organization" in d)
+            || d.organization == null
+            || (
+              d.organization is string
+              && d.organization.size() <= 200
+            )
+          )
+
+          && (
+            !("parkingCapacity" in d)
+            || d.parkingCapacity == null
+            || (
+              d.parkingCapacity is int
+              && d.parkingCapacity >= 0
+              && d.parkingCapacity <= 100000
+            )
+          )
+
+          && (
+            !("numberOfLocations" in d)
+            || d.numberOfLocations == null
+            || (
+              d.numberOfLocations is int
+              && d.numberOfLocations >= 1
+              && d.numberOfLocations <= 10000
+            )
+          )
+
+          && (
+            !("preferredContactId" in d)
+            || d.preferredContactId == null
+            || (
+              d.preferredContactId is string
+              && d.preferredContactId.size() <= 100
+            )
+          )
+
+          && (
+            !("preferredContactName" in d)
+            || d.preferredContactName == null
+            || (
+              d.preferredContactName is string
+              && d.preferredContactName.size() <= 100
+            )
+          )
+
+          && (
+            !("projectRequirement" in d)
+            || d.projectRequirement == null
+            || (
+              d.projectRequirement is string
+              && d.projectRequirement.size() <= 3000
+            )
+          )
+
+          && (
+            !("sourcePage" in d)
+            || d.sourcePage == null
+            || (
+              d.sourcePage is string
+              && d.sourcePage.size() <= 300
+            )
+          )
+
+          && (
+            !("sourceUrl" in d)
+            || d.sourceUrl == null
+            || (
+              d.sourceUrl is string
+              && d.sourceUrl.size() <= 1500
+            )
+          )
+
+          && (
+            !("referrer" in d)
+            || d.referrer == null
+            || (
+              d.referrer is string
+              && d.referrer.size() <= 1500
+            )
+          );
+      }
+
+      allow create: if validPublicInquiry();
+
+      allow read, update:
+        if canManageInquiries();
+
+      allow delete:
+        if isSuperAdmin();
+    }
+
+
+    match /analytics/{document=**} {
+      allow read:
+        if isSuperAdmin()
+        || isAnalyticsViewer();
+
+      allow write: if false;
+    }
+
+    match /auditLogs/{document=**} {
+      allow read:
+        if isSuperAdmin();
+
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
