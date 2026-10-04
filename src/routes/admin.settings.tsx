@@ -10,10 +10,13 @@ import {
 import { DEFAULT_SITE, type SiteSettings } from "@/lib/cms/model";
 import { useSettingsEditor } from "@/lib/cms/useEditor";
 import { useAdminAuth } from "@/lib/admin/auth";
+import { useState } from "react";
+import { ApkReleaseEditor } from "@/components/admin/ApkReleaseEditor";
 export const Route = createFileRoute("/admin/settings")({ component: SettingsPage });
 function SettingsPage() {
   const editor = useSettingsEditor<SiteSettings>("site", DEFAULT_SITE);
   const { isSuperAdmin } = useAdminAuth();
+  const [uploadingApk, setUploadingApk] = useState(false);
   const set = (patch: Partial<SiteSettings>) => editor.setDraft((prev) => ({ ...prev, ...patch }));
   return (
     <div className="space-y-5">
@@ -32,14 +35,21 @@ function SettingsPage() {
       >
         <ActionBar
           dirty={editor.dirty}
-          saving={editor.saving}
-          publishing={editor.publishing}
+          saving={editor.saving || uploadingApk}
+          publishing={editor.publishing || uploadingApk}
           onSaveDraft={editor.saveDraft}
           onPublish={editor.publish}
           onResetPublished={editor.resetToPublished}
           onResetDefault={editor.resetToDefault}
           changedCount={editor.dirty ? 1 : 0}
           canPublish={isSuperAdmin}
+        />
+        <ApkReleaseEditor
+          value={editor.draft}
+          onChange={set}
+          canUpload={isSuperAdmin}
+          disabled={editor.saving || editor.publishing}
+          onBusyChange={setUploadingApk}
         />
         <FieldCard title="Site identity">
           <TextField

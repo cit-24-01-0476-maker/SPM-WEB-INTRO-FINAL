@@ -43,7 +43,7 @@ function normalizeKey(raw: string): string {
   return raw.includes("\\n") ? raw.replace(/\\n/g, "\n") : raw;
 }
 
-async function getAccessToken(): Promise<string> {
+export async function getAccessToken(): Promise<string> {
   const mode = driveMode();
   if (mode === "oauth") {
     const body = new URLSearchParams({
@@ -116,7 +116,7 @@ async function findOrCreateFolder(token: string, name: string, parentId: string)
 }
 
 /** Ensure SPM-ECO-Media/<categoryFolder> exists; return the category folder id. */
-async function ensureCategoryFolder(token: string, categoryFolder: string): Promise<string> {
+export async function ensureCategoryFolder(token: string, categoryFolder: string): Promise<string> {
   const rootId = process.env.GOOGLE_DRIVE_FOLDER_ID!;
   const mediaRoot = await findOrCreateFolder(token, ROOT_FOLDER_NAME, rootId);
   return findOrCreateFolder(token, categoryFolder, mediaRoot);

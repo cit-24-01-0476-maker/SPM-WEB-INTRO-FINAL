@@ -45,6 +45,7 @@ import { Route as AdminTeamRouteImport } from './routes/admin.team'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminForgotPasswordRouteImport } from './routes/admin_.forgot-password'
 import { Route as AdminLoginRouteImport } from './routes/admin_.login'
+import { Route as ApiAppUploadRouteImport } from './routes/api/app-upload'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppPageRouteImport } from './routes/app.$page'
 import { Route as ParkingAdminIndexRouteImport } from './routes/parking-admin.index'
@@ -241,6 +242,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/admin/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAppUploadRoute = ApiAppUploadRouteImport.update({
+  id: '/api/app-upload',
+  path: '/api/app-upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -349,6 +355,7 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/admin/forgot-password': typeof AdminForgotPasswordRoute
   '/admin/login': typeof AdminLoginRoute
+  '/api/app-upload': typeof ApiAppUploadRoute
   '/app/$page': typeof AppPageRoute
   '/parking-admin/$page': typeof ParkingAdminPageRoute
   '/provider/$page': typeof ProviderPageRoute
@@ -397,6 +404,7 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/admin/forgot-password': typeof AdminForgotPasswordRoute
   '/admin/login': typeof AdminLoginRoute
+  '/api/app-upload': typeof ApiAppUploadRoute
   '/app/$page': typeof AppPageRoute
   '/parking-admin/$page': typeof ParkingAdminPageRoute
   '/provider/$page': typeof ProviderPageRoute
@@ -450,6 +458,7 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/admin_/forgot-password': typeof AdminForgotPasswordRoute
   '/admin_/login': typeof AdminLoginRoute
+  '/api/app-upload': typeof ApiAppUploadRoute
   '/app/$page': typeof AppPageRoute
   '/parking-admin/$page': typeof ParkingAdminPageRoute
   '/provider/$page': typeof ProviderPageRoute
@@ -504,6 +513,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/forgot-password'
     | '/admin/login'
+    | '/api/app-upload'
     | '/app/$page'
     | '/parking-admin/$page'
     | '/provider/$page'
@@ -552,6 +562,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/forgot-password'
     | '/admin/login'
+    | '/api/app-upload'
     | '/app/$page'
     | '/parking-admin/$page'
     | '/provider/$page'
@@ -604,6 +615,7 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin_/forgot-password'
     | '/admin_/login'
+    | '/api/app-upload'
     | '/app/$page'
     | '/parking-admin/$page'
     | '/provider/$page'
@@ -635,6 +647,7 @@ export interface RootRouteChildren {
   TechnologyRoute: typeof TechnologyRoute
   AdminForgotPasswordRoute: typeof AdminForgotPasswordRoute
   AdminLoginRoute: typeof AdminLoginRoute
+  ApiAppUploadRoute: typeof ApiAppUploadRoute
   ApiMediaDriveUploadRoute: typeof ApiMediaDriveUploadRoute
   ApiPublicContactNotifyRoute: typeof ApiPublicContactNotifyRoute
   ApiPublicTrackRoute: typeof ApiPublicTrackRoute
@@ -895,6 +908,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/app-upload': {
+      id: '/api/app-upload'
+      path: '/api/app-upload'
+      fullPath: '/api/app-upload'
+      preLoaderRoute: typeof ApiAppUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/app/': {
       id: '/app/'
       path: '/'
@@ -1112,6 +1132,7 @@ const rootRouteChildren: RootRouteChildren = {
   TechnologyRoute: TechnologyRoute,
   AdminForgotPasswordRoute: AdminForgotPasswordRoute,
   AdminLoginRoute: AdminLoginRoute,
+  ApiAppUploadRoute: ApiAppUploadRoute,
   ApiMediaDriveUploadRoute: ApiMediaDriveUploadRoute,
   ApiPublicContactNotifyRoute: ApiPublicContactNotifyRoute,
   ApiPublicTrackRoute: ApiPublicTrackRoute,

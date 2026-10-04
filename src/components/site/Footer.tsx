@@ -13,6 +13,7 @@ const LINKS = [
   { label: "Technology", to: "/technology" },
   { label: "Dashboard", to: "/dashboard" },
   { label: "Contact", to: "/contact" },
+  { label: "Get the app", to: "/" },
 ] as const;
 
 export function Footer() {
@@ -58,9 +59,10 @@ export function Footer() {
             <p className="text-sm font-semibold text-white">{tt("Explore")}</p>
             <ul className="mt-4 grid grid-cols-2 gap-2">
               {links.map((l) => (
-                <li key={l.to}>
+                <li key={l.label}>
                   <Link
                     to={l.to}
+                    hash={l.label === "Get the app" ? "download-app" : undefined}
                     className="text-sm text-white/60 transition-colors hover:text-cyan"
                   >
                     {tt(l.label)}

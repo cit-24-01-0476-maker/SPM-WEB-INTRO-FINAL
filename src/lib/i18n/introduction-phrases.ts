@@ -1,4 +1,5 @@
 export const INTRODUCTION_PHRASES: Record<string, string> = {
+  "Get the app": "App එක ලබාගන්න",
   Technology: "තාක්ෂණය",
   "Driver mobile app": "Driver mobile app",
   "Discovery, booking and receipts": "සෙවීම, booking සහ receipts",

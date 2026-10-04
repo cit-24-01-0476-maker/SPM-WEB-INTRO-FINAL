@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
+import { AppDownload } from "@/components/site/AppDownload";
 import { Hero } from "@/components/site/Hero";
 import { UseCases } from "@/components/site/UseCases";
 import {
@@ -18,7 +19,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Discover SPM ECO, a smart parking ecosystem for Sri Lanka: Flutter driver app, web administration, booking, navigation, QR/ANPR architecture and transparent AI baselines.",
+          "Meet the SPM ECO Android smart parking app for Sri Lanka. Find parking, book slots and navigate inside the mobile app. Download the APK here when released.",
       },
       {
         property: "og:title",
@@ -39,6 +40,7 @@ function Index() {
   return (
     <>
       <Hero />
+      <AppDownload />
       <EcosystemOverview />
       <SriLankaSection />
       <ParkingJourney />

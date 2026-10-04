@@ -1,17 +1,10 @@
-import {
-  ArrowRight,
-  CalendarCheck,
-  MapPin,
-  QrCode,
-  BarChart3,
-  Navigation,
-  Play,
-} from "lucide-react";
+import { CalendarCheck, MapPin, QrCode, BarChart3, Navigation, Play } from "lucide-react";
 import { HeroMotion } from "./HeroMotion";
 import { Container } from "./primitives";
 import { ParkingPhoto } from "./ParkingPhoto";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { AppDownloadButton } from "./AppDownload";
 import { DEFAULT_HERO } from "@/lib/cms/model";
 
 const CAPABILITIES = [
@@ -34,18 +27,6 @@ export function Hero() {
   )
     ? DEFAULT_HERO.eyebrow
     : hero.eyebrow;
-  const supporting =
-    hero.supporting.startsWith("SPM ECO System connects real-time parking availability,") ||
-    hero.supporting ===
-      "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO."
-      ? DEFAULT_HERO.supporting
-      : hero.supporting;
-  const primaryLabel = ["Request a System Demo", "Explore Live Demo"].includes(hero.primaryCtaLabel)
-    ? DEFAULT_HERO.primaryCtaLabel
-    : hero.primaryCtaLabel;
-  const primaryLink = ["Request a System Demo", "Explore Live Demo"].includes(hero.primaryCtaLabel)
-    ? DEFAULT_HERO.primaryCtaLink
-    : hero.primaryCtaLink;
   const secondaryLabel = ["Explore the Platform", "Find Parking"].includes(hero.secondaryCtaLabel)
     ? DEFAULT_HERO.secondaryCtaLabel
     : hero.secondaryCtaLabel;
@@ -88,25 +69,18 @@ export function Hero() {
               )}
             </h1>
             <p className="eco-hero-description">
-              {supporting !== DEFAULT_HERO.supporting
-                ? tt(supporting)
-                : lang === "si"
-                  ? "ශ්‍රී ලංකාව සඳහා සම්බන්ධිත parking ecosystem එකක්: driver app, reservations, නිශ්චිත ඉඩට navigation, web administration සහ හේතු පැහැදිලි කරන intelligence හඳුනාගන්න."
-                  : DEFAULT_HERO.supporting}
+              {lang === "si"
+                ? "SPM ECO app එකෙන් ළඟම parking සොයන්න, ඔබේ slot එක book කරන්න සහ ඔබේ parking ඉඩට navigate කරන්න. Android APK එක මෙතැනින් බාගන්න පුළුවන්—booking කරන්නේ mobile app එක තුළින්."
+                : "Find nearby parking, book your slot and navigate to your space with the SPM ECO mobile app. Get the Android APK here when released—parking bookings happen inside the app."}
             </p>
             <div className="eco-actions">
-              <a className="eco-button" href={primaryLink}>
-                {tt(primaryLabel)}
-                <ArrowRight size={18} />
-              </a>
+              <AppDownloadButton />
               <a className="eco-button eco-button-outline" href={secondaryLink}>
                 <Navigation size={17} />
                 {tt(secondaryLabel)}
               </a>
             </div>
-            <p className="eco-hero-note">
-              {tt(trust)}
-            </p>
+            <p className="eco-hero-note">{tt(trust)}</p>
             <button
               className="spm-replay-intro"
               onClick={() => window.dispatchEvent(new Event("spm:replay-intro"))}

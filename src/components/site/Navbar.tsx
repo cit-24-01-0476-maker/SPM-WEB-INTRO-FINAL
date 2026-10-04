@@ -55,7 +55,11 @@ export function Navbar() {
     to === "/" ? pathname === "/" : to.startsWith("/") && pathname.startsWith(to);
 
   const items = (navigation.items ?? []).filter(
-    (i) => i.enabled && !["/roi-calculator", "/app", "/app/demo", "/provider"].includes(i.to.split(/[?#]/)[0].replace(/\/$/, "")),
+    (i) =>
+      i.enabled &&
+      !["/roi-calculator", "/app", "/app/demo", "/provider"].includes(
+        i.to.split(/[?#]/)[0].replace(/\/$/, ""),
+      ),
   );
   if (!items.some((i) => i.to === "/technology"))
     items.splice(Math.min(4, items.length), 0, {
@@ -63,6 +67,18 @@ export function Navbar() {
       label: "Technology",
       shortLabel: "Technology",
       to: "/technology",
+      linkType: "internal",
+      enabled: true,
+      desktopVisible: true,
+      mobileVisible: true,
+      newTab: false,
+    });
+  if (!items.some((item) => item.to === "/#download-app"))
+    items.push({
+      id: "android-app",
+      label: "Get the app",
+      shortLabel: "Get the app",
+      to: "/#download-app",
       linkType: "internal",
       enabled: true,
       desktopVisible: true,

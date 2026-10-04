@@ -899,6 +899,11 @@ export const DEFAULT_HERO: HeroSettings = {
  * ------------------------------------------------------------------ */
 
 export interface SiteSettings {
+  apkUrl: string;
+  apkVersion: string;
+  apkFileName: string;
+  apkFileSize: number;
+  apkDownloadEnabled: boolean;
   siteName: string;
   siteTagline: string;
   logoUrl: string;
@@ -908,6 +913,11 @@ export interface SiteSettings {
 }
 
 export const DEFAULT_SITE: SiteSettings = {
+  apkUrl: "",
+  apkVersion: "",
+  apkFileName: "",
+  apkFileSize: 0,
+  apkDownloadEnabled: false,
   siteName: "SPM ECO System",
   siteTagline: "Smart Parking Management",
   logoUrl: "",
