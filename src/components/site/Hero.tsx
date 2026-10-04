@@ -105,8 +105,6 @@ export function Hero() {
               </a>
             </div>
             <p className="eco-hero-note">
-              <a href="/app/demo">{tt("Try the browser demo")} →</a>
-              <br />
               {tt(trust)}
             </p>
             <button

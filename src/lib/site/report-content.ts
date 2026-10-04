@@ -22,8 +22,8 @@ export const LOCAL_CONTEXT = [
   {
     title: text("Clear local pricing", "පැහැදිලි දේශීය මිල ගණන්"),
     body: text(
-      "An introduction centred on LKR pricing, visible hourly tariffs and a clear final receipt. Wallet and payment validation belong to the backend; the browser demo uses simulated money, with no real payment collection.",
-      "LKR මිල ගණන්, පැයක ගාස්තු සහ පැහැදිලි අවසාන රිසිට්පතක් මත අවධානය යොමු කරයි. Wallet සහ payment validation backend එකට අයත්ය. Browser demo එකේ මුදල් simulated වන අතර සැබෑ ගෙවීම් අය නොකෙරේ.",
+      "An introduction centred on LKR pricing, visible hourly tariffs and a clear final receipt. Wallet and payment validation belong to the backend; this introduction website does not collect real payments.",
+      "LKR මිල ගණන්, පැයක ගාස්තු සහ පැහැදිලි අවසාන රිසිට්පතක් මත අවධානය යොමු කරයි. Wallet සහ payment validation backend එකට අයත්ය. මෙම introduction website එකෙන් සැබෑ ගෙවීම් අය නොකෙරේ.",
     ),
   },
   {
@@ -322,17 +322,11 @@ export const FAQ = [
   {
     title: text("Is this already a nationwide parking service?", "මෙය දැනට දිවයින පුරා සේවාවක්ද?"),
     body: text(
-      "This website introduces the SPM ecosystem and offers a browser demonstration. The report describes the broader Flutter/backend project and a production deployment target. It does not establish a nationwide live rollout or confirmed facility partnerships.",
-      "මෙම website එක SPM ecosystem එක හඳුන්වා browser demo එකක් ලබාදෙයි. වාර්තාවේ Flutter/backend ව්‍යාපෘතිය සහ production deployment target විස්තර වේ. දිවයින පුරා live rollout හෝ facility partnerships තහවුරු නොකරයි.",
+      "This website introduces the SPM ecosystem. The report describes the broader Flutter/backend project and a production deployment target. It does not establish a nationwide live rollout or confirmed facility partnerships.",
+      "මෙම website එක SPM ecosystem එක හඳුන්වා දෙයි. වාර්තාවේ Flutter/backend ව්‍යාපෘතිය සහ production deployment target විස්තර වේ. දිවයින පුරා live rollout හෝ facility partnerships තහවුරු නොකරයි.",
     ),
   },
-  {
-    title: text("Is the browser demo the Flutter app?", "Browser demo එක Flutter app එකද?"),
-    body: text(
-      "They are separate. The browser demo illustrates the parking journey with simulated payment and verification. The technical report describes a driver-only Flutter application connected to an Express/PostgreSQL backend; this introduction website does not claim that connection is live here.",
-      "දෙක වෙනස්ය. Browser demo එක simulated payment සහ verification සමඟ parking journey පෙන්වයි. වාර්තාවේ Express/PostgreSQL backend එකට සම්බන්ධ Flutter app එක විස්තර වේ. ඒ සම්බන්ධතාව මෙහි live බව සඳහන් නොකරයි.",
-    ),
-  },
+
   {
     title: text("Are the AI models trained?", "AI models train කර තිබේද?"),
     body: text(
@@ -340,21 +334,15 @@ export const FAQ = [
       "ලබාදුන් audit එකේ baseline systems 10ක්, ML-ready vision pipelines 2ක් සහ real trained models 0ක් ඇත. Rules, utility scores, lexicons හෝ database aggregation භාවිතා කරයි. Measured ML accuracy සඳහන් නොකරයි.",
     ),
   },
-  {
-    title: text("Can I pay real money in the web demo?", "Web demo එකෙන් සැබෑ ගෙවීම් කළ හැකිද?"),
-    body: text(
-      "The web demo uses simulated wallet balances and top-ups. The report's full-system design validates financial operations on the backend. A real Sri Lankan payment integration needs its own implementation and verification.",
-      "Web demo එක simulated wallet balances සහ top-ups භාවිතා කරයි. Full-system සැලැස්ම financial operations backend එකෙන් validate කරයි. සැබෑ දේශීය payment integration වෙනම implement සහ verify කළ යුතුය.",
-    ),
-  },
+
   {
     title: text(
       "Does indoor navigation track my exact physical position?",
       "Indoor navigation මගේ නිශ්චිත physical position පෙන්වනවාද?",
     ),
     body: text(
-      "Mapped shortest-path guidance and precise indoor positioning are different capabilities. The documented graph describes routes, floors and bays. The browser demo controls internal positioning; reliable live indoor positioning needs separate hardware or positioning integration and field tests.",
-      "Mapped shortest-path guidance සහ precise indoor positioning වෙනස් හැකියාවන්ය. Graph එක routes, මහල් සහ ඉඩ විස්තර කරයි. Browser demo එකේ internal positioning controlled වේ. Live positioning සඳහා වෙනම integration සහ field tests අවශ්‍යය.",
+      "Mapped shortest-path guidance and precise indoor positioning are different capabilities. The documented graph describes routes, floors and bays. reliable live indoor positioning needs separate hardware or positioning integration and field tests.",
+      "Mapped shortest-path guidance සහ precise indoor positioning වෙනස් හැකියාවන්ය. Graph එක routes, මහල් සහ ඉඩ විස්තර කරයි. Live positioning සඳහා වෙනම integration සහ field tests අවශ්‍යය.",
     ),
   },
   {

@@ -13,8 +13,6 @@ const LINKS = [
   { label: "Technology", to: "/technology" },
   { label: "Dashboard", to: "/dashboard" },
   { label: "Contact", to: "/contact" },
-  { label: "Driver App", to: "/app" },
-  { label: "Provider Portal", to: "/provider" },
 ] as const;
 
 export function Footer() {

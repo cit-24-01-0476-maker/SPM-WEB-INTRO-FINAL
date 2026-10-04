@@ -27,7 +27,7 @@ export function About() {
             />
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               {tt(
-                "The technical report documents working deterministic baselines and ML-ready vision pipelines, with a path toward real model training and facility pilots. This introduction website includes a separate browser demo to make the parking journey easy to explore.",
+                "The technical report documents working deterministic baselines and ML-ready vision pipelines, with a path toward real model training and facility pilots.",
               )}
             </p>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">

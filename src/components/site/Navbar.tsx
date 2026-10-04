@@ -56,20 +56,8 @@ export function Navbar() {
     to === "/" ? pathname === "/" : to.startsWith("/") && pathname.startsWith(to);
 
   const items = (navigation.items ?? []).filter(
-    (i) => i.enabled && i.to.split(/[?#]/)[0].replace(/\/$/, "") !== "/roi-calculator",
+    (i) => i.enabled && !["/roi-calculator", "/app", "/app/demo", "/provider"].includes(i.to.split(/[?#]/)[0].replace(/\/$/, "")),
   );
-  if (!items.some((i) => i.to === "/app/demo"))
-    items.push({
-      id: "parking-demo",
-      label: lang === "si" ? "සජීවී නිදර්ශනය" : "Live Demo",
-      shortLabel: lang === "si" ? "නිදර්ශනය" : "Demo",
-      to: "/app/demo",
-      linkType: "internal",
-      enabled: true,
-      desktopVisible: true,
-      mobileVisible: true,
-      newTab: false,
-    });
   if (!items.some((i) => i.to === "/technology"))
     items.splice(Math.min(4, items.length), 0, {
       id: "technology-introduction",

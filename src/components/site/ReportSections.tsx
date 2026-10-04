@@ -164,8 +164,8 @@ export function ReportCapabilities() {
             eyebrow={c("Platform capabilities", "Platform හැකියාවන්")}
             title={c("The complete parking ecosystem.", "සම්පූර්ණ parking ecosystem එක.")}
             subtitle={c(
-              "The documented Flutter, Admin Web and backend project, explained feature by feature. Try the separate browser demo to explore the journey.",
-              "වාර්තාවේ Flutter, Admin Web සහ backend ව්‍යාපෘතියේ එක් එක් feature ගැන විස්තර. Journey එක බලන්න වෙනම browser demo එක භාවිතා කරන්න.",
+              "The documented Flutter, Admin Web and backend project, explained feature by feature.",
+              "වාර්තාවේ Flutter, Admin Web සහ backend ව්‍යාපෘතියේ එක් එක් feature ගැන විස්තර.",
             )}
           />
         </Reveal>
@@ -185,8 +185,8 @@ export function OperatorOverview() {
             eyebrow={c("Admin & operator web", "Admin සහ operator web")}
             title={c("A clearer picture of every facility.", "සෑම facility එකකම පැහැදිලි දැක්මක්.")}
             subtitle={c(
-              "The documented Admin Web manages operational records, navigation maps, tariffs and reports through role-protected backend services. Below it, the browser preview shows the separate demonstration dataset.",
-              "වාර්තාවේ Admin Web එක role-protected backend services හරහා records, maps, ගාස්තු සහ reports කළමනාකරණය කරයි. පහත browser preview එක වෙනම demo dataset එක පෙන්වයි.",
+              "The documented Admin Web manages operational records, navigation maps, tariffs and reports through role-protected backend services.",
+              "වාර්තාවේ Admin Web එක role-protected backend services හරහා records, maps, ගාස්තු සහ reports කළමනාකරණය කරයි.",
             )}
           />
         </Reveal>
@@ -231,18 +231,6 @@ export function ReportWorkflow() {
             </Reveal>
           ))}
         </ol>
-        <div className="mt-10 text-center">
-          <a href="/app/demo" className="eco-button">
-            {c("Try the browser demonstration", "Browser demonstration එක බලන්න")}
-            <ArrowRight size={17} />
-          </a>
-          <p className="mt-3 text-xs text-muted-foreground">
-            {c(
-              "Simulated payments and verification. Separate from the report's Flutter/backend deployment.",
-              "Simulated payments සහ verification. වාර්තාවේ Flutter/backend deployment එකෙන් වෙනම demo එකකි.",
-            )}
-          </p>
-        </div>
       </Container>
     </section>
   );
@@ -503,8 +491,8 @@ export function ArchitectureSection() {
             </h3>
             <p className="mt-3 text-sm leading-7 text-muted-foreground">
               {c(
-                "This site uses React, TypeScript and TanStack Start, with Firebase/Firestore for its website CMS. Its browser parking demo uses a separate simulated dataset. The Flutter, Express and PostgreSQL architecture above is the ecosystem described in the supplied report.",
-                "මෙම site එක React, TypeScript සහ TanStack Start භාවිතා කරයි. Website CMS සඳහා Firebase/Firestore ඇත. Browser parking demo එක වෙනම simulated dataset එකකි. ඉහත Flutter/Express/PostgreSQL architecture ලබාදුන් වාර්තාවේ ecosystem එක විස්තර කරයි.",
+                "This site uses React, TypeScript and TanStack Start, with Firebase/Firestore for its website CMS. The Flutter, Express and PostgreSQL architecture above is the ecosystem described in the supplied report.",
+                "මෙම site එක React, TypeScript සහ TanStack Start භාවිතා කරයි. Website CMS සඳහා Firebase/Firestore ඇත. ඉහත Flutter/Express/PostgreSQL architecture ලබාදුන් වාර්තාවේ ecosystem එක විස්තර කරයි.",
               )}
             </p>
           </div>

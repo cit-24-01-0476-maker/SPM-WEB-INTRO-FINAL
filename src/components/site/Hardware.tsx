@@ -27,12 +27,9 @@ export function Hardware() {
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               {lang === "si"
-                ? "Gate image එක concept illustration එකකි. මෙම browser demo එක ANPR/QR verification simulate කරයි; physical gate equipment පාලනය නොකරයි."
-                : "Gate imagery is a concept illustration. The separate browser demo simulates ANPR/QR verification and does not control physical gate equipment."}
+                ? "Gate image එක concept illustration එකකි. සැබෑ facility එකකට cameras සහ physical gate equipment integration පරීක්ෂා කළ යුතුය."
+                : "Gate imagery is a concept illustration. Camera and physical gate equipment integration require testing at a real facility."}
             </p>
-            <a href="/app/demo" className="eco-button mt-6">
-              {tt("Try the verification demo")} →
-            </a>
           </div>
         </div>
       </Container>
