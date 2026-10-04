@@ -150,6 +150,12 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         </span>
       )}
       <div className="spm-intro-video-shade" aria-hidden="true" />
+      <div className="spm-intro-impact" aria-hidden="true">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="none">
+          <path d="M160 0L410 230L350 290L500 470M840 0L590 230L650 290L500 470" />
+        </svg>
+        <span />
+      </div>
       <div className="spm-intro-brand">
         <span className="spm-intro-aura" aria-hidden="true" />
         <svg className="spm-intro-ring" viewBox="0 0 240 240" fill="none" aria-hidden="true">
