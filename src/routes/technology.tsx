@@ -6,7 +6,6 @@ import {
   ProjectReadiness,
   ReportSecurity,
 } from "@/components/site/ReportSections";
-import { ParkingCta } from "@/components/site/ParkingCta";
 import { Container } from "@/components/site/primitives";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
@@ -50,7 +49,6 @@ function TechnologyPage() {
       <AIStatus />
       <ReportSecurity />
       <ProjectReadiness />
-      <ParkingCta />
     </div>
   );
 }

@@ -10,7 +10,6 @@ import {
 } from "@/components/site/ReportSections";
 import { About } from "@/components/site/About";
 import { ParkingJourney } from "@/components/site/ParkingJourney";
-import { ParkingCta } from "@/components/site/ParkingCta";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -47,7 +46,6 @@ function Index() {
       <UseCases />
       <About />
       <ProjectFAQ />
-      <ParkingCta />
     </>
   );
 }

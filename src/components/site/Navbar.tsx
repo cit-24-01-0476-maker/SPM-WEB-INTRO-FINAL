@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ArrowRight } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import { CmsButton } from "./CmsButton";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
@@ -80,12 +79,6 @@ export function Navbar() {
   const logoText = navigation.logoText || site.siteName || "SPM ECO System";
   const logoSubtitle = navigation.logoSubtitle || "Smart Parking";
 
-  // Localize the Request Demo CTA: custom labels are respected, but the default
-  // English label is translated for Sinhala visitors via the UI dictionary.
-  const ctaText =
-    lang === "en" || !navigation.ctaLabel || navigation.ctaLabel === "Request Demo"
-      ? t("nav.requestDemo")
-      : navigation.ctaLabel;
   const showHeaderSwitcher = switcherEnabled && langConfig.showInHeader;
   const showMobileSwitcher = switcherEnabled && langConfig.showInMobileMenu;
 
@@ -180,18 +173,6 @@ export function Navbar() {
             {showHeaderSwitcher ? (
               <LanguageSwitcher variant="dropdown" className="hidden sm:block" />
             ) : null}
-            {navigation.ctaEnabled ? (
-              <CmsButton
-                variant="primary"
-                href={safeNavHref(navigation.ctaLink)}
-                target={navigation.ctaNewTab ? "_blank" : undefined}
-                rel={navigation.ctaNewTab ? "noopener noreferrer" : undefined}
-                className="hidden min-h-[44px] shrink-0 whitespace-nowrap text-sm font-bold uppercase tracking-wider sm:inline-flex"
-              >
-                {ctaText}
-                <ArrowRight size={17} />
-              </CmsButton>
-            ) : null}
             <button
               onClick={() => setOpen((v) => !v)}
               className="grid h-10 w-10 place-items-center rounded-xl border border-border bg-card text-foreground transition-colors hover:bg-secondary xl:hidden"
@@ -242,15 +223,6 @@ export function Navbar() {
                 </a>
               );
             })}
-            {navigation.ctaEnabled ? (
-              <a
-                href={safeNavHref(navigation.ctaLink)}
-                {...(navigation.ctaNewTab ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                className="mt-1 flex min-h-[48px] items-center justify-center rounded-xl bg-navy px-5 py-2.5 text-center text-sm font-bold uppercase tracking-wider text-white shadow-glow"
-              >
-                {ctaText}
-              </a>
-            ) : null}
             {showMobileSwitcher ? (
               <div className="mt-2 border-t border-border/50 pt-2">
                 <p className="px-3 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">

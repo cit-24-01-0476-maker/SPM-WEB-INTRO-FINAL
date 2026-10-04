@@ -5,7 +5,6 @@ import {
   ReportWorkflow,
   ReportSecurity,
 } from "@/components/site/ReportSections";
-import { ParkingCta } from "@/components/site/ParkingCta";
 
 export const Route = createFileRoute("/solution")({
   head: () => ({
@@ -34,7 +33,6 @@ function SolutionPage() {
       <EcosystemOverview />
       <ReportWorkflow />
       <ReportSecurity />
-      <ParkingCta />
     </div>
   );
 }
