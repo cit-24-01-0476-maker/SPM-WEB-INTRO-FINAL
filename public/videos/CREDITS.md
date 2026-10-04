@@ -1,4 +1,4 @@
-Current FPV intro: first 4 seconds of the video supplied by the user.
+Current FPV intro: first 3.20 seconds of the video supplied by the user.
 Source file: YTDown.com_YouTube_FPV-Drone-Car-Chase-Through-Rainforest-P_Media_16KzBjgMk54_001_1080p.mp4
 Website versions: silent 1920 × 1080 H.264 and VP8 WebM, plus a 1280 × 720 WebM for mobile playback. Original playback speed is retained.
 
