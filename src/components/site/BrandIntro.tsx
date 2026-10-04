@@ -3,7 +3,7 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-drone-v3";
+const INTRO_KEY = "spm-welcome-drone-v4";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
@@ -71,7 +71,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     if (!visible || phase === "scene") return;
     const timer = window.setTimeout(
       () => (phase === "brand" ? setPhase("exit") : setVisible(false)),
-      phase === "brand" ? 2700 : 700,
+      phase === "brand" ? 2100 : 700,
     );
     return () => window.clearTimeout(timer);
   }, [visible, phase, run]);
@@ -92,14 +92,18 @@ export function BrandIntro({ pathname }: { pathname: string }) {
       </button>
       <video
         className="spm-intro-real-video"
-        autoPlay
         muted
         playsInline
         preload="auto"
+        poster="/videos/spm-drone-poster.jpg"
         aria-hidden="true"
+        onCanPlayThrough={(event) => {
+          // Buffer enough footage before starting the reveal sequence.
+          void event.currentTarget.play().catch(() => setVisible(false));
+        }}
         onPlaying={() => setPlaying(true)}
         onTimeUpdate={(event) => {
-          if (event.currentTarget.currentTime >= 6.65 && phase === "scene") setPhase("brand");
+          if (event.currentTarget.currentTime >= 5.8 && phase === "scene") setPhase("brand");
         }}
         onEnded={() => {
           if (phase === "scene") setPhase("brand");
@@ -109,9 +113,14 @@ export function BrandIntro({ pathname }: { pathname: string }) {
           setVisible(false);
         }}
       >
-        <source src="/videos/spm-drone-intro.webm" type="video/webm" />
-        <source src="/videos/spm-drone-intro.mp4" type="video/mp4" />
+        <source src="/videos/spm-drone-smooth.webm" type="video/webm" />
+        <source src="/videos/spm-drone-smooth.mp4" type="video/mp4" />
       </video>
+      {!playing && (
+        <span className="spm-intro-loading" role="status">
+          {lang === "si" ? "ඔබේ ගමන සූදානම් කරමින්…" : "Preparing your journey…"}
+        </span>
+      )}
       <div className="spm-intro-video-shade" aria-hidden="true" />
       <div className="spm-intro-brand">
         <span className="spm-intro-aura" aria-hidden="true" />

@@ -191,6 +191,20 @@
 .spm-drone-intro.is-playing {
   animation: none !important;
 }
+.spm-drone-intro .spm-intro-real-video {
+  transform: translateZ(0);
+}
+.spm-intro-loading {
+  position: absolute;
+  bottom: 40px;
+  z-index: 2;
+  color: #fff;
+  font-size: 13px;
+  text-shadow: 0 2px 8px #06182c;
+}
+.spm-drone-intro[data-phase="scene"] .spm-motion-logo * {
+  animation-play-state: paused;
+}
 .spm-drone-intro .spm-intro-brand {
   animation: none !important;
   opacity: 0;
@@ -276,7 +290,7 @@
   margin-top: 25px;
 }
 .spm-drone-intro.is-playing .spm-intro-progress span {
-  animation-duration: 10.05s;
+  animation-duration: 8.6s;
 }
 .spm-drone-intro[data-phase="exit"] {
   animation: spm-drone-curtain 0.7s cubic-bezier(0.76, 0, 0.24, 1) both !important;
@@ -657,6 +671,12 @@
 body.spm-intro-running .spm-public-site .eco-hero-copy > *,
 body.spm-intro-running .spm-public-site .eco-hero-art {
   animation-play-state: paused;
+}
+body.spm-intro-running .spm-public-site > :not(.spm-brand-intro),
+body.spm-intro-running .spm-public-site > :not(.spm-brand-intro) *,
+body.spm-intro-running .spm-public-site > :not(.spm-brand-intro) *::before,
+body.spm-intro-running .spm-public-site > :not(.spm-brand-intro) *::after {
+  animation-play-state: paused !important;
 }
 .spm-public-site .eco-visual-route i {
   position: relative;
