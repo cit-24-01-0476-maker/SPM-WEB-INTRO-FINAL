@@ -17,7 +17,7 @@ import { BrandIntro } from "@/components/site/BrandIntro";
 import { MotionEffects } from "@/components/site/MotionEffects";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
-import { PublicSettingsProvider } from "@/lib/cms/PublicSettings";
+import { PublicSettingsProvider, usePublicSettings } from "@/lib/cms/PublicSettings";
 import { LanguageProvider } from "@/lib/i18n/LanguageProvider";
 import { ThemeProvider } from "@/lib/use-theme";
 import { Toaster } from "@/components/ui/sonner";
@@ -213,7 +213,7 @@ function RootComponent() {
                 {product ? (
                   <Outlet />
                 ) : (
-                  <>
+                  <PublishedSiteFrame>
                     <BrandIntro pathname={pathname} />
                     <MotionEffects pathname={pathname} />
                     <Navbar />
@@ -223,7 +223,7 @@ function RootComponent() {
                     </main>
                     <Footer />
                     <WhatsAppButton />
-                  </>
+                  </PublishedSiteFrame>
                 )}
               </div>
             </LanguageProvider>
@@ -233,4 +233,33 @@ function RootComponent() {
       </ThemeProvider>
     </QueryClientProvider>
   );
+}
+
+function PublishedSiteFrame({ children }: { children: React.ReactNode }) {
+  const { site } = usePublicSettings();
+  useEffect(() => {
+    const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
+    if (!icon) return;
+    let href = "/spm-icon.svg?v=1";
+    try {
+      const candidate = new URL(site.faviconUrl, window.location.origin);
+      if (site.faviconUrl && ["http:", "https:"].includes(candidate.protocol))
+        href = candidate.href;
+    } catch {
+      /* keep the application icon */
+    }
+    icon.href = href;
+  }, [site.faviconUrl]);
+  if (site.maintenanceMode)
+    return (
+      <main className="grid min-h-screen place-items-center px-6 text-center">
+        <div>
+          <h1 className="text-3xl font-bold">{site.siteName}</h1>
+          <p className="mt-4 text-muted-foreground">
+            We are making a few updates. Please check back soon.
+          </p>
+        </div>
+      </main>
+    );
+  return <>{children}</>;
 }

@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { requireFirebaseAdmin } from "@/lib/admin/admin-guard";
 import type { VerifiedRole } from "@/lib/firebase/verify.server";
+import { assertReadAccess, assertScopedMutation } from "./data-policy";
 
 // ---------------------------------------------------------------------------
 // Secure admin data gateway.
@@ -35,7 +36,6 @@ const WRITE_ROLES: Record<string, VerifiedRole[]> = {
   contact_submissions: ["super_admin", "inquiry_manager"],
   inquiry_notes: ["super_admin", "inquiry_manager"],
   website_settings: ["super_admin"],
-  user_roles: ["super_admin"],
   audit_logs: ["super_admin", "content_editor", "analytics_viewer", "inquiry_manager"],
 };
 
@@ -71,8 +71,9 @@ export type WriteSpec =
 export const adminRead = createServerFn({ method: "POST" })
   .middleware([requireFirebaseAdmin])
   .inputValidator((spec: ReadSpec) => spec)
-  .handler(async ({ data }) => {
+  .handler(async ({ data, context }) => {
     if (!READ_TABLES.includes(data.table)) throw new Error(`Read not allowed for ${data.table}`);
+    assertReadAccess(data.table, context.admin.role);
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     let query = supabaseAdmin
@@ -95,9 +96,12 @@ export const adminWrite = createServerFn({ method: "POST" })
   .middleware([requireFirebaseAdmin])
   .inputValidator((spec: WriteSpec) => spec)
   .handler(async ({ data, context }) => {
-    const allowed = WRITE_ROLES[data.table];
+    const allowed = Object.hasOwn(WRITE_ROLES, data.table) ? WRITE_ROLES[data.table] : undefined;
     if (!allowed) throw new Error(`Writes not allowed for ${data.table}`);
     if (!allowed.includes(context.admin.role)) throw new Error("Forbidden: insufficient role");
+    assertScopedMutation(data.op, "eq" in data ? data.eq : undefined);
+    if (data.table === "audit_logs" && data.op !== "insert")
+      throw new Error("Audit records are append-only");
 
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     // Table name is validated against WRITE_ROLES above; cast to a loose handle

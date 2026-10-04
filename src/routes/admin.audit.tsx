@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ScrollText } from "lucide-react";
@@ -32,7 +33,7 @@ const ACTION_STYLES: Record<string, string> = {
 };
 
 function AuditPage() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["audit-logs"],
     queryFn: async () => {
       const { data } = await dbRead<Log[]>({
@@ -44,6 +45,8 @@ function AuditPage() {
       return (data ?? []) as Log[];
     },
   });
+
+  if (isError) return <DataError onRetry={() => void refetch()} />;
 
   return (
     <div className="space-y-6">

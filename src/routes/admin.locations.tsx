@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { useMemo, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
@@ -29,7 +30,7 @@ function flag(cc: string) {
 function LocationsPage() {
   const [device, setDevice] = useState("all");
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["locations"],
     queryFn: async () => {
       const { data } = await dbRead<AnalyticsSession[]>({
@@ -76,6 +77,8 @@ function LocationsPage() {
   }, [sessions]);
 
   const maxCountry = Math.max(1, ...countries.map((c) => c.sessions));
+
+  if (isError) return <DataError onRetry={() => void refetch()} />;
 
   return (
     <div className="space-y-6">

@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Eye, Users, MousePointerClick, Timer, TrendingUp, BarChart3 } from "lucide-react";
@@ -38,7 +39,7 @@ const FUNNEL_STEPS: { key: string; label: string }[] = [
 
 function AnalyticsPage() {
   const [range, setRange] = useState<RangeKey>("7d");
-  const { data, isLoading } = useAnalytics(range);
+  const { data, isLoading, isError, refetch } = useAnalytics(range);
 
   const events = data?.events ?? [];
   const sessions = data?.sessions ?? [];
@@ -75,6 +76,8 @@ function AnalyticsPage() {
     return { ...step, count };
   });
   const funnelMax = Math.max(1, ...funnel.map((f) => f.count));
+
+  if (isError) return <DataError onRetry={() => void refetch()} />;
 
   return (
     <div className="space-y-6">

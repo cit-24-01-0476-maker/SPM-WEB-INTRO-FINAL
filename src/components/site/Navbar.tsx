@@ -76,6 +76,7 @@ export function Navbar() {
   const linkTarget = (item: NavItem) =>
     item.newTab ? { target: "_blank", rel: "noopener noreferrer" as const } : {};
 
+  const logoUrl = navigation.logoUrl || site.logoUrl;
   const logoText = navigation.logoText || site.siteName || "SPM ECO System";
   const logoSubtitle = navigation.logoSubtitle || "Smart Parking";
 
@@ -114,16 +115,16 @@ export function Navbar() {
         >
           {/* Logo lockup */}
           <a href="/" className="group flex shrink-0 items-center gap-2.5">
-            {navigation.logoUrl ? (
+            {logoUrl ? (
               <img
-                src={navigation.logoUrl}
+                src={logoUrl}
                 alt={logoText}
                 className="h-9 w-auto max-w-[160px] object-contain"
               />
             ) : (
               <MotionLogo compact />
             )}
-            {!navigation.logoUrl ? (
+            {!logoUrl ? (
               <span className="eco-brand" title={`${logoText} — ${logoSubtitle}`}>
                 SPM ECO
               </span>

@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
@@ -27,6 +28,7 @@ import { INQUIRY_STATUSES, INQUIRY_STATUS_LABELS } from "@/lib/admin/roles";
 import type { InquiryStatus } from "@/lib/admin/roles";
 import {
   subscribeInquiries,
+  appendInquiryNote,
   updateInquiry,
   deleteInquiry,
   type InquiryRecord,
@@ -65,6 +67,8 @@ function InquiriesPage() {
   const contactPeople = useMemo(() => visibleContacts(contact.contacts), [contact.contacts]);
 
   const [rows, setRows] = useState<InquiryRecord[] | null>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
@@ -75,6 +79,8 @@ function InquiriesPage() {
   const seenCount = useRef<number | null>(null);
 
   useEffect(() => {
+    setLoadFailed(false);
+    setRows(null);
     const unsub = subscribeInquiries(
       (data) => {
         setRows(data);
@@ -85,12 +91,12 @@ function InquiriesPage() {
         seenCount.current = data.length;
       },
       () => {
-        setRows([]);
+        setLoadFailed(true);
         toast.error("Could not load inquiries. Verify your admin role and security rules.");
       },
     );
     return () => unsub();
-  }, []);
+  }, [retry]);
 
   // Keep the open drawer in sync with live updates.
   useEffect(() => {
@@ -165,15 +171,10 @@ function InquiriesPage() {
   async function addNote(rec: InquiryRecord) {
     if (!canManage || !note.trim()) return;
     try {
-      await updateInquiry(rec.id, {
-        internalNotes: [
-          ...rec.internalNotes,
-          {
-            text: note.trim(),
-            by: user?.email ?? user?.uid ?? "admin",
-            at: new Date().toISOString(),
-          },
-        ],
+      await appendInquiryNote(rec.id, {
+        text: note.trim(),
+        by: user?.email ?? user?.uid ?? "admin",
+        at: new Date().toISOString(),
       });
       setNote("");
       toast.success("Note added");
@@ -244,6 +245,8 @@ function InquiriesPage() {
   }
 
   const isLoading = rows === null;
+
+  if (loadFailed) return <DataError onRetry={() => setRetry((value) => value + 1)} />;
 
   return (
     <div className="space-y-6">

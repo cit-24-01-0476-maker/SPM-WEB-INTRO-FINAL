@@ -1,7 +1,7 @@
 // Shared premium admin editor primitives for the CMS Design Studio, Hero CMS
 // and Contact settings. Fully responsive; controls never clip or overflow.
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import {
   AlertTriangle,
   Check,
@@ -90,19 +90,21 @@ export function ActionBar({
       <div className="ml-auto flex flex-wrap items-center gap-2">
         <button
           onClick={onResetPublished}
+          disabled={saving || publishing}
           className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-secondary"
         >
           <Undo2 className="h-3.5 w-3.5" /> Restore Published
         </button>
         <button
           onClick={onResetDefault}
+          disabled={saving || publishing}
           className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground transition-colors hover:bg-secondary"
         >
           <RotateCcw className="h-3.5 w-3.5" /> Reset Default
         </button>
         <button
           onClick={onSaveDraft}
-          disabled={saving || !dirty}
+          disabled={saving || publishing || !dirty}
           className="inline-flex items-center gap-1.5 rounded-lg bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/70 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Save className="h-3.5 w-3.5" /> {saving ? "Saving…" : "Save Draft"}
@@ -110,7 +112,7 @@ export function ActionBar({
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <button
-              disabled={!canPublish || publishing}
+              disabled={!canPublish || saving || publishing}
               className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-primary px-4 py-2 text-xs font-semibold text-white shadow-glow transition-all hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-50"
             >
               <UploadCloud className="h-3.5 w-3.5" /> {publishing ? "Publishing…" : "Publish"}
@@ -337,12 +339,9 @@ export function ColorField({
 }) {
   const [text, setText] = useState(value);
   // keep local text in sync when value changes externally
-  if (
-    text.toLowerCase() !== value.toLowerCase() &&
-    document.activeElement?.getAttribute("data-color") !== label
-  ) {
-    // no-op guard; controlled below
-  }
+  useEffect(() => {
+    setText(value);
+  }, [value]);
   const rating = contrastAgainst ? contrastRating(contrastRatio(value, contrastAgainst)) : null;
   return (
     <div className="flex items-center gap-2">
@@ -468,6 +467,23 @@ export function SettingsGate({
           className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-primary px-4 py-2 text-xs font-semibold text-white shadow-glow transition-all hover:brightness-110"
         >
           <RefreshCw className="h-3.5 w-3.5" /> Retry
+        </button>
+      </CenteredState>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <CenteredState
+        icon={AlertTriangle}
+        title="Settings could not be loaded"
+        description="Check your connection and retry. Editing is paused so defaults cannot overwrite your saved settings."
+      >
+        <button
+          onClick={onRetry}
+          className="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground"
+        >
+          Retry
         </button>
       </CenteredState>
     );

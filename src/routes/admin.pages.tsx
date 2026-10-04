@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -124,7 +125,7 @@ function PagesPage() {
         op: "insert",
         table: "pages",
         values: {
-          slug: `new-page-${n}`,
+          slug: `new-page-${crypto.randomUUID().slice(0, 8)}`,
           title: `New Page ${n}`,
           status: "draft",
           display_order: n,
@@ -148,7 +149,7 @@ function PagesPage() {
         op: "insert",
         table: "pages",
         values: {
-          slug: `${page.slug}-copy`,
+          slug: `${page.slug}-copy-${crypto.randomUUID().slice(0, 8)}`,
           title: `${page.title} (Copy)`,
           status: "draft",
           display_order: (pages.data?.length ?? 0) + 1,
@@ -183,6 +184,7 @@ function PagesPage() {
       setActiveId(id);
       toast.success("Page duplicated");
     },
+    onError: (e) => toast.error("Could not duplicate page", { description: (e as Error).message }),
   });
 
   const deletePage = useMutation({
@@ -194,7 +196,10 @@ function PagesPage() {
       setActiveId(null);
       toast.success("Page deleted");
     },
+    onError: (e) => toast.error("Could not delete page", { description: (e as Error).message }),
   });
+
+  if (pages.isError) return <DataError onRetry={() => void pages.refetch()} />;
 
   return (
     <div className="space-y-6">
@@ -257,6 +262,7 @@ function PagesPage() {
 
         {activeId ? (
           <PageEditor
+            key={activeId}
             page={pages.data?.find((p) => p.id === activeId)}
             userId={user?.uid ?? null}
             onDuplicate={(p) => duplicatePage.mutate(p)}
@@ -368,7 +374,11 @@ function PageEditor({
     const newIndex = sections.findIndex((s) => s.id === over.id);
     const next = arrayMove(sections, oldIndex, newIndex);
     setSections(next);
-    void persistOrder(next);
+    void persistOrder(next).catch(() => {
+      setSections(sectionsQuery.data ?? []);
+      void sectionsQuery.refetch();
+      toast.error("Order could not be saved. Reloaded the saved order.");
+    });
   }
 
   const addSection = useMutation({
@@ -389,8 +399,10 @@ function PageEditor({
       qc.invalidateQueries({ queryKey: ["sections", page?.id] });
       toast.success("Section added");
     },
+    onError: (e) => toast.error("Could not add section", { description: (e as Error).message }),
   });
 
+  if (sectionsQuery.isError) return <DataError onRetry={() => void sectionsQuery.refetch()} />;
   if (!meta) return null;
 
   return (
@@ -544,29 +556,41 @@ function SortableSection({
   };
 
   async function toggleVisible() {
-    await dbWrite({
-      op: "update",
-      table: "sections",
-      values: { is_visible: !section.is_visible },
-      eq: [["id", section.id]],
-    });
-    onChanged();
+    try {
+      await dbWrite({
+        op: "update",
+        table: "sections",
+        values: { is_visible: !section.is_visible },
+        eq: [["id", section.id]],
+      });
+      onChanged();
+    } catch (error) {
+      toast.error("Section change failed", { description: (error as Error).message });
+    }
   }
   async function remove() {
-    await dbWrite({ op: "delete", table: "sections", eq: [["id", section.id]] });
-    qc.invalidateQueries({ queryKey: ["sections", pageId] });
-    toast.success("Section removed");
+    try {
+      await dbWrite({ op: "delete", table: "sections", eq: [["id", section.id]] });
+      qc.invalidateQueries({ queryKey: ["sections", pageId] });
+      toast.success("Section removed");
+    } catch (error) {
+      toast.error("Section change failed", { description: (error as Error).message });
+    }
   }
   async function saveContent() {
-    await dbWrite({
-      op: "update",
-      table: "sections",
-      values: { content: { heading, text } },
-      eq: [["id", section.id]],
-    });
-    onChanged();
-    setOpen(false);
-    toast.success("Section updated");
+    try {
+      await dbWrite({
+        op: "update",
+        table: "sections",
+        values: { content: { heading, text } },
+        eq: [["id", section.id]],
+      });
+      onChanged();
+      setOpen(false);
+      toast.success("Section updated");
+    } catch (error) {
+      toast.error("Section change failed", { description: (error as Error).message });
+    }
   }
 
   return (

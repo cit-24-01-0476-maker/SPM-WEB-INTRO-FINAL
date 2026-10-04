@@ -29,7 +29,6 @@ import {
   Calculator,
   ChevronLeft,
   LogOut,
-  Bell,
   ExternalLink,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -198,6 +197,7 @@ function initials(name?: string | null, email?: string | null) {
 export function AdminShell({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const { profile, user, roles, hasAnyRole, signOut } = useAdminAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -206,15 +206,20 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
   const visibleGroups = NAV.map((g) => ({
     ...g,
-    items: g.items.filter((i) => !i.planned && (!i.roles || hasAnyRole(i.roles))),
+    items: g.items.filter(
+      (i) =>
+        !i.planned &&
+        (!i.roles || hasAnyRole(i.roles)) &&
+        (!search.trim() ||
+          `${g.label} ${i.label}`.toLowerCase().includes(search.trim().toLowerCase())),
+    ),
   })).filter((g) => g.items.length > 0);
 
   const isActive = (to: string) =>
     to === "/admin/dashboard"
       ? pathname === "/admin/dashboard" || pathname === "/admin"
       : pathname.startsWith(to);
-  const currentLabel =
-    visibleGroups.flatMap((g) => g.items).find((i) => isActive(i.to))?.label ?? "Admin";
+  const currentLabel = NAV.flatMap((g) => g.items).find((i) => isActive(i.to))?.label ?? "Admin";
 
   async function handleSignOut() {
     await signOut();
@@ -241,6 +246,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
       </div>
 
       <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4">
+        {visibleGroups.length === 0 && (
+          <p className="px-2 text-xs text-white/60">No matching sections.</p>
+        )}
         {visibleGroups.map((group) => (
           <div key={group.label}>
             {!collapsed && (
@@ -341,16 +349,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
               <input
                 type="search"
                 placeholder="Search admin…"
+                aria-label="Search admin sections"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
                 className="h-9 w-56 rounded-lg border border-border bg-background pl-9 pr-3 text-sm outline-none focus:ring-2 focus:ring-primary/20"
               />
             </div>
-            <button
-              className="relative grid h-9 w-9 place-items-center rounded-lg text-muted-foreground hover:bg-secondary"
-              aria-label="Notifications"
-            >
-              <Bell className="h-5 w-5" />
-              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-primary" />
-            </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -376,9 +380,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   </p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link to="/admin/settings">Settings</Link>
-                </DropdownMenuItem>
+                {hasAnyRole(["super_admin"]) && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/admin/settings">Settings</Link>
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuItem
                   onClick={handleSignOut}
                   className="text-red-600 focus:text-red-600"

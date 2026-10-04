@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { subscribeInquiries, type InquiryRecord } from "@/lib/cms/inquiries";
+import { DataError } from "@/components/admin/DataError";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -44,6 +47,7 @@ function DashboardPage() {
   const analytics = useQuery({
     queryKey: ["dash-analytics"],
     enabled: canAnalytics,
+    refetchInterval: 30_000,
     queryFn: async () => {
       const [events, sessions] = await Promise.all([
         dbRead<{ event_name: string; page_path: string | null; created_at: string }[]>({
@@ -70,34 +74,40 @@ function DashboardPage() {
     },
   });
 
-  const inquiries = useQuery({
-    queryKey: ["dash-inquiries"],
-    enabled: canInquiries,
-    queryFn: async () => {
-      const list = await dbRead<
-        {
-          id: string;
-          name: string;
-          organization: string | null;
-          email: string;
-          status: string;
-          created_at: string;
-        }[]
-      >({
-        table: "contact_submissions",
-        select: "id, name, organization, email, status, created_at",
-        order: { column: "created_at", ascending: false },
-        limit: 6,
-      });
-      const c = await dbRead({
-        table: "contact_submissions",
-        select: "id",
-        eq: [["status", "new"]],
-        headCount: true,
-      });
-      return { recent: list.data ?? [], newCount: c.count ?? 0 };
+  const [inquiryRows, setInquiryRows] = useState<InquiryRecord[]>([]);
+  const [inquiryError, setInquiryError] = useState(false);
+  const [inquiryLoading, setInquiryLoading] = useState(true);
+  const [inquiryRetry, setInquiryRetry] = useState(0);
+  useEffect(() => {
+    if (!canInquiries) return;
+    setInquiryLoading(true);
+    setInquiryError(false);
+    return subscribeInquiries(
+      (rows) => {
+        setInquiryRows(rows);
+        setInquiryLoading(false);
+      },
+      () => {
+        setInquiryError(true);
+        setInquiryLoading(false);
+      },
+    );
+  }, [canInquiries, inquiryRetry]);
+  const inquiries = {
+    data: {
+      newCount: inquiryRows.filter((row) => row.status === "new").length,
+      recent: inquiryRows
+        .slice(0, 6)
+        .map((row) => ({
+          id: row.id,
+          name: row.fullName,
+          organization: row.organization,
+          email: row.email,
+          status: row.status,
+          created_at: row.createdAt,
+        })),
     },
-  });
+  };
 
   const ev = analytics.data?.events ?? [];
   const sess = analytics.data?.sessions ?? [];
@@ -142,38 +152,94 @@ function DashboardPage() {
         description="A live overview of your SPM ECO System marketing website."
       />
 
+      {analytics.isError && <DataError onRetry={() => void analytics.refetch()} />}
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard
           label="Total Page Views"
-          value={pageViews.length.toLocaleString()}
+          value={
+            !canAnalytics || analytics.isError
+              ? "—"
+              : analytics.isLoading
+                ? "…"
+                : pageViews.length.toLocaleString()
+          }
           icon={Eye}
           tone="primary"
         />
-        <StatCard label="Unique Visitors" value={sess.length.toLocaleString()} icon={Users} />
+        <StatCard
+          label="Unique Visitors"
+          value={
+            !canAnalytics || analytics.isError
+              ? "—"
+              : analytics.isLoading
+                ? "…"
+                : sess.length.toLocaleString()
+          }
+          icon={Users}
+        />
         <StatCard
           label="Live Visitors"
-          value={liveVisitors}
+          value={
+            !canAnalytics || analytics.isError ? "—" : analytics.isLoading ? "…" : liveVisitors
+          }
           icon={Radio}
           tone="success"
           hint="Active in the last 5 minutes"
         />
         <StatCard
           label="New Inquiries"
-          value={inquiries.data?.newCount ?? 0}
+          value={
+            !canInquiries || inquiryError ? "—" : inquiryLoading ? "…" : inquiries.data.newCount
+          }
           icon={Inbox}
           tone="warning"
         />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Views Today" value={viewsToday.toLocaleString()} />
-        <StatCard label="Views This Week" value={viewsWeek.toLocaleString()} />
-        <StatCard label="Views This Month" value={viewsMonth.toLocaleString()} />
+        <StatCard
+          label="Views Today"
+          value={
+            !canAnalytics || analytics.isError
+              ? "—"
+              : analytics.isLoading
+                ? "…"
+                : viewsToday.toLocaleString()
+          }
+        />
+        <StatCard
+          label="Views This Week"
+          value={
+            !canAnalytics || analytics.isError
+              ? "—"
+              : analytics.isLoading
+                ? "…"
+                : viewsWeek.toLocaleString()
+          }
+        />
+        <StatCard
+          label="Views This Month"
+          value={
+            !canAnalytics || analytics.isError
+              ? "—"
+              : analytics.isLoading
+                ? "…"
+                : viewsMonth.toLocaleString()
+          }
+        />
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         <AdminCard title="Traffic — last 7 days" className="lg:col-span-2">
-          {pageViews.length === 0 ? (
+          {!canAnalytics ? (
+            <p className="text-sm text-muted-foreground">
+              Your role does not include analytics access.
+            </p>
+          ) : analytics.isLoading ? (
+            <p>Loading traffic…</p>
+          ) : analytics.isError ? (
+            <DataError onRetry={() => void analytics.refetch()} />
+          ) : pageViews.length === 0 ? (
             <EmptyState
               icon={Activity}
               title="No traffic data yet"
@@ -182,7 +248,7 @@ function DashboardPage() {
           ) : (
             <div className="flex h-48 items-end gap-3">
               {days.map((d) => (
-                <div key={d.label} className="flex flex-1 flex-col items-center gap-2">
+                <div key={d.label} className="flex h-full flex-1 flex-col items-center gap-2">
                   <div className="flex w-full flex-1 items-end">
                     <div
                       className="w-full rounded-t-lg bg-gradient-primary transition-all"
@@ -241,6 +307,10 @@ function DashboardPage() {
               title="No access"
               description="You don't have permission to view inquiries."
             />
+          ) : inquiryError ? (
+            <DataError onRetry={() => setInquiryRetry((v) => v + 1)} />
+          ) : inquiryLoading ? (
+            <p>Loading inquiries…</p>
           ) : (inquiries.data?.recent.length ?? 0) === 0 ? (
             <EmptyState
               icon={Inbox}
@@ -260,7 +330,7 @@ function DashboardPage() {
                   <div className="flex items-center gap-3">
                     <StatusBadge status={r.status as InquiryStatus} />
                     <span className="hidden text-xs text-muted-foreground sm:block">
-                      {new Date(r.created_at).toLocaleDateString()}
+                      {r.created_at ? new Date(r.created_at).toLocaleDateString() : "—"}
                     </span>
                   </div>
                 </li>
@@ -271,14 +341,36 @@ function DashboardPage() {
 
         <AdminCard title="System status">
           <ul className="space-y-3 text-sm">
-            <StatusLine label="Website" ok />
-            <StatusLine label="Database & Cloud backend" ok />
-            <StatusLine label="Analytics ingestion" ok />
-            <StatusLine label="Contact form" ok />
+            <StatusLine label="Administrator session" status="Connected" />
+            <StatusLine
+              label="Analytics data"
+              status={
+                !canAnalytics
+                  ? "No access"
+                  : analytics.isError
+                    ? "Unavailable"
+                    : analytics.isLoading
+                      ? "Checking"
+                      : "Connected"
+              }
+            />
+            <StatusLine
+              label="Inquiry data"
+              status={
+                !canInquiries
+                  ? "No access"
+                  : inquiryError
+                    ? "Unavailable"
+                    : inquiryLoading
+                      ? "Checking"
+                      : "Connected"
+              }
+            />
           </ul>
           <div className="mt-4 flex items-center gap-2 rounded-xl bg-secondary/50 p-3 text-xs text-muted-foreground">
             <FileClock className="h-4 w-4" />
-            Data updates in real time as visitors interact with your website.
+            Inquiries update live. Analytics refresh every 30 seconds; figures cover the most recent
+            5,000 records.
           </div>
         </AdminCard>
       </div>
@@ -305,13 +397,17 @@ function GlanceRow({
   );
 }
 
-function StatusLine({ label, ok }: { label: string; ok: boolean }) {
+function StatusLine({ label, status }: { label: string; status: string }) {
   return (
     <li className="flex items-center justify-between">
       <span className="text-foreground">{label}</span>
-      <span className="flex items-center gap-1.5 text-xs font-semibold text-emerald-600 dark:text-emerald-400">
-        <span className="h-2 w-2 rounded-full bg-emerald-500" />
-        {ok ? "Operational" : "Down"}
+      <span
+        className={`flex items-center gap-1.5 text-xs font-semibold ${status === "Connected" ? "text-emerald-600" : "text-muted-foreground"}`}
+      >
+        <span
+          className={`h-2 w-2 rounded-full ${status === "Connected" ? "bg-emerald-500" : "bg-muted-foreground"}`}
+        />
+        {status}
       </span>
     </li>
   );

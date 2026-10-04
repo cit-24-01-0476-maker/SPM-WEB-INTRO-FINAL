@@ -1,3 +1,4 @@
+import { DataError } from "@/components/admin/DataError";
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -39,7 +40,7 @@ function ContentPage() {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [historyFor, setHistoryFor] = useState<Content | null>(null);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["site-content"],
     queryFn: async () => {
       const { data } = await dbRead<Content[]>({
@@ -110,6 +111,8 @@ function ContentPage() {
       });
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["site-content"] }),
+    onError: (e) =>
+      toast.error("Publish status could not be changed", { description: (e as Error).message }),
   });
 
   const del = useMutation({
@@ -123,6 +126,8 @@ function ContentPage() {
     },
     onError: (e) => toast.error("Delete failed", { description: (e as Error).message }),
   });
+
+  if (isError) return <DataError onRetry={() => void refetch()} />;
 
   return (
     <div className="space-y-6">
@@ -351,7 +356,7 @@ function EditDrawer({
 }
 
 function HistoryDrawer({ content, onClose }: { content: Content; onClose: () => void }) {
-  const { data } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["content-versions", content.id],
     queryFn: async () => {
       const { data } = await dbRead<{ id: string; snapshot: unknown; created_at: string }[]>({
@@ -378,7 +383,11 @@ function HistoryDrawer({ content, onClose }: { content: Content; onClose: () => 
           </button>
         </div>
         <div className="space-y-3 p-5">
-          {(data ?? []).length === 0 ? (
+          {isError ? (
+            <DataError onRetry={() => void refetch()} />
+          ) : isLoading ? (
+            <p>Loading version history…</p>
+          ) : (data ?? []).length === 0 ? (
             <EmptyState
               icon={History}
               title="No previous versions"

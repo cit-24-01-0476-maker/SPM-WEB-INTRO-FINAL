@@ -8,6 +8,7 @@
 
 import {
   addDoc,
+  arrayUnion,
   collection,
   deleteDoc,
   doc,
@@ -234,4 +235,14 @@ export async function updateInquiry(
 
 export async function deleteInquiry(id: string): Promise<void> {
   await deleteDoc(doc(firestore, "inquiries", id));
+}
+
+export async function appendInquiryNote(
+  id: string,
+  note: InquiryRecord["internalNotes"][number],
+): Promise<void> {
+  await updateDoc(doc(firestore, "inquiries", id), {
+    internalNotes: arrayUnion(note),
+    updatedAt: serverTimestamp(),
+  });
 }

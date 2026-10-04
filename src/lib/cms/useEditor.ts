@@ -133,7 +133,10 @@ export function useSettingsEditor<T>(key: SettingsKey, defaults: T): EditorState
       // Notify any open public/admin tabs so they refresh without a reload.
       broadcastPublish(key, version);
       toast.success(`Version ${version} published and synchronized with the public website`);
-      await reload();
+      // Refresh metadata without replacing edits typed while the publish was in flight.
+      const result = await readEditorDoc(key, defaults);
+      setMeta(result.meta);
+      setInitialized(result.meta.initialized);
     } catch (error) {
       const kind = classifyFirestoreError(error);
       toast.error(
@@ -144,7 +147,7 @@ export function useSettingsEditor<T>(key: SettingsKey, defaults: T): EditorState
     } finally {
       setPublishing(false);
     }
-  }, [key, draft, user, reload]);
+  }, [key, draft, user, defaults]);
 
   const initialize = useCallback(async () => {
     if (!user) {

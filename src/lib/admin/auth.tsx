@@ -3,6 +3,7 @@ import type { User } from "firebase/auth";
 import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { firebaseAuth, firestore } from "@/lib/firebase/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 export type AppRole = "super_admin" | "content_editor" | "analytics_viewer" | "inquiry_manager";
 
@@ -66,6 +67,7 @@ function toStringOrNull(v: unknown): string | null {
 }
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<AdminProfile | null>(null);
   const [authorized, setAuthorized] = useState(false);
@@ -95,6 +97,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
     const status = d.status;
     if (!isApprovedRole(role) || status !== "active") return false;
 
+    if (firebaseAuth.currentUser?.uid !== u.uid) return false;
     setProfile({
       uid: u.uid,
       full_name: (d.displayName as string) ?? u.displayName ?? null,
@@ -110,6 +113,10 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const auth = firebaseAuth;
     const unsub = onAuthStateChanged(auth, async (u) => {
+      queryClient.clear();
+      setLoading(true);
+      setProfile(null);
+      setAuthorized(false);
       setUser(u);
       if (!u) {
         setProfile(null);
@@ -119,6 +126,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       }
       try {
         const ok = await evaluate(u);
+        if (auth.currentUser?.uid !== u.uid) return;
         if (!ok) {
           // Signed-in Firebase user without a valid admin profile — sign out.
           setProfile(null);
@@ -132,11 +140,11 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
         setProfile(null);
         setAuthorized(false);
       } finally {
-        setLoading(false);
+        if (auth.currentUser?.uid === u.uid) setLoading(false);
       }
     });
     return () => unsub();
-  }, [evaluate]);
+  }, [evaluate, queryClient]);
 
   const role = profile?.role ?? null;
 
@@ -156,12 +164,18 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
         try {
           const ok = await evaluate(user);
           setAuthorized(ok);
+          if (!ok) {
+            setProfile(null);
+            await firebaseSignOut(firebaseAuth);
+          }
         } catch {
-          /* ignore */
+          setProfile(null);
+          setAuthorized(false);
         }
       }
     },
     signOut: async () => {
+      queryClient.clear();
       try {
         await firebaseSignOut(firebaseAuth);
       } catch {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { Save, Plus, Trash2, ArrowUp, ArrowDown, Copy } from "lucide-react";
@@ -18,15 +18,9 @@ import {
 import { DevicePreview } from "@/components/admin/DevicePreview";
 import { useAdminAuth } from "@/lib/admin/auth";
 import { useSettingsEditor } from "@/lib/cms/useEditor";
-import { publishDoc, readPublicDoc } from "@/lib/cms/store";
+import { Link } from "@tanstack/react-router";
 import { whatsappLink } from "@/lib/cms/PublicSettings";
-import {
-  DEFAULT_CONTACT,
-  DEFAULT_SITE,
-  type ContactPerson,
-  type ContactSettings,
-  type SiteSettings,
-} from "@/lib/cms/model";
+import { DEFAULT_CONTACT, type ContactPerson, type ContactSettings } from "@/lib/cms/model";
 
 export const Route = createFileRoute("/admin/contact-info")({
   component: ContactSettingsPage,
@@ -276,79 +270,11 @@ function ContactSettingsPage() {
 /* --- Site settings (flat doc) --------------------------------------- */
 
 function SiteSettingsCard() {
-  const { user } = useAdminAuth();
-  const [site, setSite] = useState<SiteSettings>(DEFAULT_SITE);
-  const [saving, setSaving] = useState(false);
-  const set = (patch: Partial<SiteSettings>) => setSite((s) => ({ ...s, ...patch }));
-
-  useEffect(() => {
-    let cancelled = false;
-    readPublicDoc("site", DEFAULT_SITE)
-      .then((value) => {
-        if (!cancelled) setSite(value);
-      })
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  const save = useCallback(async () => {
-    if (!user) return;
-    setSaving(true);
-    try {
-      await publishDoc("site", site, user.uid);
-      toast.success("Website settings saved");
-    } catch {
-      toast.error("Could not save website settings.");
-    } finally {
-      setSaving(false);
-    }
-  }, [site, user]);
-
   return (
-    <FieldCard title="Website settings" description="Global site identity (applies immediately).">
-      <TextField label="Site name" value={site.siteName} onChange={(v) => set({ siteName: v })} />
-      <TextField
-        label="Site tagline"
-        value={site.siteTagline}
-        onChange={(v) => set({ siteTagline: v })}
-      />
-      <TextField
-        label="Logo URL"
-        value={site.logoUrl}
-        onChange={(v) => set({ logoUrl: v })}
-        placeholder="https://…"
-      />
-      <TextField
-        label="Favicon URL"
-        value={site.faviconUrl}
-        onChange={(v) => set({ faviconUrl: v })}
-        placeholder="https://…"
-      />
-      <SelectField
-        label="Default language"
-        value={site.defaultLanguage}
-        options={[
-          { value: "en", label: "English" },
-          { value: "si", label: "Sinhala" },
-          { value: "ta", label: "Tamil" },
-        ]}
-        onChange={(v) => set({ defaultLanguage: v })}
-      />
-      <ToggleField
-        label="Maintenance mode"
-        description="Show a maintenance notice to visitors"
-        checked={site.maintenanceMode}
-        onChange={(v) => set({ maintenanceMode: v })}
-      />
-      <button
-        onClick={save}
-        disabled={saving}
-        className="inline-flex items-center gap-1.5 rounded-lg bg-secondary px-4 py-2 text-xs font-semibold text-secondary-foreground transition-colors hover:bg-secondary/70 disabled:opacity-50"
-      >
-        <Save className="h-3.5 w-3.5" /> {saving ? "Saving…" : "Save website settings"}
-      </button>
+    <FieldCard title="Website identity">
+      <Link to="/admin/settings" className="text-sm font-semibold text-primary">
+        Open Website Settings
+      </Link>
     </FieldCard>
   );
 }
