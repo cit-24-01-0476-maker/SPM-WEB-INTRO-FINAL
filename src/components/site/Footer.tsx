@@ -10,6 +10,7 @@ const LINKS = [
   { label: "Problem", to: "/problem" },
   { label: "Solution", to: "/solution" },
   { label: "Features", to: "/features" },
+  { label: "Technology", to: "/technology" },
   { label: "Dashboard", to: "/dashboard" },
   { label: "Contact", to: "/contact" },
   { label: "Driver App", to: "/app" },
@@ -35,7 +36,7 @@ export function Footer() {
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">
               {tt(
-                "Find parking, reserve a space, navigate to your exact slot and manage your parking session. One connected software prototype for drivers and parking providers in Sri Lanka.",
+                "A smart parking ecosystem for Sri Lanka, connecting driver discovery, booking and navigation with web administration, operational data and explainable intelligence.",
               )}
             </p>
             <div className="mt-5 flex flex-col gap-2 text-sm text-white/70">

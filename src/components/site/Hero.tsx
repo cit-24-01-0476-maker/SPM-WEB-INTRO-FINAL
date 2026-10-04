@@ -15,10 +15,10 @@ import { usePublicSettings } from "@/lib/cms/PublicSettings";
 import { DEFAULT_HERO } from "@/lib/cms/model";
 
 const CAPABILITIES = [
-  { icon: CalendarCheck, title: "Real-time booking", detail: "Find and reserve with ease" },
-  { icon: MapPin, title: "Custom navigation", detail: "Find your exact parking space" },
-  { icon: QrCode, title: "Demo wallet", detail: "Simple simulated payments" },
-  { icon: BarChart3, title: "Operator insights", detail: "Smarter, data-driven operations" },
+  { icon: CalendarCheck, title: "Driver mobile app", detail: "Discovery, booking and receipts" },
+  { icon: MapPin, title: "Exact-bay navigation", detail: "From the road to your space" },
+  { icon: QrCode, title: "Sinhala & Singlish", detail: "Familiar language, clear requests" },
+  { icon: BarChart3, title: "Operator intelligence", detail: "Facilities, reports and control" },
 ];
 
 export function Hero() {
@@ -29,32 +29,34 @@ export function Hero() {
     hero.headline === "Intelligent Parking. Seamless Mobility."
       ? DEFAULT_HERO.headline
       : hero.headline;
-  const eyebrow =
-    hero.eyebrow === "AI-Powered Smart Parking Ecosystem" ? DEFAULT_HERO.eyebrow : hero.eyebrow;
-  const supporting = hero.supporting.startsWith(
-    "SPM ECO System connects real-time parking availability,",
+  const eyebrow = ["AI-Powered Smart Parking Ecosystem", "SMART PARKING. BETTER CITIES."].includes(
+    hero.eyebrow,
   )
-    ? DEFAULT_HERO.supporting
-    : hero.supporting;
-  const primaryLabel =
-    hero.primaryCtaLabel === "Request a System Demo"
-      ? DEFAULT_HERO.primaryCtaLabel
-      : hero.primaryCtaLabel;
-  const primaryLink =
-    hero.primaryCtaLabel === "Request a System Demo"
-      ? DEFAULT_HERO.primaryCtaLink
-      : hero.primaryCtaLink;
-  const secondaryLabel =
-    hero.secondaryCtaLabel === "Explore the Platform"
-      ? DEFAULT_HERO.secondaryCtaLabel
-      : hero.secondaryCtaLabel;
-  const secondaryLink =
-    hero.secondaryCtaLabel === "Explore the Platform"
-      ? DEFAULT_HERO.secondaryCtaLink
-      : hero.secondaryCtaLink;
-  const trust = hero.trustStatement.startsWith("Built for modern parking facilities,")
-    ? DEFAULT_HERO.trustStatement
-    : hero.trustStatement;
+    ? DEFAULT_HERO.eyebrow
+    : hero.eyebrow;
+  const supporting =
+    hero.supporting.startsWith("SPM ECO System connects real-time parking availability,") ||
+    hero.supporting ===
+      "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO."
+      ? DEFAULT_HERO.supporting
+      : hero.supporting;
+  const primaryLabel = ["Request a System Demo", "Explore Live Demo"].includes(hero.primaryCtaLabel)
+    ? DEFAULT_HERO.primaryCtaLabel
+    : hero.primaryCtaLabel;
+  const primaryLink = ["Request a System Demo", "Explore Live Demo"].includes(hero.primaryCtaLabel)
+    ? DEFAULT_HERO.primaryCtaLink
+    : hero.primaryCtaLink;
+  const secondaryLabel = ["Explore the Platform", "Find Parking"].includes(hero.secondaryCtaLabel)
+    ? DEFAULT_HERO.secondaryCtaLabel
+    : hero.secondaryCtaLabel;
+  const secondaryLink = ["Explore the Platform", "Find Parking"].includes(hero.secondaryCtaLabel)
+    ? DEFAULT_HERO.secondaryCtaLink
+    : hero.secondaryCtaLink;
+  const trust =
+    hero.trustStatement.startsWith("Built for modern parking facilities,") ||
+    hero.trustStatement === "University prototype · Simulated payments, location and verification"
+      ? DEFAULT_HERO.trustStatement
+      : hero.trustStatement;
   return (
     <>
       <section id="home" className="eco-hero">
@@ -65,8 +67,8 @@ export function Hero() {
               {eyebrow !== DEFAULT_HERO.eyebrow
                 ? tt(eyebrow)
                 : lang === "si"
-                  ? "ස්මාර්ට් වාහන නැවැත්වීම. යහපත් නගර."
-                  : "SMART PARKING. BETTER CITIES."}
+                  ? "ශ්‍රී ලංකාව සඳහා SMART PARKING"
+                  : DEFAULT_HERO.eyebrow}
             </p>
             <h1>
               {headline !== DEFAULT_HERO.headline ? (
@@ -89,8 +91,8 @@ export function Hero() {
               {supporting !== DEFAULT_HERO.supporting
                 ? tt(supporting)
                 : lang === "si"
-                  ? "වාහන නැවැත්වීමට ඉඩ සොයන්න, ඔබේ ස්ථානය වෙන්කරගෙන SPM ECO සමඟ එතැනටම මඟ සොයාගන්න."
-                  : "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO."}
+                  ? "ශ්‍රී ලංකාව සඳහා සම්බන්ධිත parking ecosystem එකක්: driver app, reservations, නිශ්චිත ඉඩට navigation, web administration සහ හේතු පැහැදිලි කරන intelligence හඳුනාගන්න."
+                  : DEFAULT_HERO.supporting}
             </p>
             <div className="eco-actions">
               <a className="eco-button" href={primaryLink}>
@@ -103,7 +105,7 @@ export function Hero() {
               </a>
             </div>
             <p className="eco-hero-note">
-              <a href="/provider">{tt("For Parking Providers")} →</a>
+              <a href="/app/demo">{tt("Try the browser demo")} →</a>
               <br />
               {tt(trust)}
             </p>

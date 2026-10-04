@@ -22,12 +22,12 @@ export function About() {
               eyebrow={tt("About")}
               title={tt("A University Technology Challenge Competition Project")}
               subtitle={tt(
-                "SPM ECO is a smart parking software prototype developed for a University Technology Challenge Competition, connecting discovery, booking and custom parking navigation.",
+                "SPM ECO is a Sri Lankan university project exploring a complete parking ecosystem: a driver-only Flutter app, separate web administration, a shared backend and explainable intelligence.",
               )}
             />
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               {tt(
-                "The responsive driver web app, parking provider portal and parking operations dashboard share one connected demonstration dataset. ANPR and QR support entry and exit verification; precise internal positioning and payments are simulated.",
+                "The technical report documents working deterministic baselines and ML-ready vision pipelines, with a path toward real model training and facility pilots. This introduction website includes a separate browser demo to make the parking journey easy to explore.",
               )}
             </p>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">

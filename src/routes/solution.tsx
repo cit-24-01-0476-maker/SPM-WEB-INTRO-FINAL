@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import { Solution } from "@/components/site/Solution";
-import { HowItWorks } from "@/components/site/HowItWorks";
-import { ParkingJourney } from "@/components/site/ParkingJourney";
+import {
+  EcosystemOverview,
+  ReportWorkflow,
+  ReportSecurity,
+} from "@/components/site/ReportSections";
 import { ParkingCta } from "@/components/site/ParkingCta";
 
 export const Route = createFileRoute("/solution")({
@@ -29,9 +31,9 @@ function SolutionPage() {
   useScrollReveal();
   return (
     <div className="pt-20">
-      <Solution />
-      <ParkingJourney />
-      <HowItWorks />
+      <EcosystemOverview />
+      <ReportWorkflow />
+      <ReportSecurity />
       <ParkingCta />
     </div>
   );

@@ -70,6 +70,18 @@ export function Navbar() {
       mobileVisible: true,
       newTab: false,
     });
+  if (!items.some((i) => i.to === "/technology"))
+    items.splice(Math.min(4, items.length), 0, {
+      id: "technology-introduction",
+      label: "Technology",
+      shortLabel: "Technology",
+      to: "/technology",
+      linkType: "internal",
+      enabled: true,
+      desktopVisible: true,
+      mobileVisible: true,
+      newTab: false,
+    });
   const desktopItems = items.filter((i) => i.desktopVisible);
   const mobileItems = items.filter((i) => i.mobileVisible);
 

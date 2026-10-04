@@ -9,21 +9,21 @@ const STEPS = [
     icon: MapPin,
     title: "Find & reserve",
     text: "View live availability, choose your space and reserve in seconds.",
-    href: "/app/parking",
+    href: "/solution#driver-journey",
   },
   {
     scene: "gate",
     icon: Car,
     title: "Navigate & park",
     text: "Follow the route to your facility, then navigate to your exact reserved space.",
-    href: "/app/navigation",
+    href: "/features#platform-capabilities",
   },
   {
     scene: "dashboard",
     icon: BarChart3,
     title: "Manage & grow",
     text: "Monitor operations, simplify payments and make smarter decisions.",
-    href: "/provider",
+    href: "/dashboard",
   },
 ] as const;
 

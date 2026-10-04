@@ -20,6 +20,7 @@
 
 import type { LanguageCode } from "@/lib/cms/model";
 import { PARKING_PHRASES } from "./parking-phrases";
+import { INTRODUCTION_PHRASES } from "./introduction-phrases";
 
 export const PHRASES: Record<string, string> = {
   /* ---------------- Hero (status bar + CMS defaults) ---------------- */
@@ -616,6 +617,7 @@ export const PHRASES: Record<string, string> = {
 export function translatePhrase(text: string, lang: LanguageCode): string {
   if (typeof text !== "string" || text.trim() === "") return text;
   if (lang !== "si") return text;
-  const hit = PARKING_PHRASES[text.trim()] ?? PHRASES[text.trim()];
+  const hit =
+    INTRODUCTION_PHRASES[text.trim()] ?? PARKING_PHRASES[text.trim()] ?? PHRASES[text.trim()];
   return hit && hit.trim() !== "" ? hit : text;
 }

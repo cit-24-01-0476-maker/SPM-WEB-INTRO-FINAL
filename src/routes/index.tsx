@@ -1,9 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Hero } from "@/components/site/Hero";
-import { Benefits } from "@/components/site/Benefits";
 import { UseCases } from "@/components/site/UseCases";
-import { Outcomes } from "@/components/site/Outcomes";
+import {
+  EcosystemOverview,
+  SriLankaSection,
+  AIStatus,
+  ProjectFAQ,
+} from "@/components/site/ReportSections";
 import { About } from "@/components/site/About";
 import { ParkingJourney } from "@/components/site/ParkingJourney";
 import { ParkingCta } from "@/components/site/ParkingCta";
@@ -15,7 +19,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "SPM ECO helps drivers find parking, reserve a space, navigate to the exact slot and manage parking sessions. Explore the connected SLTC campus software demo.",
+          "Discover SPM ECO, a smart parking ecosystem for Sri Lanka: Flutter driver app, web administration, booking, navigation, QR/ANPR architecture and transparent AI baselines.",
       },
       {
         property: "og:title",
@@ -24,7 +28,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "A connected parking software prototype: discovery, booking, outdoor and custom parking navigation, demo wallet, sessions and provider management.",
+          "A complete introduction to SPM smart parking, local use cases, Sinhala and Singlish assistance, system architecture and the project's development status.",
       },
     ],
   }),
@@ -36,11 +40,13 @@ function Index() {
   return (
     <>
       <Hero />
+      <EcosystemOverview />
+      <SriLankaSection />
       <ParkingJourney />
-      <Benefits />
+      <AIStatus compact />
       <UseCases />
-      <Outcomes />
       <About />
+      <ProjectFAQ />
       <ParkingCta />
     </>
   );

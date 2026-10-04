@@ -1,15 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Dashboard } from "@/components/site/Dashboard";
+import { OperatorOverview } from "@/components/site/ReportSections";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Provider Dashboard Demo | SPM ECO" },
+      { title: "Admin & Operator Web | SPM ECO Sri Lanka" },
       {
         name: "description",
         content:
-          "Explore the SPM ECO provider dashboard demo: shared availability, bookings, parking sessions, revenue and configurable platform commission.",
+          "Understand SPM web administration, facility maps, bookings, tariff approval, safe AI reports and the separate interactive provider demonstration.",
       },
       { property: "og:title", content: "Provider Dashboard Demo | SPM ECO" },
       {
@@ -26,6 +27,7 @@ function DashboardPage() {
   useScrollReveal();
   return (
     <div className="pt-20">
+      <OperatorOverview />
       <Dashboard />
     </div>
   );

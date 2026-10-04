@@ -1,0 +1,292 @@
+.spm-report-card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: var(--card);
+  padding: clamp(22px, 2vw, 32px);
+  box-shadow: 0 14px 38px -32px #06182c30;
+}
+.spm-report-number {
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+.spm-report-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  color: var(--primary);
+  background: var(--secondary);
+}
+.spm-local-strip {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  padding: 18px;
+  border-block: 1px solid var(--border);
+}
+.spm-local-strip span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 650;
+}
+.spm-local-strip svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.spm-journey-list {
+  position: relative;
+  margin-inline: auto;
+  max-width: 920px;
+}
+.spm-journey-list::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: 48px;
+  left: 25px;
+  width: 1px;
+  background: var(--border);
+}
+.spm-journey-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 24px;
+  padding-bottom: 36px;
+}
+.spm-step-dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-self: start;
+  width: 52px;
+  height: 52px;
+  border: 5px solid var(--background);
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  font-size: 15px;
+  font-weight: 750;
+}
+.spm-journey-step > div {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 24px;
+  background: var(--card);
+}
+.spm-assistant-example {
+  min-width: 0;
+  padding: clamp(24px, 4vw, 44px);
+  color: white;
+  border-radius: 28px;
+  background: radial-gradient(ellipse at top right, #164477, #06182c 70%);
+  box-shadow: 0 24px 60px -32px #06182c55;
+}
+.spm-assistant-example button {
+  padding: 9px 15px;
+  border: 1px solid #ffffff30;
+  border-radius: 9px;
+  font-size: 13px;
+}
+.spm-assistant-example button.spm-example-selected {
+  background: white;
+  color: #06182c;
+}
+.spm-status-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--card);
+}
+.spm-status-summary > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 30px;
+}
+.spm-status-summary > div + div {
+  border-left: 1px solid var(--border);
+}
+.spm-status-summary strong {
+  color: var(--primary);
+  font-size: clamp(38px, 5vw, 64px);
+  line-height: 1;
+}
+.spm-status-summary span {
+  max-width: 170px;
+  font-size: 13px;
+  line-height: 1.7;
+  font-weight: 650;
+}
+.spm-model-badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #176bff0e;
+  color: #1254ca;
+  font-size: 11px;
+  font-weight: 750;
+}
+.spm-model-ready {
+  background: #a855f70f;
+  color: #7b34a6;
+}
+.spm-architecture {
+  max-width: 1040px;
+  margin-inline: auto;
+  padding: clamp(22px, 3vw, 42px);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background: var(--card);
+}
+.spm-architecture-client {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 26px 20px;
+  gap: 10px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  text-align: center;
+}
+.spm-architecture-client svg {
+  color: var(--primary);
+}
+.spm-architecture-client p,
+.spm-architecture-backend p,
+.spm-architecture-database p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.spm-architecture-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 0;
+  color: var(--muted-foreground);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+.spm-architecture-backend,
+.spm-architecture-database {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  border-radius: 18px;
+  padding: 28px;
+  background: #06182c;
+  color: white;
+}
+.spm-architecture-backend svg,
+.spm-architecture-database svg {
+  color: #19c6f4;
+  flex-shrink: 0;
+}
+.spm-architecture-backend strong,
+.spm-architecture-database strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 20px;
+}
+.spm-architecture-backend p,
+.spm-architecture-database p {
+  color: #ffffffb3;
+}
+.spm-architecture-database {
+  background: #0b2d57;
+}
+.spm-report-faq {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--card);
+  padding: 20px 24px;
+}
+.spm-report-faq summary {
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.8;
+}
+.spm-report-faq p {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--muted-foreground);
+}
+.spm-chapter-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.spm-chapter-nav a {
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: var(--card);
+  font-size: 13px;
+  font-weight: 650;
+}
+.spm-chapter-nav a:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+.spm-report-faq summary:focus-visible,
+.spm-chapter-nav a:focus-visible,
+.spm-assistant-example button:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 5px;
+}
+@media (max-width: 767px) {
+  .spm-status-summary {
+    grid-template-columns: 1fr;
+  }
+  .spm-status-summary > div {
+    justify-content: flex-start;
+    padding: 22px 28px;
+  }
+  .spm-status-summary > div + div {
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+  .spm-status-summary strong {
+    width: 64px;
+  }
+  .spm-status-summary span {
+    max-width: none;
+  }
+  .spm-journey-step {
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 12px;
+  }
+  .spm-step-dot {
+    width: 42px;
+    height: 42px;
+  }
+  .spm-journey-list::before {
+    left: 20px;
+  }
+  .spm-journey-step > div {
+    padding: 20px;
+  }
+  .spm-architecture-backend,
+  .spm-architecture-database {
+    padding: 24px 20px;
+    gap: 14px;
+  }
+}

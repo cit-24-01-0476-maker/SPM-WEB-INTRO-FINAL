@@ -22,7 +22,7 @@ const CASES = [
   {
     icon: Store,
     title: "Retail Chain Parking",
-    body: "Protects customer parking with overstay detection across every branch.",
+    body: "Could help operators distinguish customer stays and manage parking across branches.",
   },
   {
     icon: ShoppingBag,
@@ -37,7 +37,7 @@ const CASES = [
   {
     icon: Hospital,
     title: "Hospital Parking",
-    body: "Prioritizes emergency and staff access while managing visitor flow.",
+    body: "A potential setting for visitor guidance, clearly mapped bays and operator oversight.",
   },
   {
     icon: GraduationCap,
@@ -57,7 +57,7 @@ const CASES = [
   {
     icon: MapPin,
     title: "Public Parking Area",
-    body: "Brings real-time availability and cashless payment to public lots.",
+    body: "A potential pilot setting for clear availability, pricing and navigation.",
   },
   {
     icon: Network,
@@ -73,7 +73,7 @@ export function UseCases() {
       <Container>
         <Reveal>
           <SectionHeading
-            eyebrow={tt("Use Cases")}
+            eyebrow={tt("Potential use cases")}
             title={tt("Where SPM ECO System Can Be Used")}
             subtitle={tt("One adaptable platform for every kind of parking facility in Sri Lanka.")}
           />

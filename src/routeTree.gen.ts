@@ -19,6 +19,7 @@ import { Route as ParkingAdminRouteImport } from './routes/parking-admin'
 import { Route as ProblemRouteImport } from './routes/problem'
 import { Route as ProviderRouteImport } from './routes/provider'
 import { Route as SolutionRouteImport } from './routes/solution'
+import { Route as TechnologyRouteImport } from './routes/technology'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
@@ -107,6 +108,11 @@ const ProviderRoute = ProviderRouteImport.update({
 const SolutionRoute = SolutionRouteImport.update({
   id: '/solution',
   path: '/solution',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TechnologyRoute = TechnologyRouteImport.update({
+  id: '/technology',
+  path: '/technology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -318,6 +324,7 @@ export interface FileRoutesByFullPath {
   '/problem': typeof ProblemRoute
   '/provider': typeof ProviderRouteWithChildren
   '/solution': typeof SolutionRoute
+  '/technology': typeof TechnologyRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/backup': typeof AdminBackupRoute
@@ -365,6 +372,7 @@ export interface FileRoutesByTo {
   '/features': typeof FeaturesRoute
   '/problem': typeof ProblemRoute
   '/solution': typeof SolutionRoute
+  '/technology': typeof TechnologyRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/backup': typeof AdminBackupRoute
@@ -417,6 +425,7 @@ export interface FileRoutesById {
   '/problem': typeof ProblemRoute
   '/provider': typeof ProviderRouteWithChildren
   '/solution': typeof SolutionRoute
+  '/technology': typeof TechnologyRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/backup': typeof AdminBackupRoute
@@ -470,6 +479,7 @@ export interface FileRouteTypes {
     | '/problem'
     | '/provider'
     | '/solution'
+    | '/technology'
     | '/admin/analytics'
     | '/admin/audit'
     | '/admin/backup'
@@ -517,6 +527,7 @@ export interface FileRouteTypes {
     | '/features'
     | '/problem'
     | '/solution'
+    | '/technology'
     | '/admin/analytics'
     | '/admin/audit'
     | '/admin/backup'
@@ -568,6 +579,7 @@ export interface FileRouteTypes {
     | '/problem'
     | '/provider'
     | '/solution'
+    | '/technology'
     | '/admin/analytics'
     | '/admin/audit'
     | '/admin/backup'
@@ -620,6 +632,7 @@ export interface RootRouteChildren {
   ProblemRoute: typeof ProblemRoute
   ProviderRoute: typeof ProviderRouteWithChildren
   SolutionRoute: typeof SolutionRoute
+  TechnologyRoute: typeof TechnologyRoute
   AdminForgotPasswordRoute: typeof AdminForgotPasswordRoute
   AdminLoginRoute: typeof AdminLoginRoute
   ApiMediaDriveUploadRoute: typeof ApiMediaDriveUploadRoute
@@ -698,6 +711,13 @@ declare module '@tanstack/react-router' {
       path: '/solution'
       fullPath: '/solution'
       preLoaderRoute: typeof SolutionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/technology': {
+      id: '/technology'
+      path: '/technology'
+      fullPath: '/technology'
+      preLoaderRoute: typeof TechnologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -1089,6 +1109,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProblemRoute: ProblemRoute,
   ProviderRoute: ProviderRouteWithChildren,
   SolutionRoute: SolutionRoute,
+  TechnologyRoute: TechnologyRoute,
   AdminForgotPasswordRoute: AdminForgotPasswordRoute,
   AdminLoginRoute: AdminLoginRoute,
   ApiMediaDriveUploadRoute: ApiMediaDriveUploadRoute,

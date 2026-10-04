@@ -844,15 +844,15 @@ export interface HeroSettings {
 }
 
 export const DEFAULT_HERO: HeroSettings = {
-  eyebrow: "SMART PARKING. BETTER CITIES.",
+  eyebrow: "SMART PARKING FOR SRI LANKA",
   headline: "Find. Navigate. Park Smarter.",
   supporting:
-    "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO.",
-  primaryCtaLabel: "Explore Live Demo",
-  primaryCtaLink: "/app/demo",
-  secondaryCtaLabel: "Find Parking",
-  secondaryCtaLink: "/app/parking",
-  trustStatement: "University prototype · Simulated payments, location and verification",
+    "Meet SPM ECO: a connected parking ecosystem for Sri Lanka. Discover the driver app, reservations, exact-bay navigation, web administration and explainable intelligence.",
+  primaryCtaLabel: "Explore the ecosystem",
+  primaryCtaLink: "/features",
+  secondaryCtaLabel: "See how it works",
+  secondaryCtaLink: "/solution",
+  trustStatement: "Flutter driver app · Admin Web · One connected backend",
   mediaType: "image",
   backgroundImage: "",
   backgroundVideo: "",
@@ -975,6 +975,7 @@ export const DEFAULT_NAVIGATION: NavigationSettings = {
     navItem("Problem", "/problem"),
     navItem("Solution", "/solution"),
     navItem("Features", "/features"),
+    navItem("Technology", "/technology"),
     navItem("Dashboard", "/dashboard"),
     navItem("Contact", "/contact"),
   ],

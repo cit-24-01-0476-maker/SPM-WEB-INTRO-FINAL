@@ -65,7 +65,7 @@ export function Problem() {
             eyebrow={tt("The Problem")}
             title={tt("The Parking Problem in Urban Sri Lanka")}
             subtitle={tt(
-              "Parking facilities in Colombo and commercial zones still depend heavily on manual and paper-based operations.",
+              "Uncertain availability, entrance queues, confusing indoor layouts and unclear charges are the everyday parking challenges this project is designed to address.",
             )}
           />
         </Reveal>
