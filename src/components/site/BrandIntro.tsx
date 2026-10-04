@@ -3,12 +3,13 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-real-video-v2";
+const INTRO_KEY = "spm-welcome-drone-v3";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
   const [run, setRun] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [phase, setPhase] = useState<"scene" | "brand" | "exit">("scene");
   const skipRef = useRef<HTMLButtonElement>(null);
   const { lang } = useLanguage();
 
@@ -24,12 +25,15 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     } catch {
       /* The intro still works when browser storage is unavailable. */
     }
+    setPlaying(false);
+    setPhase("scene");
     setVisible(true);
   }, [pathname]);
 
   useEffect(() => {
     const replay = () => {
       setPlaying(false);
+      setPhase("scene");
       setRun((value) => value + 1);
       setVisible(true);
     };
@@ -44,7 +48,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     document.body.style.overflow = "hidden";
     document.body.classList.add("spm-intro-running");
     skipRef.current?.focus({ preventScroll: true });
-    const timer = window.setTimeout(() => setVisible(false), 12000);
+    const timer = window.setTimeout(() => setVisible(false), 20000);
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setVisible(false);
       // The intro contains one control, so keep keyboard focus on that control.
@@ -64,16 +68,20 @@ export function BrandIntro({ pathname }: { pathname: string }) {
   }, [visible, run]);
 
   useEffect(() => {
-    if (!visible || !playing) return;
-    const timer = window.setTimeout(() => setVisible(false), 7200);
+    if (!visible || phase === "scene") return;
+    const timer = window.setTimeout(
+      () => (phase === "brand" ? setPhase("exit") : setVisible(false)),
+      phase === "brand" ? 2700 : 700,
+    );
     return () => window.clearTimeout(timer);
-  }, [visible, playing, run]);
+  }, [visible, phase, run]);
 
   if (!visible) return null;
   return (
     <div
       key={run}
-      className={`spm-brand-intro spm-real-intro${playing ? " is-playing" : ""}`}
+      className={`spm-brand-intro spm-real-intro spm-drone-intro${playing ? " is-playing" : ""}`}
+      data-phase={phase}
       role="dialog"
       aria-modal="true"
       aria-label="SPM ECO welcome"
@@ -90,19 +98,30 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         preload="auto"
         aria-hidden="true"
         onPlaying={() => setPlaying(true)}
+        onTimeUpdate={(event) => {
+          if (event.currentTarget.currentTime >= 6.65 && phase === "scene") setPhase("brand");
+        }}
+        onEnded={() => {
+          if (phase === "scene") setPhase("brand");
+        }}
         onError={(event) => {
           console.warn("SPM intro video could not play", event.currentTarget.error?.message);
           setVisible(false);
         }}
       >
-        <source src="/videos/bmw-road-intro.webm" type="video/webm" />
-        <source src="/videos/bmw-road-intro.mp4" type="video/mp4" />
+        <source src="/videos/spm-drone-intro.webm" type="video/webm" />
+        <source src="/videos/spm-drone-intro.mp4" type="video/mp4" />
       </video>
       <div className="spm-intro-video-shade" aria-hidden="true" />
       <div className="spm-intro-brand">
+        <span className="spm-intro-aura" aria-hidden="true" />
+        <svg className="spm-intro-ring" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+          <circle cx="120" cy="120" r="112" pathLength="100" />
+          <path d="M38 120H12M202 120H228M120 38V12M120 202V228" />
+        </svg>
         <MotionLogo />
         <div className="spm-intro-wordmark">
-          SPM <span>ECO</span>
+          <span className="spm-wordmark-main">SPM</span> <span>ECO</span>
         </div>
         <p>
           {lang === "si"

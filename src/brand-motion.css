@@ -188,6 +188,156 @@
     animation: none;
   }
 }
+.spm-drone-intro.is-playing {
+  animation: none !important;
+}
+.spm-drone-intro .spm-intro-brand {
+  animation: none !important;
+  opacity: 0;
+  transform: translateY(22px) scale(0.94);
+  transition:
+    opacity 0.7s ease,
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.spm-drone-intro[data-phase="brand"] .spm-intro-brand,
+.spm-drone-intro[data-phase="exit"] .spm-intro-brand {
+  opacity: 1;
+  transform: none;
+}
+.spm-drone-intro.is-playing .spm-intro-video-shade {
+  animation: none;
+  transition: background-color 0.95s ease;
+}
+.spm-drone-intro[data-phase="brand"] .spm-intro-video-shade,
+.spm-drone-intro[data-phase="exit"] .spm-intro-video-shade {
+  background-color: #06182cb5;
+}
+.spm-drone-intro .spm-intro-brand > .spm-motion-logo {
+  width: 210px;
+  height: 210px;
+}
+.spm-drone-intro .spm-logo-core {
+  width: 100px;
+  height: 100px;
+  border-radius: 28px;
+}
+.spm-drone-intro .spm-logo-core svg {
+  width: 58px;
+  height: 58px;
+}
+.spm-drone-intro .spm-intro-wordmark {
+  font-size: clamp(48px, 7vw, 90px);
+  letter-spacing: -0.055em;
+  position: relative;
+  overflow: hidden;
+}
+.spm-drone-intro .spm-intro-wordmark .spm-wordmark-main {
+  color: white;
+}
+.spm-drone-intro[data-phase="brand"] .spm-intro-wordmark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, #ffffff80 48%, transparent 65%);
+  mix-blend-mode: overlay;
+  animation: spm-logo-light-pass 1.4s ease 0.4s both;
+}
+.spm-intro-aura {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 360px;
+  height: 360px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, #19c6f42e, #176bff12 42%, transparent 68%);
+  pointer-events: none;
+}
+.spm-intro-ring {
+  position: absolute;
+  top: 9px;
+  left: calc(50% - 120px);
+  width: 240px;
+  height: 240px;
+  pointer-events: none;
+  stroke: #78dfff70;
+  stroke-width: 0.7;
+}
+.spm-intro-ring circle {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+.spm-drone-intro[data-phase="brand"] .spm-intro-ring circle {
+  animation: spm-ring-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.spm-drone-intro .spm-intro-enter {
+  margin-top: 25px;
+}
+.spm-drone-intro.is-playing .spm-intro-progress span {
+  animation-duration: 10.05s;
+}
+.spm-drone-intro[data-phase="exit"] {
+  animation: spm-drone-curtain 0.7s cubic-bezier(0.76, 0, 0.24, 1) both !important;
+}
+@keyframes spm-ring-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes spm-logo-light-pass {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(110%);
+  }
+}
+@keyframes spm-drone-curtain {
+  from {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+  to {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.5;
+  }
+}
+@media (max-width: 639px) {
+  .spm-drone-intro .spm-intro-real-video {
+    object-fit: cover;
+    object-position: 50% center;
+  }
+  .spm-drone-intro .spm-intro-ring {
+    top: 0;
+  }
+  .spm-drone-intro .spm-intro-brand > .spm-motion-logo {
+    width: 210px;
+    height: 210px;
+  }
+  .spm-drone-intro .spm-intro-aura {
+    width: 280px;
+    height: 280px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spm-drone-intro .spm-intro-brand {
+    transition: none;
+  }
+  .spm-drone-intro[data-phase="brand"] .spm-intro-ring circle {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .spm-drone-intro[data-phase="brand"] .spm-intro-wordmark::after {
+    animation: none;
+    display: none;
+  }
+  .spm-drone-intro[data-phase="exit"] {
+    animation: none !important;
+    opacity: 0;
+  }
+}
 .spm-brand-intro {
   position: fixed;
   inset: 0;
