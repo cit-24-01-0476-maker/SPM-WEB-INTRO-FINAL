@@ -3,7 +3,7 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-drone-v4";
+const INTRO_KEY = "spm-welcome-drone-v5";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
@@ -71,7 +71,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     if (!visible || phase === "scene") return;
     const timer = window.setTimeout(
       () => (phase === "brand" ? setPhase("exit") : setVisible(false)),
-      phase === "brand" ? 2100 : 700,
+      phase === "brand" ? 1800 : 700,
     );
     return () => window.clearTimeout(timer);
   }, [visible, phase, run]);
@@ -103,7 +103,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         }}
         onPlaying={() => setPlaying(true)}
         onTimeUpdate={(event) => {
-          if (event.currentTarget.currentTime >= 5.8 && phase === "scene") setPhase("brand");
+          if (event.currentTarget.currentTime >= 5 && phase === "scene") setPhase("brand");
         }}
         onEnded={() => {
           if (phase === "scene") setPhase("brand");
@@ -113,8 +113,8 @@ export function BrandIntro({ pathname }: { pathname: string }) {
           setVisible(false);
         }}
       >
-        <source src="/videos/spm-drone-smooth.webm" type="video/webm" />
-        <source src="/videos/spm-drone-smooth.mp4" type="video/mp4" />
+        <source src="/videos/spm-drone-enhanced.webm" type="video/webm" />
+        <source src="/videos/spm-drone-enhanced.mp4" type="video/mp4" />
       </video>
       {!playing && (
         <span className="spm-intro-loading" role="status">

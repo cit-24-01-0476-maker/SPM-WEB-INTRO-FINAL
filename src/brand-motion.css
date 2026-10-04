@@ -290,7 +290,7 @@
   margin-top: 25px;
 }
 .spm-drone-intro.is-playing .spm-intro-progress span {
-  animation-duration: 8.6s;
+  animation-duration: 7.5s;
 }
 .spm-drone-intro[data-phase="exit"] {
   animation: spm-drone-curtain 0.7s cubic-bezier(0.76, 0, 0.24, 1) both !important;
