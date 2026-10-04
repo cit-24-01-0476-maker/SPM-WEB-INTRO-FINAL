@@ -392,7 +392,7 @@
   animation-delay: 0.1s;
 }
 .spm-fpv-intro.is-playing .spm-intro-progress span {
-  animation-duration: 4.75s;
+  animation-duration: 4.95s;
 }
 .spm-fpv-intro[data-phase="exit"] {
   animation: spm-fpv-zoom-out 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;

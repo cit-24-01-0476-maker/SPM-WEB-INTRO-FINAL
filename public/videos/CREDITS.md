@@ -1,6 +1,6 @@
-Current FPV intro: first 3.20 seconds of the video supplied by the user.
+Current FPV intro: opening footage slowed to 0.941× speed for a 3.40-second clip, with light contrast, colour and sharpening enhancement.
 Source file: YTDown.com_YouTube_FPV-Drone-Car-Chase-Through-Rainforest-P_Media_16KzBjgMk54_001_1080p.mp4
-Website versions: silent 1920 × 1080 H.264 and VP8 WebM, plus a 1280 × 720 WebM for mobile playback. Original playback speed is retained.
+Website versions: silent 1920 × 1080 H.264 and VP8 WebM, plus a 1280 × 720 WebM for mobile playback, encoded from the user original.
 
 Previous drone intro (retained assets): user-supplied AI-generated video.
 Source file: WhatsApp Video 2026-10-04 at 9.38.02 AM.mp4
