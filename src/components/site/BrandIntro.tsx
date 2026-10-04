@@ -3,7 +3,7 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-fpv-v6";
+const INTRO_KEY = "spm-welcome-fpv-v7";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
@@ -125,10 +125,14 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         }}
       >
         <source
-          src={compactVideo ? "/videos/spm-fpv-intro-mobile.webm" : "/videos/spm-fpv-intro.webm"}
+          src={
+            compactVideo
+              ? "/videos/spm-fpv-intro-mobile.webm?v=7"
+              : "/videos/spm-fpv-intro.webm?v=7"
+          }
           type="video/webm"
         />
-        <source src="/videos/spm-fpv-intro.mp4" type="video/mp4" />
+        <source src="/videos/spm-fpv-intro.mp4?v=7" type="video/mp4" />
       </video>
       {!playing && (
         <span className="spm-intro-loading" role="status">

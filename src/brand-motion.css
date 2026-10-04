@@ -359,8 +359,19 @@
 }
 .spm-fpv-intro[data-phase="brand"] .spm-intro-real-video,
 .spm-fpv-intro[data-phase="exit"] .spm-intro-real-video {
-  opacity: 0.28;
-  transform: translateZ(0) scale(1.06);
+  opacity: 1;
+  transform: translateZ(0) scale(1.025);
+}
+.spm-fpv-intro[data-phase="brand"] .spm-intro-video-shade,
+.spm-fpv-intro[data-phase="exit"] .spm-intro-video-shade {
+  background-color: #06182c38;
+}
+.spm-fpv-intro .spm-intro-brand p,
+.spm-fpv-intro .spm-intro-enter {
+  color: #fff;
+  text-shadow:
+    0 2px 8px #020b17,
+    0 0 20px #020b17;
 }
 .spm-fpv-intro .spm-intro-brand {
   transform: translateY(32px) scale(0.8);
@@ -381,7 +392,7 @@
   animation-delay: 0.1s;
 }
 .spm-fpv-intro.is-playing .spm-intro-progress span {
-  animation-duration: 4.55s;
+  animation-duration: 5.55s;
 }
 .spm-fpv-intro[data-phase="exit"] {
   animation: spm-fpv-zoom-out 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
