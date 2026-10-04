@@ -3,7 +3,6 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
-  useRouter,
   useRouterState,
   HeadContent,
   Scripts,
@@ -11,6 +10,7 @@ import {
 import { useEffect, useRef, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { chunkRecoveryScript } from "@/lib/chunk-recovery";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
@@ -47,9 +47,8 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
+function ErrorComponent({ error }: { error: unknown }) {
   console.error(error);
-  const router = useRouter();
   const { tt } = useLanguage();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
@@ -67,8 +66,8 @@ function ErrorComponent({ error, reset }: { error: unknown; reset: () => void })
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
-              router.invalidate();
-              reset();
+              // A full reload also replaces stale deployment asset references.
+              window.location.reload();
             }}
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
@@ -140,6 +139,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: chunkRecoveryScript }} />
         <HeadContent />
         <script
           dangerouslySetInnerHTML={{
