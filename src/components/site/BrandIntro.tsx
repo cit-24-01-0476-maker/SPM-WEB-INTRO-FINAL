@@ -3,7 +3,7 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-fpv-v9";
+const INTRO_KEY = "spm-welcome-fpv-v10";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
@@ -12,15 +12,23 @@ export function BrandIntro({ pathname }: { pathname: string }) {
   const [compactVideo, setCompactVideo] = useState(false);
   const [phase, setPhase] = useState<"scene" | "brand" | "exit">("scene");
   const skipRef = useRef<HTMLButtonElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { lang } = useLanguage();
 
   const startWhenBuffered = (video: HTMLVideoElement) => {
     if (!video.paused || video.ended || !Number.isFinite(video.duration) || !video.buffered.length)
       return;
-    // This short clip can buffer completely before playing, avoiding mid-chase stalls.
-    if (video.buffered.end(video.buffered.length - 1) < video.duration - 0.1) return;
+    // Start from a short lead instead of blocking on downloading the entire clip.
+    if (video.buffered.end(video.buffered.length - 1) - video.currentTime < 0.35) return;
     void video.play().catch(() => setVisible(false));
   };
+
+  useEffect(() => {
+    if (!visible || phase !== "scene") return;
+    // A slow connection must never leave visitors trapped on a loading screen.
+    const timer = window.setTimeout(() => setPhase("brand"), playing ? 4800 : 2500);
+    return () => window.clearTimeout(timer);
+  }, [visible, phase, playing, run]);
 
   useEffect(() => {
     if (pathname !== "/") {
@@ -59,7 +67,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     document.body.style.overflow = "hidden";
     document.body.classList.add("spm-intro-running");
     skipRef.current?.focus({ preventScroll: true });
-    const timer = window.setTimeout(() => setVisible(false), 20000);
+    const timer = window.setTimeout(() => setVisible(false), 8000);
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setVisible(false);
       // The intro contains one control, so keep keyboard focus on that control.
@@ -80,6 +88,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
 
   useEffect(() => {
     if (!visible || phase === "scene") return;
+    videoRef.current?.pause();
     const timer = window.setTimeout(
       () => (phase === "brand" ? setPhase("exit") : setVisible(false)),
       phase === "brand" ? 1100 : 450,
@@ -107,13 +116,15 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         <X size={16} />
       </button>
       <video
+        ref={videoRef}
         className="spm-intro-real-video"
         muted
+        autoPlay
         playsInline
         preload="auto"
         poster="/videos/spm-fpv-poster.jpg"
         aria-hidden="true"
-        onCanPlayThrough={(event) => startWhenBuffered(event.currentTarget)}
+        onCanPlay={(event) => startWhenBuffered(event.currentTarget)}
         onProgress={(event) => startWhenBuffered(event.currentTarget)}
         onPlaying={() => setPlaying(true)}
         onEnded={() => {
@@ -121,20 +132,19 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         }}
         onError={(event) => {
           console.warn("SPM intro video could not play", event.currentTarget.error?.message);
-          setVisible(false);
+          setPhase("brand");
         }}
       >
         <source
           src={
             compactVideo
-            ? "/videos/spm-fpv-intro-mobile.webm?v=9"
-            : "/videos/spm-fpv-intro.webm?v=9"
+            ? "/videos/spm-fpv-fast-mobile.mp4?v=10"
+            : "/videos/spm-fpv-fast.mp4?v=10"
           }
-          type="video/webm"
+          type="video/mp4"
         />
-        <source src="/videos/spm-fpv-intro.mp4?v=9" type="video/mp4" />
       </video>
-      {!playing && (
+      {!playing && phase === "scene" && (
         <span className="spm-intro-loading" role="status">
           {lang === "si" ? "ඔබේ ගමන සූදානම් කරමින්…" : "Preparing your journey…"}
         </span>
