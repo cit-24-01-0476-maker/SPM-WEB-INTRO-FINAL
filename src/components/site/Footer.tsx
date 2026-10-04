@@ -12,22 +12,15 @@ const LINKS = [
   { label: "Features", to: "/features" },
   { label: "Dashboard", to: "/dashboard" },
   { label: "Contact", to: "/contact" },
+  { label: "Driver App", to: "/app" },
+  { label: "Provider Portal", to: "/provider" },
 ] as const;
 
 export function Footer() {
-  const { site, contact, economicFeasibility } = usePublicSettings();
-  const { config: langConfig, switcherEnabled, tt, tx } = useLanguage();
+  const { site, contact } = usePublicSettings();
+  const { config: langConfig, switcherEnabled, tt } = useLanguage();
   const showFooterSwitcher = switcherEnabled && langConfig.showInFooter;
-  const links =
-    economicFeasibility.enabled &&
-    economicFeasibility.navEnabled &&
-    economicFeasibility.navFooterVisible
-      ? [
-          ...LINKS.slice(0, 5),
-          { label: tx(economicFeasibility.navLabel, "ROI Calculator"), to: "/roi-calculator" as const },
-          LINKS[5],
-        ]
-      : LINKS;
+  const links = LINKS;
   return (
     <footer className="bg-gradient-navy py-14 text-white">
       {/* language switcher (footer) rendered below when enabled */}
@@ -42,7 +35,7 @@ export function Footer() {
             </div>
             <p className="mt-4 max-w-md text-sm leading-relaxed text-white/60">
               {tt(
-                "A smart parking platform that combines real-time booking, ANPR gate automation, dynamic pricing, QR payment, retail parking control, and operator analytics for modern parking facilities in Sri Lanka.",
+                "Find parking, reserve a space, navigate to your exact slot and manage your parking session. One connected software prototype for drivers and parking providers in Sri Lanka.",
               )}
             </p>
             <div className="mt-5 flex flex-col gap-2 text-sm text-white/70">

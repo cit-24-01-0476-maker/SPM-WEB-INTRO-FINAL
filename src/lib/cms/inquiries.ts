@@ -41,7 +41,6 @@ export interface InquiryInput {
   sourcePage: string;
   sourceUrl: string;
   referrer: string;
-  
 }
 
 export interface InquiryRecord extends InquiryInput {
@@ -65,8 +64,7 @@ export function mapInquiryError(err: unknown): string {
     return "Firestore blocked this inquiry. Verify the deployed security rules.";
   if (code.includes("unavailable"))
     return "The inquiry service is temporarily unavailable. Please try again.";
-  if (code.includes("failed-precondition"))
-    return "The inquiry data configuration is incomplete.";
+  if (code.includes("failed-precondition")) return "The inquiry data configuration is incomplete.";
   if (code.includes("invalid-argument"))
     return "Some form information is invalid. Please review the form and try again.";
   return "Unable to submit your inquiry. Please try again.";
@@ -159,7 +157,6 @@ export async function submitInquiry(input: InquiryInput): Promise<string> {
     throw err;
   }
 }
-
 
 function tsToIso(v: unknown): string | null {
   if (!v) return null;

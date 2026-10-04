@@ -1,7 +1,11 @@
 import { Loader2, ParkingSquare } from "lucide-react";
 
 /** Premium full-screen loading state shown while auth is being verified. */
-export function AdminLoadingScreen({ message = "Verifying secure session…" }: { message?: string }) {
+export function AdminLoadingScreen({
+  message = "Verifying secure session…",
+}: {
+  message?: string;
+}) {
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-navy text-white">
       <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-primary/25 blur-[130px]" />

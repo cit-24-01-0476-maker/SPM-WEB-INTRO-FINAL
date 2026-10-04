@@ -37,11 +37,19 @@ export function DesignPreviewMock({ design }: { design: DesignSettings }) {
   };
 
   return (
-    <div ref={ref} className="min-h-full" style={{ background: "var(--background)", color: "var(--foreground)" }}>
+    <div
+      ref={ref}
+      className="min-h-full"
+      style={{ background: "var(--background)", color: "var(--foreground)" }}
+    >
       {/* nav */}
       <div
         className="flex items-center justify-between px-6 py-4"
-        style={{ fontFamily: "var(--cms-font-nav)", background: design.colors.primaryNavy, color: "#fff" }}
+        style={{
+          fontFamily: "var(--cms-font-nav)",
+          background: design.colors.primaryNavy,
+          color: "#fff",
+        }}
       >
         <span className="text-sm font-bold">SPM ECO System</span>
         <div className="flex items-center gap-4 text-xs opacity-90">
@@ -80,7 +88,11 @@ export function DesignPreviewMock({ design }: { design: DesignSettings }) {
         </h1>
         <p
           className="mt-4 max-w-lg opacity-85"
-          style={{ fontFamily: "var(--font-sans)", fontSize: t.bodyTextSize, fontWeight: t.bodyWeight }}
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: t.bodyTextSize,
+            fontWeight: t.bodyWeight,
+          }}
         >
           Real-time availability, ANPR access, dynamic pricing and multi-location analytics in one
           intelligent platform.
@@ -115,17 +127,30 @@ export function DesignPreviewMock({ design }: { design: DesignSettings }) {
           >
             <span
               className="grid h-10 w-10 place-items-center rounded-xl text-white"
-              style={{ background: `linear-gradient(120deg, ${design.colors.buttonGradientStart}, ${design.colors.buttonGradientEnd})` }}
+              style={{
+                background: `linear-gradient(120deg, ${design.colors.buttonGradientStart}, ${design.colors.buttonGradientEnd})`,
+              }}
             >
               <card.icon className="h-5 w-5" />
             </span>
             <h3
               className="mt-3"
-              style={{ fontFamily: "var(--font-display)", fontSize: t.subheadingSize, fontWeight: t.headingWeight, color: "var(--foreground)" }}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: t.subheadingSize,
+                fontWeight: t.headingWeight,
+                color: "var(--foreground)",
+              }}
             >
               {card.title}
             </h3>
-            <p style={{ color: design.colors.secondaryText, fontSize: t.smallTextSize, marginTop: 4 }}>
+            <p
+              style={{
+                color: design.colors.secondaryText,
+                fontSize: t.smallTextSize,
+                marginTop: 4,
+              }}
+            >
               {card.text}
             </p>
           </div>
@@ -136,19 +161,35 @@ export function DesignPreviewMock({ design }: { design: DesignSettings }) {
       <div className="px-6 pb-12">
         <div
           className="rounded-2xl p-6"
-          style={{ background: "var(--card)", border: `1px solid ${design.colors.border}`, borderRadius: b.borderRadius + 6 }}
+          style={{
+            background: "var(--card)",
+            border: `1px solid ${design.colors.border}`,
+            borderRadius: b.borderRadius + 6,
+          }}
         >
-          <p style={{ fontSize: t.smallTextSize, fontWeight: 600, color: "var(--foreground)" }}>Form Label</p>
+          <p style={{ fontSize: t.smallTextSize, fontWeight: 600, color: "var(--foreground)" }}>
+            Form Label
+          </p>
           <input
             className="mt-1.5 w-full rounded-lg px-3 py-2 text-sm outline-none"
-            style={{ border: `1px solid ${design.colors.border}`, background: "var(--background)", color: "var(--foreground)" }}
+            style={{
+              border: `1px solid ${design.colors.border}`,
+              background: "var(--background)",
+              color: "var(--foreground)",
+            }}
             placeholder="you@company.com"
             readOnly
           />
           <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-white">
-            <span className="rounded-full px-3 py-1" style={{ background: design.colors.success }}>Success</span>
-            <span className="rounded-full px-3 py-1" style={{ background: design.colors.warning }}>Warning</span>
-            <span className="rounded-full px-3 py-1" style={{ background: design.colors.error }}>Error</span>
+            <span className="rounded-full px-3 py-1" style={{ background: design.colors.success }}>
+              Success
+            </span>
+            <span className="rounded-full px-3 py-1" style={{ background: design.colors.warning }}>
+              Warning
+            </span>
+            <span className="rounded-full px-3 py-1" style={{ background: design.colors.error }}>
+              Error
+            </span>
           </div>
         </div>
       </div>

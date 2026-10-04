@@ -5,6 +5,8 @@ import { Benefits } from "@/components/site/Benefits";
 import { UseCases } from "@/components/site/UseCases";
 import { Outcomes } from "@/components/site/Outcomes";
 import { About } from "@/components/site/About";
+import { ParkingJourney } from "@/components/site/ParkingJourney";
+import { ParkingCta } from "@/components/site/ParkingCta";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -13,13 +15,16 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "SPM ECO System is a complete software + hardware smart parking ecosystem for Sri Lanka: real-time booking, ANPR gate automation, dynamic pricing, QR payment, retail control, and operator analytics.",
+          "SPM ECO helps drivers find parking, reserve a space, navigate to the exact slot and manage parking sessions. Explore the connected SLTC campus software demo.",
       },
-      { property: "og:title", content: "SPM ECO System | Smart Parking Management System Sri Lanka" },
+      {
+        property: "og:title",
+        content: "SPM ECO System | Smart Parking Management System Sri Lanka",
+      },
       {
         property: "og:description",
         content:
-          "A complete software + hardware smart parking ecosystem: real-time booking, ANPR gate automation, dynamic pricing, QR payment, retail parking control, and operator analytics.",
+          "A connected parking software prototype: discovery, booking, outdoor and custom parking navigation, demo wallet, sessions and provider management.",
       },
     ],
   }),
@@ -31,10 +36,12 @@ function Index() {
   return (
     <>
       <Hero />
+      <ParkingJourney />
       <Benefits />
       <UseCases />
       <Outcomes />
       <About />
+      <ParkingCta />
     </>
   );
 }

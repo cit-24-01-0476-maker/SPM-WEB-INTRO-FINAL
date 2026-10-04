@@ -76,7 +76,9 @@ function AuditPage() {
               <tbody className="divide-y divide-border">
                 {data!.map((l) => (
                   <tr key={l.id} className="hover:bg-secondary/40">
-                    <td className="py-3 pr-4 font-medium text-foreground">{l.actor_email || "—"}</td>
+                    <td className="py-3 pr-4 font-medium text-foreground">
+                      {l.actor_email || "—"}
+                    </td>
                     <td className="py-3 pr-4">
                       <span
                         className={`inline-flex rounded-full px-2 py-0.5 text-xs font-semibold ${
@@ -88,10 +90,14 @@ function AuditPage() {
                     </td>
                     <td className="py-3 pr-4 text-muted-foreground">
                       {l.entity || "—"}
-                      {l.entity_id ? <span className="ml-1 text-xs">#{l.entity_id.slice(0, 8)}</span> : null}
+                      {l.entity_id ? (
+                        <span className="ml-1 text-xs">#{l.entity_id.slice(0, 8)}</span>
+                      ) : null}
                     </td>
                     <td className="py-3 pr-4 text-muted-foreground">{l.device || "—"}</td>
-                    <td className="py-3 pr-4 font-mono text-xs text-muted-foreground">{l.masked_ip || "—"}</td>
+                    <td className="py-3 pr-4 font-mono text-xs text-muted-foreground">
+                      {l.masked_ip || "—"}
+                    </td>
                     <td className="py-3 text-xs text-muted-foreground">
                       {new Date(l.created_at).toLocaleString()}
                     </td>

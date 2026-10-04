@@ -18,6 +18,9 @@ dist-ssr
 
 # Wrangler / Cloudflare
 .wrangler/
+.vercel/
+output/npm-cache/
+output/
 .dev.vars
 
 # Editor directories and files

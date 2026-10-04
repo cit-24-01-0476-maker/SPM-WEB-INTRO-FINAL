@@ -15,7 +15,13 @@ import {
 } from "lucide-react";
 import { dbRead } from "@/lib/admin/db";
 import { useAdminAuth } from "@/lib/admin/auth";
-import { PageHeader, StatCard, AdminCard, EmptyState, StatusBadge } from "@/components/admin/primitives";
+import {
+  PageHeader,
+  StatCard,
+  AdminCard,
+  EmptyState,
+  StatusBadge,
+} from "@/components/admin/primitives";
 import type { InquiryStatus } from "@/lib/admin/roles";
 
 export const Route = createFileRoute("/admin/dashboard")({
@@ -46,7 +52,15 @@ function DashboardPage() {
           order: { column: "created_at", ascending: false },
           limit: 5000,
         }),
-        dbRead<{ session_id: string; country: string | null; device_type: string | null; traffic_source: string | null; last_seen: string }[]>({
+        dbRead<
+          {
+            session_id: string;
+            country: string | null;
+            device_type: string | null;
+            traffic_source: string | null;
+            last_seen: string;
+          }[]
+        >({
           table: "analytics_sessions",
           select: "session_id, country, device_type, traffic_source, last_seen",
           limit: 5000,
@@ -60,7 +74,16 @@ function DashboardPage() {
     queryKey: ["dash-inquiries"],
     enabled: canInquiries,
     queryFn: async () => {
-      const list = await dbRead<{ id: string; name: string; organization: string | null; email: string; status: string; created_at: string }[]>({
+      const list = await dbRead<
+        {
+          id: string;
+          name: string;
+          organization: string | null;
+          email: string;
+          status: string;
+          created_at: string;
+        }[]
+      >({
         table: "contact_submissions",
         select: "id, name, organization, email, status, created_at",
         order: { column: "created_at", ascending: false },
@@ -120,7 +143,12 @@ function DashboardPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total Page Views" value={pageViews.length.toLocaleString()} icon={Eye} tone="primary" />
+        <StatCard
+          label="Total Page Views"
+          value={pageViews.length.toLocaleString()}
+          icon={Eye}
+          tone="primary"
+        />
         <StatCard label="Unique Visitors" value={sess.length.toLocaleString()} icon={Users} />
         <StatCard
           label="Live Visitors"
@@ -129,7 +157,12 @@ function DashboardPage() {
           tone="success"
           hint="Active in the last 5 minutes"
         />
-        <StatCard label="New Inquiries" value={inquiries.data?.newCount ?? 0} icon={Inbox} tone="warning" />
+        <StatCard
+          label="New Inquiries"
+          value={inquiries.data?.newCount ?? 0}
+          icon={Inbox}
+          tone="warning"
+        />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -193,16 +226,27 @@ function DashboardPage() {
           title="Recent inquiries"
           actions={
             canInquiries ? (
-              <Link to="/admin/inquiries" className="text-xs font-semibold text-primary hover:underline">
+              <Link
+                to="/admin/inquiries"
+                className="text-xs font-semibold text-primary hover:underline"
+              >
                 View all
               </Link>
             ) : null
           }
         >
           {!canInquiries ? (
-            <EmptyState icon={Inbox} title="No access" description="You don't have permission to view inquiries." />
+            <EmptyState
+              icon={Inbox}
+              title="No access"
+              description="You don't have permission to view inquiries."
+            />
           ) : (inquiries.data?.recent.length ?? 0) === 0 ? (
-            <EmptyState icon={Inbox} title="No inquiries yet" description="Contact form submissions will appear here." />
+            <EmptyState
+              icon={Inbox}
+              title="No inquiries yet"
+              description="Contact form submissions will appear here."
+            />
           ) : (
             <ul className="divide-y divide-border">
               {inquiries.data!.recent.map((r) => (

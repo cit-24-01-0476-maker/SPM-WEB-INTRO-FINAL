@@ -127,7 +127,7 @@ function LiveAnprCard({ t }: { t: number }) {
           }`}
         />
         <span className={approved ? "text-white/80" : "text-white/40"}>
-          {approved ? tt("Barrier Opening") : tt("Awaiting Verification")}
+          {approved ? tt("Demo entry approved") : tt("Awaiting Verification")}
         </span>
       </div>
     </div>
@@ -220,7 +220,7 @@ export function HeroParkingVideo() {
         {reduced ? (
           <img
             src={posterImg}
-            alt="Night-time smart parking entrance with ANPR camera and automatic barrier gate"
+            alt="Smart parking arrival concept illustration"
             width={1600}
             height={912}
             className="aspect-[16/10] h-full w-full object-cover object-center"
@@ -241,7 +241,7 @@ export function HeroParkingVideo() {
             {/* Fallback for browsers that cannot play the video */}
             <img
               src={posterImg}
-              alt="Night-time smart parking entrance with ANPR camera and automatic barrier gate"
+              alt="Smart parking arrival concept illustration"
               width={1600}
               height={912}
             />

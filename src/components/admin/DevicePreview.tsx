@@ -87,7 +87,11 @@ export function DevicePreview({
           </a>
         </div>
       </div>
-      <div ref={containerRef} className="overflow-hidden bg-secondary/40 p-3" style={{ height: height + 24 }}>
+      <div
+        ref={containerRef}
+        className="overflow-hidden bg-secondary/40 p-3"
+        style={{ height: height + 24 }}
+      >
         <div
           style={{
             width,
@@ -96,7 +100,10 @@ export function DevicePreview({
             transformOrigin: "top left",
           }}
         >
-          <div key={reloadKey} className="h-full w-full overflow-y-auto rounded-xl bg-background shadow-lg">
+          <div
+            key={reloadKey}
+            className="h-full w-full overflow-y-auto rounded-xl bg-background shadow-lg"
+          >
             {children}
           </div>
         </div>

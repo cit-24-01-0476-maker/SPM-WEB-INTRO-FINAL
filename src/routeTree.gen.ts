@@ -9,72 +9,59 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SolutionRouteImport } from './routes/solution'
-import { Route as RoiCalculatorRouteImport } from './routes/roi-calculator'
-import { Route as ProblemRouteImport } from './routes/problem'
-import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as DashboardRouteImport } from './routes/dashboard'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as ParkingAdminRouteImport } from './routes/parking-admin'
+import { Route as ProblemRouteImport } from './routes/problem'
+import { Route as ProviderRouteImport } from './routes/provider'
+import { Route as SolutionRouteImport } from './routes/solution'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminLoginRouteImport } from './routes/admin_.login'
-import { Route as AdminForgotPasswordRouteImport } from './routes/admin_.forgot-password'
-import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AdminTeamRouteImport } from './routes/admin.team'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
-import { Route as AdminSeoRouteImport } from './routes/admin.seo'
-import { Route as AdminPagesRouteImport } from './routes/admin.pages'
-import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
-import { Route as AdminMediaRouteImport } from './routes/admin.media'
-import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
-import { Route as AdminLiveVisitorsRouteImport } from './routes/admin.live-visitors'
-import { Route as AdminLanguagesRouteImport } from './routes/admin.languages'
-import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
-import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
-import { Route as AdminHeroRouteImport } from './routes/admin.hero'
-import { Route as AdminFaqRouteImport } from './routes/admin.faq'
-import { Route as AdminEconomicFeasibilityRouteImport } from './routes/admin.economic-feasibility'
-import { Route as AdminDesignRouteImport } from './routes/admin.design'
-import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
-import { Route as AdminContentRouteImport } from './routes/admin.content'
-import { Route as AdminContactInfoRouteImport } from './routes/admin.contact-info'
-import { Route as AdminBackupRouteImport } from './routes/admin.backup'
-import { Route as AdminAuditRouteImport } from './routes/admin.audit'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
-import { Route as ApiPublicVisitorContextRouteImport } from './routes/api/public/visitor-context'
-import { Route as ApiPublicTrackRouteImport } from './routes/api/public/track'
-import { Route as ApiPublicContactNotifyRouteImport } from './routes/api/public/contact-notify'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminBackupRouteImport } from './routes/admin.backup'
+import { Route as AdminContactInfoRouteImport } from './routes/admin.contact-info'
+import { Route as AdminContentRouteImport } from './routes/admin.content'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminDesignRouteImport } from './routes/admin.design'
+import { Route as AdminEconomicFeasibilityRouteImport } from './routes/admin.economic-feasibility'
+import { Route as AdminFaqRouteImport } from './routes/admin.faq'
+import { Route as AdminHeroRouteImport } from './routes/admin.hero'
+import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
+import { Route as AdminIntegrationsRouteImport } from './routes/admin.integrations'
+import { Route as AdminLanguagesRouteImport } from './routes/admin.languages'
+import { Route as AdminLiveVisitorsRouteImport } from './routes/admin.live-visitors'
+import { Route as AdminLocationsRouteImport } from './routes/admin.locations'
+import { Route as AdminMediaRouteImport } from './routes/admin.media'
+import { Route as AdminNavigationRouteImport } from './routes/admin.navigation'
+import { Route as AdminPagesRouteImport } from './routes/admin.pages'
+import { Route as AdminSeoRouteImport } from './routes/admin.seo'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminTeamRouteImport } from './routes/admin.team'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminForgotPasswordRouteImport } from './routes/admin_.forgot-password'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppPageRouteImport } from './routes/app.$page'
+import { Route as ParkingAdminIndexRouteImport } from './routes/parking-admin.index'
+import { Route as ParkingAdminPageRouteImport } from './routes/parking-admin.$page'
+import { Route as ProviderIndexRouteImport } from './routes/provider.index'
+import { Route as ProviderPageRouteImport } from './routes/provider.$page'
 import { Route as ApiMediaDriveUploadRouteImport } from './routes/api/media.drive-upload'
+import { Route as ApiPublicContactNotifyRouteImport } from './routes/api/public/contact-notify'
+import { Route as ApiPublicTrackRouteImport } from './routes/api/public/track'
+import { Route as ApiPublicVisitorContextRouteImport } from './routes/api/public/visitor-context'
+import { Route as AppBookingsIdRouteImport } from './routes/app.bookings.$id'
+import { Route as AppParkingIdRouteImport } from './routes/app.parking.$id'
+import { Route as ParkingAdminFacilitiesIdRouteImport } from './routes/parking-admin.facilities.$id'
+import { Route as ProviderFacilitiesIdRouteImport } from './routes/provider.facilities.$id'
 
-const SolutionRoute = SolutionRouteImport.update({
-  id: '/solution',
-  path: '/solution',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RoiCalculatorRoute = RoiCalculatorRouteImport.update({
-  id: '/roi-calculator',
-  path: '/roi-calculator',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProblemRoute = ProblemRouteImport.update({
-  id: '/problem',
-  path: '/problem',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const FeaturesRoute = FeaturesRouteImport.update({
-  id: '/features',
-  path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DashboardRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -82,9 +69,44 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FeaturesRoute = FeaturesRouteImport.update({
+  id: '/features',
+  path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ParkingAdminRoute = ParkingAdminRouteImport.update({
+  id: '/parking-admin',
+  path: '/parking-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProblemRoute = ProblemRouteImport.update({
+  id: '/problem',
+  path: '/problem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProviderRoute = ProviderRouteImport.update({
+  id: '/provider',
+  path: '/provider',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SolutionRoute = SolutionRouteImport.update({
+  id: '/solution',
+  path: '/solution',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -92,84 +114,39 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/admin_/login',
-  path: '/admin/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminForgotPasswordRoute = AdminForgotPasswordRouteImport.update({
-  id: '/admin_/forgot-password',
-  path: '/admin/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminTeamRoute = AdminTeamRouteImport.update({
-  id: '/team',
-  path: '/team',
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+const AdminBackupRoute = AdminBackupRouteImport.update({
+  id: '/backup',
+  path: '/backup',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminSeoRoute = AdminSeoRouteImport.update({
-  id: '/seo',
-  path: '/seo',
+const AdminContactInfoRoute = AdminContactInfoRouteImport.update({
+  id: '/contact-info',
+  path: '/contact-info',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminPagesRoute = AdminPagesRouteImport.update({
-  id: '/pages',
-  path: '/pages',
+const AdminContentRoute = AdminContentRouteImport.update({
+  id: '/content',
+  path: '/content',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminNavigationRoute = AdminNavigationRouteImport.update({
-  id: '/navigation',
-  path: '/navigation',
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminMediaRoute = AdminMediaRouteImport.update({
-  id: '/media',
-  path: '/media',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLocationsRoute = AdminLocationsRouteImport.update({
-  id: '/locations',
-  path: '/locations',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLiveVisitorsRoute = AdminLiveVisitorsRouteImport.update({
-  id: '/live-visitors',
-  path: '/live-visitors',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminLanguagesRoute = AdminLanguagesRouteImport.update({
-  id: '/languages',
-  path: '/languages',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
-  id: '/integrations',
-  path: '/integrations',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
-  id: '/inquiries',
-  path: '/inquiries',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminHeroRoute = AdminHeroRouteImport.update({
-  id: '/hero',
-  path: '/hero',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminFaqRoute = AdminFaqRouteImport.update({
-  id: '/faq',
-  path: '/faq',
+const AdminDesignRoute = AdminDesignRouteImport.update({
+  id: '/design',
+  path: '/design',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminEconomicFeasibilityRoute =
@@ -178,49 +155,119 @@ const AdminEconomicFeasibilityRoute =
     path: '/economic-feasibility',
     getParentRoute: () => AdminRoute,
   } as any)
-const AdminDesignRoute = AdminDesignRouteImport.update({
-  id: '/design',
-  path: '/design',
+const AdminFaqRoute = AdminFaqRouteImport.update({
+  id: '/faq',
+  path: '/faq',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminDashboardRoute = AdminDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AdminHeroRoute = AdminHeroRouteImport.update({
+  id: '/hero',
+  path: '/hero',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminContentRoute = AdminContentRouteImport.update({
-  id: '/content',
-  path: '/content',
+const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
+  id: '/inquiries',
+  path: '/inquiries',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminContactInfoRoute = AdminContactInfoRouteImport.update({
-  id: '/contact-info',
-  path: '/contact-info',
+const AdminIntegrationsRoute = AdminIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminBackupRoute = AdminBackupRouteImport.update({
-  id: '/backup',
-  path: '/backup',
+const AdminLanguagesRoute = AdminLanguagesRouteImport.update({
+  id: '/languages',
+  path: '/languages',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAuditRoute = AdminAuditRouteImport.update({
-  id: '/audit',
-  path: '/audit',
+const AdminLiveVisitorsRoute = AdminLiveVisitorsRouteImport.update({
+  id: '/live-visitors',
+  path: '/live-visitors',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
-  id: '/analytics',
-  path: '/analytics',
+const AdminLocationsRoute = AdminLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
   getParentRoute: () => AdminRoute,
 } as any)
-const ApiPublicVisitorContextRoute = ApiPublicVisitorContextRouteImport.update({
-  id: '/api/public/visitor-context',
-  path: '/api/public/visitor-context',
+const AdminMediaRoute = AdminMediaRouteImport.update({
+  id: '/media',
+  path: '/media',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNavigationRoute = AdminNavigationRouteImport.update({
+  id: '/navigation',
+  path: '/navigation',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPagesRoute = AdminPagesRouteImport.update({
+  id: '/pages',
+  path: '/pages',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSeoRoute = AdminSeoRouteImport.update({
+  id: '/seo',
+  path: '/seo',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminTeamRoute = AdminTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminForgotPasswordRoute = AdminForgotPasswordRouteImport.update({
+  id: '/admin_/forgot-password',
+  path: '/admin/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicTrackRoute = ApiPublicTrackRouteImport.update({
-  id: '/api/public/track',
-  path: '/api/public/track',
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPageRoute = AppPageRouteImport.update({
+  id: '/$page',
+  path: '/$page',
+  getParentRoute: () => AppRoute,
+} as any)
+const ParkingAdminIndexRoute = ParkingAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ParkingAdminRoute,
+} as any)
+const ParkingAdminPageRoute = ParkingAdminPageRouteImport.update({
+  id: '/$page',
+  path: '/$page',
+  getParentRoute: () => ParkingAdminRoute,
+} as any)
+const ProviderIndexRoute = ProviderIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ProviderPageRoute = ProviderPageRouteImport.update({
+  id: '/$page',
+  path: '/$page',
+  getParentRoute: () => ProviderRoute,
+} as any)
+const ApiMediaDriveUploadRoute = ApiMediaDriveUploadRouteImport.update({
+  id: '/api/media/drive-upload',
+  path: '/api/media/drive-upload',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicContactNotifyRoute = ApiPublicContactNotifyRouteImport.update({
@@ -228,20 +275,48 @@ const ApiPublicContactNotifyRoute = ApiPublicContactNotifyRouteImport.update({
   path: '/api/public/contact-notify',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiMediaDriveUploadRoute = ApiMediaDriveUploadRouteImport.update({
-  id: '/api/media/drive-upload',
-  path: '/api/media/drive-upload',
+const ApiPublicTrackRoute = ApiPublicTrackRouteImport.update({
+  id: '/api/public/track',
+  path: '/api/public/track',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicVisitorContextRoute = ApiPublicVisitorContextRouteImport.update({
+  id: '/api/public/visitor-context',
+  path: '/api/public/visitor-context',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppBookingsIdRoute = AppBookingsIdRouteImport.update({
+  id: '/bookings/$id',
+  path: '/bookings/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppParkingIdRoute = AppParkingIdRouteImport.update({
+  id: '/parking/$id',
+  path: '/parking/$id',
+  getParentRoute: () => AppRoute,
+} as any)
+const ParkingAdminFacilitiesIdRoute =
+  ParkingAdminFacilitiesIdRouteImport.update({
+    id: '/facilities/$id',
+    path: '/facilities/$id',
+    getParentRoute: () => ParkingAdminRoute,
+  } as any)
+const ProviderFacilitiesIdRoute = ProviderFacilitiesIdRouteImport.update({
+  id: '/facilities/$id',
+  path: '/facilities/$id',
+  getParentRoute: () => ProviderRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
+  '/parking-admin': typeof ParkingAdminRouteWithChildren
   '/problem': typeof ProblemRoute
-  '/roi-calculator': typeof RoiCalculatorRoute
+  '/provider': typeof ProviderRouteWithChildren
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -267,11 +342,21 @@ export interface FileRoutesByFullPath {
   '/admin/users': typeof AdminUsersRoute
   '/admin/forgot-password': typeof AdminForgotPasswordRoute
   '/admin/login': typeof AdminLoginRoute
+  '/app/$page': typeof AppPageRoute
+  '/parking-admin/$page': typeof ParkingAdminPageRoute
+  '/provider/$page': typeof ProviderPageRoute
   '/admin/': typeof AdminIndexRoute
+  '/app/': typeof AppIndexRoute
+  '/parking-admin/': typeof ParkingAdminIndexRoute
+  '/provider/': typeof ProviderIndexRoute
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
+  '/app/bookings/$id': typeof AppBookingsIdRoute
+  '/app/parking/$id': typeof AppParkingIdRoute
+  '/parking-admin/facilities/$id': typeof ParkingAdminFacilitiesIdRoute
+  '/provider/facilities/$id': typeof ProviderFacilitiesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -279,7 +364,6 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
   '/problem': typeof ProblemRoute
-  '/roi-calculator': typeof RoiCalculatorRoute
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -305,21 +389,33 @@ export interface FileRoutesByTo {
   '/admin/users': typeof AdminUsersRoute
   '/admin/forgot-password': typeof AdminForgotPasswordRoute
   '/admin/login': typeof AdminLoginRoute
+  '/app/$page': typeof AppPageRoute
+  '/parking-admin/$page': typeof ParkingAdminPageRoute
+  '/provider/$page': typeof ProviderPageRoute
   '/admin': typeof AdminIndexRoute
+  '/app': typeof AppIndexRoute
+  '/parking-admin': typeof ParkingAdminIndexRoute
+  '/provider': typeof ProviderIndexRoute
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
+  '/app/bookings/$id': typeof AppBookingsIdRoute
+  '/app/parking/$id': typeof AppParkingIdRoute
+  '/parking-admin/facilities/$id': typeof ParkingAdminFacilitiesIdRoute
+  '/provider/facilities/$id': typeof ProviderFacilitiesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
+  '/app': typeof AppRouteWithChildren
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRoute
   '/features': typeof FeaturesRoute
+  '/parking-admin': typeof ParkingAdminRouteWithChildren
   '/problem': typeof ProblemRoute
-  '/roi-calculator': typeof RoiCalculatorRoute
+  '/provider': typeof ProviderRouteWithChildren
   '/solution': typeof SolutionRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/audit': typeof AdminAuditRoute
@@ -345,22 +441,34 @@ export interface FileRoutesById {
   '/admin/users': typeof AdminUsersRoute
   '/admin_/forgot-password': typeof AdminForgotPasswordRoute
   '/admin_/login': typeof AdminLoginRoute
+  '/app/$page': typeof AppPageRoute
+  '/parking-admin/$page': typeof ParkingAdminPageRoute
+  '/provider/$page': typeof ProviderPageRoute
   '/admin/': typeof AdminIndexRoute
+  '/app/': typeof AppIndexRoute
+  '/parking-admin/': typeof ParkingAdminIndexRoute
+  '/provider/': typeof ProviderIndexRoute
   '/api/media/drive-upload': typeof ApiMediaDriveUploadRoute
   '/api/public/contact-notify': typeof ApiPublicContactNotifyRoute
   '/api/public/track': typeof ApiPublicTrackRoute
   '/api/public/visitor-context': typeof ApiPublicVisitorContextRoute
+  '/app/bookings/$id': typeof AppBookingsIdRoute
+  '/app/parking/$id': typeof AppParkingIdRoute
+  '/parking-admin/facilities/$id': typeof ParkingAdminFacilitiesIdRoute
+  '/provider/facilities/$id': typeof ProviderFacilitiesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/admin'
+    | '/app'
     | '/contact'
     | '/dashboard'
     | '/features'
+    | '/parking-admin'
     | '/problem'
-    | '/roi-calculator'
+    | '/provider'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -386,11 +494,21 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/forgot-password'
     | '/admin/login'
+    | '/app/$page'
+    | '/parking-admin/$page'
+    | '/provider/$page'
     | '/admin/'
+    | '/app/'
+    | '/parking-admin/'
+    | '/provider/'
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
     | '/api/public/visitor-context'
+    | '/app/bookings/$id'
+    | '/app/parking/$id'
+    | '/parking-admin/facilities/$id'
+    | '/provider/facilities/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -398,7 +516,6 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/features'
     | '/problem'
-    | '/roi-calculator'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -424,20 +541,32 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin/forgot-password'
     | '/admin/login'
+    | '/app/$page'
+    | '/parking-admin/$page'
+    | '/provider/$page'
     | '/admin'
+    | '/app'
+    | '/parking-admin'
+    | '/provider'
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
     | '/api/public/visitor-context'
+    | '/app/bookings/$id'
+    | '/app/parking/$id'
+    | '/parking-admin/facilities/$id'
+    | '/provider/facilities/$id'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/app'
     | '/contact'
     | '/dashboard'
     | '/features'
+    | '/parking-admin'
     | '/problem'
-    | '/roi-calculator'
+    | '/provider'
     | '/solution'
     | '/admin/analytics'
     | '/admin/audit'
@@ -463,21 +592,33 @@ export interface FileRouteTypes {
     | '/admin/users'
     | '/admin_/forgot-password'
     | '/admin_/login'
+    | '/app/$page'
+    | '/parking-admin/$page'
+    | '/provider/$page'
     | '/admin/'
+    | '/app/'
+    | '/parking-admin/'
+    | '/provider/'
     | '/api/media/drive-upload'
     | '/api/public/contact-notify'
     | '/api/public/track'
     | '/api/public/visitor-context'
+    | '/app/bookings/$id'
+    | '/app/parking/$id'
+    | '/parking-admin/facilities/$id'
+    | '/provider/facilities/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRoute
   FeaturesRoute: typeof FeaturesRoute
+  ParkingAdminRoute: typeof ParkingAdminRouteWithChildren
   ProblemRoute: typeof ProblemRoute
-  RoiCalculatorRoute: typeof RoiCalculatorRoute
+  ProviderRoute: typeof ProviderRouteWithChildren
   SolutionRoute: typeof SolutionRoute
   AdminForgotPasswordRoute: typeof AdminForgotPasswordRoute
   AdminLoginRoute: typeof AdminLoginRoute
@@ -489,46 +630,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/solution': {
-      id: '/solution'
-      path: '/solution'
-      fullPath: '/solution'
-      preLoaderRoute: typeof SolutionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/roi-calculator': {
-      id: '/roi-calculator'
-      path: '/roi-calculator'
-      fullPath: '/roi-calculator'
-      preLoaderRoute: typeof RoiCalculatorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/problem': {
-      id: '/problem'
-      path: '/problem'
-      fullPath: '/problem'
-      preLoaderRoute: typeof ProblemRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/features': {
-      id: '/features'
-      path: '/features'
-      fullPath: '/features'
-      preLoaderRoute: typeof FeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -538,11 +644,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/features': {
+      id: '/features'
+      path: '/features'
+      fullPath: '/features'
+      preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/parking-admin': {
+      id: '/parking-admin'
+      path: '/parking-admin'
+      fullPath: '/parking-admin'
+      preLoaderRoute: typeof ParkingAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/problem': {
+      id: '/problem'
+      path: '/problem'
+      fullPath: '/problem'
+      preLoaderRoute: typeof ProblemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/provider': {
+      id: '/provider'
+      path: '/provider'
+      fullPath: '/provider'
+      preLoaderRoute: typeof ProviderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solution': {
+      id: '/solution'
+      path: '/solution'
+      fullPath: '/solution'
+      preLoaderRoute: typeof SolutionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -552,158 +707,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin_/login': {
-      id: '/admin_/login'
-      path: '/admin/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin_/forgot-password': {
-      id: '/admin_/forgot-password'
-      path: '/admin/forgot-password'
-      fullPath: '/admin/forgot-password'
-      preLoaderRoute: typeof AdminForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/users': {
-      id: '/admin/users'
-      path: '/users'
-      fullPath: '/admin/users'
-      preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/team': {
-      id: '/admin/team'
-      path: '/team'
-      fullPath: '/admin/team'
-      preLoaderRoute: typeof AdminTeamRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/seo': {
-      id: '/admin/seo'
-      path: '/seo'
-      fullPath: '/admin/seo'
-      preLoaderRoute: typeof AdminSeoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/pages': {
-      id: '/admin/pages'
-      path: '/pages'
-      fullPath: '/admin/pages'
-      preLoaderRoute: typeof AdminPagesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/navigation': {
-      id: '/admin/navigation'
-      path: '/navigation'
-      fullPath: '/admin/navigation'
-      preLoaderRoute: typeof AdminNavigationRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/media': {
-      id: '/admin/media'
-      path: '/media'
-      fullPath: '/admin/media'
-      preLoaderRoute: typeof AdminMediaRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/locations': {
-      id: '/admin/locations'
-      path: '/locations'
-      fullPath: '/admin/locations'
-      preLoaderRoute: typeof AdminLocationsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/live-visitors': {
-      id: '/admin/live-visitors'
-      path: '/live-visitors'
-      fullPath: '/admin/live-visitors'
-      preLoaderRoute: typeof AdminLiveVisitorsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/languages': {
-      id: '/admin/languages'
-      path: '/languages'
-      fullPath: '/admin/languages'
-      preLoaderRoute: typeof AdminLanguagesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/integrations': {
-      id: '/admin/integrations'
-      path: '/integrations'
-      fullPath: '/admin/integrations'
-      preLoaderRoute: typeof AdminIntegrationsRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/inquiries': {
-      id: '/admin/inquiries'
-      path: '/inquiries'
-      fullPath: '/admin/inquiries'
-      preLoaderRoute: typeof AdminInquiriesRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/hero': {
-      id: '/admin/hero'
-      path: '/hero'
-      fullPath: '/admin/hero'
-      preLoaderRoute: typeof AdminHeroRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/faq': {
-      id: '/admin/faq'
-      path: '/faq'
-      fullPath: '/admin/faq'
-      preLoaderRoute: typeof AdminFaqRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/economic-feasibility': {
-      id: '/admin/economic-feasibility'
-      path: '/economic-feasibility'
-      fullPath: '/admin/economic-feasibility'
-      preLoaderRoute: typeof AdminEconomicFeasibilityRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/design': {
-      id: '/admin/design'
-      path: '/design'
-      fullPath: '/admin/design'
-      preLoaderRoute: typeof AdminDesignRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/dashboard': {
-      id: '/admin/dashboard'
-      path: '/dashboard'
-      fullPath: '/admin/dashboard'
-      preLoaderRoute: typeof AdminDashboardRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/content': {
-      id: '/admin/content'
-      path: '/content'
-      fullPath: '/admin/content'
-      preLoaderRoute: typeof AdminContentRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/contact-info': {
-      id: '/admin/contact-info'
-      path: '/contact-info'
-      fullPath: '/admin/contact-info'
-      preLoaderRoute: typeof AdminContactInfoRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/admin/backup': {
-      id: '/admin/backup'
-      path: '/backup'
-      fullPath: '/admin/backup'
-      preLoaderRoute: typeof AdminBackupRouteImport
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/audit': {
@@ -713,25 +721,207 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAuditRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/analytics': {
-      id: '/admin/analytics'
-      path: '/analytics'
-      fullPath: '/admin/analytics'
-      preLoaderRoute: typeof AdminAnalyticsRouteImport
+    '/admin/backup': {
+      id: '/admin/backup'
+      path: '/backup'
+      fullPath: '/admin/backup'
+      preLoaderRoute: typeof AdminBackupRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/api/public/visitor-context': {
-      id: '/api/public/visitor-context'
-      path: '/api/public/visitor-context'
-      fullPath: '/api/public/visitor-context'
-      preLoaderRoute: typeof ApiPublicVisitorContextRouteImport
+    '/admin/contact-info': {
+      id: '/admin/contact-info'
+      path: '/contact-info'
+      fullPath: '/admin/contact-info'
+      preLoaderRoute: typeof AdminContactInfoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/content': {
+      id: '/admin/content'
+      path: '/content'
+      fullPath: '/admin/content'
+      preLoaderRoute: typeof AdminContentRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/design': {
+      id: '/admin/design'
+      path: '/design'
+      fullPath: '/admin/design'
+      preLoaderRoute: typeof AdminDesignRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/economic-feasibility': {
+      id: '/admin/economic-feasibility'
+      path: '/economic-feasibility'
+      fullPath: '/admin/economic-feasibility'
+      preLoaderRoute: typeof AdminEconomicFeasibilityRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/faq': {
+      id: '/admin/faq'
+      path: '/faq'
+      fullPath: '/admin/faq'
+      preLoaderRoute: typeof AdminFaqRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/hero': {
+      id: '/admin/hero'
+      path: '/hero'
+      fullPath: '/admin/hero'
+      preLoaderRoute: typeof AdminHeroRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/inquiries': {
+      id: '/admin/inquiries'
+      path: '/inquiries'
+      fullPath: '/admin/inquiries'
+      preLoaderRoute: typeof AdminInquiriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/integrations': {
+      id: '/admin/integrations'
+      path: '/integrations'
+      fullPath: '/admin/integrations'
+      preLoaderRoute: typeof AdminIntegrationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/languages': {
+      id: '/admin/languages'
+      path: '/languages'
+      fullPath: '/admin/languages'
+      preLoaderRoute: typeof AdminLanguagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/live-visitors': {
+      id: '/admin/live-visitors'
+      path: '/live-visitors'
+      fullPath: '/admin/live-visitors'
+      preLoaderRoute: typeof AdminLiveVisitorsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/locations': {
+      id: '/admin/locations'
+      path: '/locations'
+      fullPath: '/admin/locations'
+      preLoaderRoute: typeof AdminLocationsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/media': {
+      id: '/admin/media'
+      path: '/media'
+      fullPath: '/admin/media'
+      preLoaderRoute: typeof AdminMediaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/navigation': {
+      id: '/admin/navigation'
+      path: '/navigation'
+      fullPath: '/admin/navigation'
+      preLoaderRoute: typeof AdminNavigationRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pages': {
+      id: '/admin/pages'
+      path: '/pages'
+      fullPath: '/admin/pages'
+      preLoaderRoute: typeof AdminPagesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/seo': {
+      id: '/admin/seo'
+      path: '/seo'
+      fullPath: '/admin/seo'
+      preLoaderRoute: typeof AdminSeoRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/team': {
+      id: '/admin/team'
+      path: '/team'
+      fullPath: '/admin/team'
+      preLoaderRoute: typeof AdminTeamRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin_/forgot-password': {
+      id: '/admin_/forgot-password'
+      path: '/admin/forgot-password'
+      fullPath: '/admin/forgot-password'
+      preLoaderRoute: typeof AdminForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/track': {
-      id: '/api/public/track'
-      path: '/api/public/track'
-      fullPath: '/api/public/track'
-      preLoaderRoute: typeof ApiPublicTrackRouteImport
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/$page': {
+      id: '/app/$page'
+      path: '/$page'
+      fullPath: '/app/$page'
+      preLoaderRoute: typeof AppPageRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/parking-admin/': {
+      id: '/parking-admin/'
+      path: '/'
+      fullPath: '/parking-admin/'
+      preLoaderRoute: typeof ParkingAdminIndexRouteImport
+      parentRoute: typeof ParkingAdminRoute
+    }
+    '/parking-admin/$page': {
+      id: '/parking-admin/$page'
+      path: '/$page'
+      fullPath: '/parking-admin/$page'
+      preLoaderRoute: typeof ParkingAdminPageRouteImport
+      parentRoute: typeof ParkingAdminRoute
+    }
+    '/provider/': {
+      id: '/provider/'
+      path: '/'
+      fullPath: '/provider/'
+      preLoaderRoute: typeof ProviderIndexRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/provider/$page': {
+      id: '/provider/$page'
+      path: '/$page'
+      fullPath: '/provider/$page'
+      preLoaderRoute: typeof ProviderPageRouteImport
+      parentRoute: typeof ProviderRoute
+    }
+    '/api/media/drive-upload': {
+      id: '/api/media/drive-upload'
+      path: '/api/media/drive-upload'
+      fullPath: '/api/media/drive-upload'
+      preLoaderRoute: typeof ApiMediaDriveUploadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/contact-notify': {
@@ -741,12 +931,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContactNotifyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/media/drive-upload': {
-      id: '/api/media/drive-upload'
-      path: '/api/media/drive-upload'
-      fullPath: '/api/media/drive-upload'
-      preLoaderRoute: typeof ApiMediaDriveUploadRouteImport
+    '/api/public/track': {
+      id: '/api/public/track'
+      path: '/api/public/track'
+      fullPath: '/api/public/track'
+      preLoaderRoute: typeof ApiPublicTrackRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/public/visitor-context': {
+      id: '/api/public/visitor-context'
+      path: '/api/public/visitor-context'
+      fullPath: '/api/public/visitor-context'
+      preLoaderRoute: typeof ApiPublicVisitorContextRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/bookings/$id': {
+      id: '/app/bookings/$id'
+      path: '/bookings/$id'
+      fullPath: '/app/bookings/$id'
+      preLoaderRoute: typeof AppBookingsIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/parking/$id': {
+      id: '/app/parking/$id'
+      path: '/parking/$id'
+      fullPath: '/app/parking/$id'
+      preLoaderRoute: typeof AppParkingIdRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/parking-admin/facilities/$id': {
+      id: '/parking-admin/facilities/$id'
+      path: '/facilities/$id'
+      fullPath: '/parking-admin/facilities/$id'
+      preLoaderRoute: typeof ParkingAdminFacilitiesIdRouteImport
+      parentRoute: typeof ParkingAdminRoute
+    }
+    '/provider/facilities/$id': {
+      id: '/provider/facilities/$id'
+      path: '/facilities/$id'
+      fullPath: '/provider/facilities/$id'
+      preLoaderRoute: typeof ProviderFacilitiesIdRouteImport
+      parentRoute: typeof ProviderRoute
     }
   }
 }
@@ -805,14 +1030,64 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
+interface AppRouteChildren {
+  AppPageRoute: typeof AppPageRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppBookingsIdRoute: typeof AppBookingsIdRoute
+  AppParkingIdRoute: typeof AppParkingIdRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppPageRoute: AppPageRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppBookingsIdRoute: AppBookingsIdRoute,
+  AppParkingIdRoute: AppParkingIdRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
+interface ParkingAdminRouteChildren {
+  ParkingAdminPageRoute: typeof ParkingAdminPageRoute
+  ParkingAdminIndexRoute: typeof ParkingAdminIndexRoute
+  ParkingAdminFacilitiesIdRoute: typeof ParkingAdminFacilitiesIdRoute
+}
+
+const ParkingAdminRouteChildren: ParkingAdminRouteChildren = {
+  ParkingAdminPageRoute: ParkingAdminPageRoute,
+  ParkingAdminIndexRoute: ParkingAdminIndexRoute,
+  ParkingAdminFacilitiesIdRoute: ParkingAdminFacilitiesIdRoute,
+}
+
+const ParkingAdminRouteWithChildren = ParkingAdminRoute._addFileChildren(
+  ParkingAdminRouteChildren,
+)
+
+interface ProviderRouteChildren {
+  ProviderPageRoute: typeof ProviderPageRoute
+  ProviderIndexRoute: typeof ProviderIndexRoute
+  ProviderFacilitiesIdRoute: typeof ProviderFacilitiesIdRoute
+}
+
+const ProviderRouteChildren: ProviderRouteChildren = {
+  ProviderPageRoute: ProviderPageRoute,
+  ProviderIndexRoute: ProviderIndexRoute,
+  ProviderFacilitiesIdRoute: ProviderFacilitiesIdRoute,
+}
+
+const ProviderRouteWithChildren = ProviderRoute._addFileChildren(
+  ProviderRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
+  AppRoute: AppRouteWithChildren,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRoute,
   FeaturesRoute: FeaturesRoute,
+  ParkingAdminRoute: ParkingAdminRouteWithChildren,
   ProblemRoute: ProblemRoute,
-  RoiCalculatorRoute: RoiCalculatorRoute,
+  ProviderRoute: ProviderRouteWithChildren,
   SolutionRoute: SolutionRoute,
   AdminForgotPasswordRoute: AdminForgotPasswordRoute,
   AdminLoginRoute: AdminLoginRoute,
@@ -824,3 +1099,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

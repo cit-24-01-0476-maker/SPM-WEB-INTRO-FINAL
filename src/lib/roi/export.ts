@@ -74,7 +74,10 @@ export function exportProjectionCsv(results: EFResults): void {
   rows.push(["Five-Year Net Profit", Math.round(results.fiveYearProfit)]);
 
   const csv = rows.map((r) => r.map(csvCell).join(",")).join("\n");
-  triggerDownload(new Blob([csv], { type: "text/csv;charset=utf-8;" }), "spm-eco-roi-projection.csv");
+  triggerDownload(
+    new Blob([csv], { type: "text/csv;charset=utf-8;" }),
+    "spm-eco-roi-projection.csv",
+  );
 }
 
 /* ------------------------------- PDF -------------------------------- */

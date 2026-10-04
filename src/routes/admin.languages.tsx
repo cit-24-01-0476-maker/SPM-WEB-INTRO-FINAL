@@ -244,7 +244,9 @@ function SwitcherPreview({ settings }: { settings: LanguageSettings }) {
               key={c}
               lang={c}
               className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm ${
-                c === active ? "bg-secondary font-semibold text-foreground" : "text-muted-foreground"
+                c === active
+                  ? "bg-secondary font-semibold text-foreground"
+                  : "text-muted-foreground"
               }`}
             >
               {settings.labels[c]}

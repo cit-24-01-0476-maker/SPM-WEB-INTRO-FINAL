@@ -123,7 +123,12 @@ function PagesPage() {
       const { data } = await dbWrite<{ id: string }>({
         op: "insert",
         table: "pages",
-        values: { slug: `new-page-${n}`, title: `New Page ${n}`, status: "draft", display_order: n },
+        values: {
+          slug: `new-page-${n}`,
+          title: `New Page ${n}`,
+          status: "draft",
+          display_order: n,
+        },
         select: "id",
         single: true,
       });
@@ -151,7 +156,9 @@ function PagesPage() {
         select: "id",
         single: true,
       });
-      const { data: secs } = await dbRead<{ type: string; content: unknown; display_order: number; is_visible: boolean }[]>({
+      const { data: secs } = await dbRead<
+        { type: string; content: unknown; display_order: number; is_visible: boolean }[]
+      >({
         table: "sections",
         select: "*",
         eq: [["page_id", page.id]],
@@ -221,12 +228,16 @@ function PagesPage() {
                   <button
                     onClick={() => setActiveId(p.id)}
                     className={`flex w-full items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-left text-sm transition-colors ${
-                      activeId === p.id ? "bg-secondary font-semibold text-foreground" : "hover:bg-secondary/50"
+                      activeId === p.id
+                        ? "bg-secondary font-semibold text-foreground"
+                        : "hover:bg-secondary/50"
                     }`}
                   >
                     <span className="min-w-0">
                       <span className="block truncate text-foreground">{p.title}</span>
-                      <span className="block truncate font-mono text-[11px] text-muted-foreground">/{p.slug}</span>
+                      <span className="block truncate font-mono text-[11px] text-muted-foreground">
+                        /{p.slug}
+                      </span>
                     </span>
                     <span
                       className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-semibold ${
@@ -253,7 +264,11 @@ function PagesPage() {
           />
         ) : (
           <AdminCard>
-            <EmptyState icon={Layers} title="Select a page" description="Choose a page to edit its sections." />
+            <EmptyState
+              icon={Layers}
+              title="Select a page"
+              description="Choose a page to edit its sections."
+            />
           </AdminCard>
         )}
       </div>
@@ -336,7 +351,12 @@ function PageEditor({
   async function persistOrder(next: Section[]) {
     await Promise.all(
       next.map((s, i) =>
-        dbWrite({ op: "update", table: "sections", values: { display_order: i + 1 }, eq: [["id", s.id]] }),
+        dbWrite({
+          op: "update",
+          table: "sections",
+          values: { display_order: i + 1 },
+          eq: [["id", s.id]],
+        }),
       ),
     );
   }
@@ -409,7 +429,9 @@ function PageEditor({
             <span className="mb-1 block text-xs font-semibold text-foreground">URL slug</span>
             <input
               value={meta.slug}
-              onChange={(e) => setMeta({ ...meta, slug: e.target.value.replace(/\s+/g, "-").toLowerCase() })}
+              onChange={(e) =>
+                setMeta({ ...meta, slug: e.target.value.replace(/\s+/g, "-").toLowerCase() })
+              }
               className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none focus:ring-2 focus:ring-primary/20"
             />
           </label>
@@ -431,7 +453,11 @@ function PageEditor({
               disabled={saveMeta.isPending}
               className="inline-flex items-center gap-2 rounded-lg bg-gradient-primary px-4 py-2 text-sm font-semibold text-white shadow-glow disabled:opacity-60"
             >
-              {saveMeta.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {saveMeta.isPending ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Save className="h-4 w-4" />
+              )}
               Save page
             </button>
           </div>
@@ -472,7 +498,10 @@ function PageEditor({
           />
         ) : (
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={onDragEnd}>
-            <SortableContext items={sections.map((s) => s.id)} strategy={verticalListSortingStrategy}>
+            <SortableContext
+              items={sections.map((s) => s.id)}
+              strategy={verticalListSortingStrategy}
+            >
               <div className="space-y-2">
                 {sections.map((s) => (
                   <SortableSection
@@ -508,10 +537,19 @@ function SortableSection({
   const [heading, setHeading] = useState(section.content?.heading ?? "");
   const [text, setText] = useState(section.content?.text ?? "");
 
-  const style = { transform: CSS.Transform.toString(transform), transition, opacity: isDragging ? 0.6 : 1 };
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0.6 : 1,
+  };
 
   async function toggleVisible() {
-    await dbWrite({ op: "update", table: "sections", values: { is_visible: !section.is_visible }, eq: [["id", section.id]] });
+    await dbWrite({
+      op: "update",
+      table: "sections",
+      values: { is_visible: !section.is_visible },
+      eq: [["id", section.id]],
+    });
     onChanged();
   }
   async function remove() {
@@ -520,18 +558,19 @@ function SortableSection({
     toast.success("Section removed");
   }
   async function saveContent() {
-    await dbWrite({ op: "update", table: "sections", values: { content: { heading, text } }, eq: [["id", section.id]] });
+    await dbWrite({
+      op: "update",
+      table: "sections",
+      values: { content: { heading, text } },
+      eq: [["id", section.id]],
+    });
     onChanged();
     setOpen(false);
     toast.success("Section updated");
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="rounded-xl border border-border bg-background"
-    >
+    <div ref={setNodeRef} style={style} className="rounded-xl border border-border bg-background">
       <div className="flex items-center gap-2 p-3">
         <button
           {...attributes}
@@ -556,7 +595,11 @@ function SortableSection({
           className="grid h-8 w-8 place-items-center rounded-lg text-muted-foreground hover:bg-secondary"
           title={section.is_visible ? "Hide" : "Show"}
         >
-          {section.is_visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4 text-amber-600" />}
+          {section.is_visible ? (
+            <Eye className="h-4 w-4" />
+          ) : (
+            <EyeOff className="h-4 w-4 text-amber-600" />
+          )}
         </button>
         <button
           onClick={remove}

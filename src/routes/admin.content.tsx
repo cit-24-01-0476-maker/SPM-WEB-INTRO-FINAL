@@ -132,7 +132,12 @@ function ContentPage() {
         actions={
           <button
             onClick={() =>
-              setEditing({ section_key: "", title: "", is_published: true, display_order: (data?.length ?? 0) + 1 })
+              setEditing({
+                section_key: "",
+                title: "",
+                is_published: true,
+                display_order: (data?.length ?? 0) + 1,
+              })
             }
             className="inline-flex items-center gap-2 rounded-lg bg-gradient-primary px-4 py-2 text-sm font-semibold text-white shadow-glow"
           >
@@ -151,7 +156,9 @@ function ContentPage() {
             description="Create editable sections such as Hero, Problem, Solution, Features and Contact."
             action={
               <button
-                onClick={() => setEditing({ section_key: "", is_published: true, display_order: 1 })}
+                onClick={() =>
+                  setEditing({ section_key: "", is_published: true, display_order: 1 })
+                }
                 className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
               >
                 <Plus className="h-4 w-4" /> Create first section
@@ -172,7 +179,9 @@ function ContentPage() {
                       {c.section_key}
                     </code>
                   </p>
-                  <p className="truncate text-xs text-muted-foreground">{c.subtitle || c.description || "—"}</p>
+                  <p className="truncate text-xs text-muted-foreground">
+                    {c.subtitle || c.description || "—"}
+                  </p>
                 </div>
                 <span
                   className={`hidden rounded-full px-2 py-0.5 text-xs font-semibold sm:inline ${
@@ -275,8 +284,13 @@ function EditDrawer({
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <div className="relative h-full w-full max-w-md overflow-y-auto border-l border-border bg-card shadow-2xl">
         <div className="sticky top-0 flex items-center justify-between border-b border-border bg-card px-5 py-4">
-          <h2 className="text-base font-bold text-foreground">{value.id ? "Edit section" : "New section"}</h2>
-          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-lg hover:bg-secondary">
+          <h2 className="text-base font-bold text-foreground">
+            {value.id ? "Edit section" : "New section"}
+          </h2>
+          <button
+            onClick={onClose}
+            className="grid h-8 w-8 place-items-center rounded-lg hover:bg-secondary"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
@@ -356,21 +370,32 @@ function HistoryDrawer({ content, onClose }: { content: Content; onClose: () => 
       <div className="relative h-full w-full max-w-md overflow-y-auto border-l border-border bg-card shadow-2xl">
         <div className="sticky top-0 flex items-center justify-between border-b border-border bg-card px-5 py-4">
           <h2 className="text-base font-bold text-foreground">Version history</h2>
-          <button onClick={onClose} className="grid h-8 w-8 place-items-center rounded-lg hover:bg-secondary">
+          <button
+            onClick={onClose}
+            className="grid h-8 w-8 place-items-center rounded-lg hover:bg-secondary"
+          >
             <X className="h-4 w-4" />
           </button>
         </div>
         <div className="space-y-3 p-5">
           {(data ?? []).length === 0 ? (
-            <EmptyState icon={History} title="No previous versions" description="Edits will be versioned here." />
+            <EmptyState
+              icon={History}
+              title="No previous versions"
+              description="Edits will be versioned here."
+            />
           ) : (
             (data ?? []).map((v) => {
               const snap = v.snapshot as { title?: string; subtitle?: string };
               return (
                 <div key={v.id} className="rounded-lg border border-border bg-background p-3">
-                  <p className="text-sm font-semibold text-foreground">{snap.title || "Untitled"}</p>
+                  <p className="text-sm font-semibold text-foreground">
+                    {snap.title || "Untitled"}
+                  </p>
                   <p className="text-xs text-muted-foreground">{snap.subtitle || ""}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">{new Date(v.created_at).toLocaleString()}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {new Date(v.created_at).toLocaleString()}
+                  </p>
                 </div>
               );
             })

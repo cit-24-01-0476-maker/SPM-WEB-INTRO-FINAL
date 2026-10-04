@@ -11,7 +11,7 @@ const GROUPS = [
       "Reserve parking in advance",
       "Avoid unnecessary searching",
       "Transparent pricing",
-      "QR-based easy access",
+      "QR fallback verification",
       "Reduced waiting time",
     ],
   },
@@ -26,7 +26,7 @@ const GROUPS = [
       "Manage multiple locations",
       "Get historical reports",
       "Improve security",
-      "Increase revenue with dynamic pricing",
+      "Understand revenue and platform commission",
     ],
   },
   {

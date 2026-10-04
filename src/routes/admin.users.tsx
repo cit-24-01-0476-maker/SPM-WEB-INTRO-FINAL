@@ -29,7 +29,10 @@ function UsersPage() {
     queryFn: async () => {
       const [profiles, roles] = await Promise.all([
         dbRead<ProfileRow[]>({ table: "profiles", select: "id, email, full_name, last_login_at" }),
-        dbRead<{ user_id: string; role: string }[]>({ table: "user_roles", select: "user_id, role" }),
+        dbRead<{ user_id: string; role: string }[]>({
+          table: "user_roles",
+          select: "user_id, role",
+        }),
       ]);
       const roleMap: Record<string, AppRole[]> = {};
       for (const r of roles.data ?? []) {
@@ -45,7 +48,10 @@ function UsersPage() {
         await dbWrite({
           op: "delete",
           table: "user_roles",
-          eq: [["user_id", userId], ["role", role]],
+          eq: [
+            ["user_id", userId],
+            ["role", role],
+          ],
         });
       } else {
         await dbWrite({ op: "insert", table: "user_roles", values: { user_id: userId, role } });
@@ -96,7 +102,11 @@ function UsersPage() {
         {isLoading ? (
           <TableSkeleton rows={4} cols={5} />
         ) : users.length === 0 ? (
-          <EmptyState icon={UserPlus} title="No users yet" description="Register the first admin account from the sign-in page." />
+          <EmptyState
+            icon={UserPlus}
+            title="No users yet"
+            description="Register the first admin account from the sign-in page."
+          />
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -119,7 +129,9 @@ function UsersPage() {
                       <td className="py-3 pr-4">
                         <p className="font-semibold text-foreground">
                           {u.full_name || "—"}
-                          {u.id === me?.uid && <span className="ml-2 text-xs text-primary">(you)</span>}
+                          {u.id === me?.uid && (
+                            <span className="ml-2 text-xs text-primary">(you)</span>
+                          )}
                         </p>
                         <p className="text-xs text-muted-foreground">{u.email}</p>
                       </td>

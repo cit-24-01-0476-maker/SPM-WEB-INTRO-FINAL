@@ -1,99 +1,155 @@
-import {
-  ScanLine,
-  TrendingUp,
-  QrCode,
-  LayoutDashboard,
-  ArrowRight,
-  ShieldCheck,
-  Clock3,
-} from "lucide-react";
-import { HeroParkingVideo } from "./HeroParkingVideo";
+import { ArrowRight, CalendarCheck, MapPin, QrCode, BarChart3, Navigation } from "lucide-react";
 import { Container } from "./primitives";
-import { CmsButton } from "./CmsButton";
-import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { ParkingPhoto } from "./ParkingPhoto";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { usePublicSettings } from "@/lib/cms/PublicSettings";
+import { DEFAULT_HERO } from "@/lib/cms/model";
 
-const STATUS = [
-  { icon: Clock3, label: "Real-Time Availability" },
-  { icon: ScanLine, label: "ANPR Automation" },
-  { icon: TrendingUp, label: "Dynamic Pricing" },
-  { icon: QrCode, label: "Secure QR Payments" },
-  { icon: LayoutDashboard, label: "Multi-Location Control" },
+const CAPABILITIES = [
+  { icon: CalendarCheck, title: "Real-time booking", detail: "Find and reserve with ease" },
+  { icon: MapPin, title: "Custom navigation", detail: "Find your exact parking space" },
+  { icon: QrCode, title: "Demo wallet", detail: "Simple simulated payments" },
+  { icon: BarChart3, title: "Operator insights", detail: "Smarter, data-driven operations" },
 ];
 
 export function Hero() {
+  const { lang, tt } = useLanguage();
   const { hero } = usePublicSettings();
-  const { tt } = useLanguage();
+  // Migrate the previous built-in copy while honoring subsequently published CMS edits.
+  const headline =
+    hero.headline === "Intelligent Parking. Seamless Mobility."
+      ? DEFAULT_HERO.headline
+      : hero.headline;
+  const eyebrow =
+    hero.eyebrow === "AI-Powered Smart Parking Ecosystem" ? DEFAULT_HERO.eyebrow : hero.eyebrow;
+  const supporting = hero.supporting.startsWith(
+    "SPM ECO System connects real-time parking availability,",
+  )
+    ? DEFAULT_HERO.supporting
+    : hero.supporting;
+  const primaryLabel =
+    hero.primaryCtaLabel === "Request a System Demo"
+      ? DEFAULT_HERO.primaryCtaLabel
+      : hero.primaryCtaLabel;
+  const primaryLink =
+    hero.primaryCtaLabel === "Request a System Demo"
+      ? DEFAULT_HERO.primaryCtaLink
+      : hero.primaryCtaLink;
+  const secondaryLabel =
+    hero.secondaryCtaLabel === "Explore the Platform"
+      ? DEFAULT_HERO.secondaryCtaLabel
+      : hero.secondaryCtaLabel;
+  const secondaryLink =
+    hero.secondaryCtaLabel === "Explore the Platform"
+      ? DEFAULT_HERO.secondaryCtaLink
+      : hero.secondaryCtaLink;
+  const trust = hero.trustStatement.startsWith("Built for modern parking facilities,")
+    ? DEFAULT_HERO.trustStatement
+    : hero.trustStatement;
   return (
-    <section
-      id="home"
-      className="relative overflow-hidden bg-gradient-hero pt-32 pb-16 text-white sm:pt-36 lg:pb-24"
-    >
-      {/* soft grid pattern */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.08]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-          backgroundSize: "56px 56px",
-          maskImage: "radial-gradient(ellipse at 60% 30%, black 0%, transparent 75%)",
-        }}
-      />
-      {/* controlled cyan / blue radial glow */}
-      <div className="pointer-events-none absolute -left-32 top-0 h-96 w-96 rounded-full bg-[#176bff]/25 blur-[140px]" />
-      <div className="pointer-events-none absolute right-0 top-1/3 h-96 w-96 rounded-full bg-[#18c8ff]/20 blur-[150px]" />
-
-      <Container className="relative">
-        <div className="grid items-center gap-14 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
-          <div className="reveal is-visible flex flex-col gap-6">
-            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-cyan backdrop-blur">
-              <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
-              {tt(hero.eyebrow)}
-            </span>
-
-            <h1 className="text-[2.5rem] font-extrabold leading-[1.03] sm:text-6xl lg:text-[4.5rem]">
-              {tt(hero.headline)}
-            </h1>
-
-            <p className="max-w-xl text-base leading-relaxed text-white/80 sm:text-lg">
-              {tt(hero.supporting)}
+    <>
+      <section id="home" className="eco-hero">
+        <Container className="eco-hero-grid">
+          <div className="eco-hero-copy">
+            <p className="eco-eyebrow">
+              {eyebrow !== DEFAULT_HERO.eyebrow
+                ? tt(eyebrow)
+                : lang === "si"
+                  ? "ස්මාර්ට් වාහන නැවැත්වීම. යහපත් නගර."
+                  : "SMART PARKING. BETTER CITIES."}
             </p>
-
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <CmsButton variant="primary" href={hero.primaryCtaLink}>
-                {tt(hero.primaryCtaLabel)}
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </CmsButton>
-              <CmsButton variant="secondary" onDark href={hero.secondaryCtaLink}>
-                {tt(hero.secondaryCtaLabel)}
-              </CmsButton>
+            <h1>
+              {headline !== DEFAULT_HERO.headline ? (
+                tt(headline)
+              ) : lang === "si" ? (
+                <>
+                  සොයන්න. මඟ සොයාගන්න.
+                  <br />
+                  පහසුවෙන් නවත්වන්න.
+                </>
+              ) : (
+                <>
+                  Find. Navigate.
+                  <br />
+                  Park Smarter.
+                </>
+              )}
+            </h1>
+            <p className="eco-hero-description">
+              {supporting !== DEFAULT_HERO.supporting
+                ? tt(supporting)
+                : lang === "si"
+                  ? "වාහන නැවැත්වීමට ඉඩ සොයන්න, ඔබේ ස්ථානය වෙන්කරගෙන SPM ECO සමඟ එතැනටම මඟ සොයාගන්න."
+                  : "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO."}
+            </p>
+            <div className="eco-actions">
+              <a className="eco-button" href={primaryLink}>
+                {tt(primaryLabel)}
+                <ArrowRight size={18} />
+              </a>
+              <a className="eco-button eco-button-outline" href={secondaryLink}>
+                <Navigation size={17} />
+                {tt(secondaryLabel)}
+              </a>
             </div>
-
-            <p className="flex items-center gap-2 pt-1 text-xs text-white/55">
-              <ShieldCheck className="h-4 w-4 text-cyan" />
-              {tt(hero.trustStatement)}
+            <p className="eco-hero-note">
+              <a href="/provider">{tt("For Parking Providers")} →</a>
+              <br />
+              {tt(trust)}
             </p>
           </div>
-
-          {/* Hero visual: live smart parking system demonstration video */}
-          <HeroParkingVideo />
-        </div>
-
-        {/* Status bar with dividers */}
-        <div className="reveal is-visible mt-14 rounded-2xl border border-white/10 bg-white/[0.04] px-2 py-3 backdrop-blur lg:mt-20">
-          <div className="flex flex-wrap items-center justify-center gap-y-3 divide-white/10 sm:divide-x">
-            {STATUS.map((s) => (
-              <span
-                key={s.label}
-                className="inline-flex items-center gap-2 px-4 text-xs font-medium text-white/80 sm:px-6"
-              >
-                <s.icon className="h-4 w-4 text-cyan" />
-                {tt(s.label)}
-              </span>
+          <div className="eco-hero-art">
+            {hero.mediaType === "video" && hero.backgroundVideo ? (
+              <video
+                src={hero.backgroundVideo}
+                poster={hero.posterImage || undefined}
+                autoPlay={hero.autoplay}
+                loop={hero.loop}
+                muted={hero.muted}
+                controls
+                playsInline
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: hero.objectPosition,
+                }}
+              />
+            ) : hero.backgroundImage ? (
+              <img
+                src={hero.backgroundImage}
+                alt={tt("SPM ECO platform concept")}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: hero.objectPosition,
+                }}
+              />
+            ) : (
+              <ParkingPhoto />
+            )}
+            <span className="eco-art-caption">{tt("SPM ECO platform concept")}</span>
+          </div>
+        </Container>
+      </section>
+      <div className="eco-capabilities">
+        <Container>
+          <div className="eco-capability-grid">
+            {CAPABILITIES.map(({ icon: Icon, title, detail }) => (
+              <div key={title} className="eco-capability">
+                <span className="eco-icon">
+                  <Icon size={23} />
+                </span>
+                <div>
+                  <h3>{tt(title)}</h3>
+                  <p>{tt(detail)}</p>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </div>
+    </>
   );
 }

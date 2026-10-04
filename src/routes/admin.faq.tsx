@@ -8,7 +8,12 @@ export const Route = createFileRoute("/admin/faq")({
       title="FAQ"
       description="Manage frequently asked questions and answers."
       icon={HelpCircle}
-      points={["Add / edit questions", "Reorder & categorize", "Hide questions", "Publish or draft"]}
+      points={[
+        "Add / edit questions",
+        "Reorder & categorize",
+        "Hide questions",
+        "Publish or draft",
+      ]}
     />
   ),
 });

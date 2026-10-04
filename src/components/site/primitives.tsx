@@ -24,8 +24,7 @@ export function Reveal({
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">
-      <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+    <span className="eco-section-eyebrow inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-primary">
       {children}
     </span>
   );
@@ -87,7 +86,7 @@ export function Container({
     <div
       className={cn(
         "mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-10",
-        wide ? "max-w-[1520px]" : "max-w-[1440px]",
+        wide ? "max-w-[1440px]" : "max-w-[1320px]",
         className,
       )}
     >

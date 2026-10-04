@@ -30,7 +30,8 @@ export const firebaseConfigured = true;
 
 // Initialize Firebase exactly once (guards against duplicate-app errors during
 // HMR / repeated module evaluation).
-export const firebaseApp: FirebaseApp = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+export const firebaseApp: FirebaseApp =
+  getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 
 export const firebaseAuth: Auth = getAuth(firebaseApp);
 export const firestore: Firestore = getFirestore(firebaseApp);

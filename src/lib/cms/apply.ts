@@ -120,7 +120,6 @@ export function applyDesign(design: DesignSettings, target?: HTMLElement): void 
   setColor("--destructive", c.error);
   setColor("--sidebar", c.adminSidebar);
 
-
   // Gradients + glows.
   set(
     "--gradient-primary",

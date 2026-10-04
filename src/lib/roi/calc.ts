@@ -127,8 +127,8 @@ export const DEFAULT_EF_INPUTS: EFInputs = {
   cameraCount: 8,
   gateUnitCost: 450_000,
   gateCount: 4,
-  sensorUnitCost: 12_000,
-  sensorCount: 60,
+  sensorUnitCost: 0,
+  sensorCount: 0,
   serverCost: 900_000,
   networkInstallCost: 400_000,
   electricalInstallCost: 350_000,
@@ -207,12 +207,7 @@ export interface BreakdownItem {
   amount: number;
 }
 
-export type FeasibilityStatus =
-  | "excellent"
-  | "good"
-  | "moderate"
-  | "longterm"
-  | "notfeasible";
+export type FeasibilityStatus = "excellent" | "good" | "moderate" | "longterm" | "notfeasible";
 
 export interface EFResults {
   currency: string;
@@ -293,8 +288,7 @@ export function computeResults(
     { key: "premium", amount: num(raw.premiumParkingIncome) },
     { key: "otherIncome", amount: num(raw.otherMonthlyIncome) },
   ];
-  const monthlyGrossRevenue =
-    revenueBreakdown.reduce((s, x) => s + x.amount, 0) * mRev;
+  const monthlyGrossRevenue = revenueBreakdown.reduce((s, x) => s + x.amount, 0) * mRev;
 
   // Investment
   const investmentBreakdown: BreakdownItem[] = [
@@ -303,7 +297,6 @@ export function computeResults(
     { key: "mobileApp", amount: num(raw.mobileAppCost) },
     { key: "cameras", amount: num(raw.cameraUnitCost) * num(raw.cameraCount) },
     { key: "gates", amount: num(raw.gateUnitCost) * num(raw.gateCount) },
-    { key: "sensors", amount: num(raw.sensorUnitCost) * num(raw.sensorCount) },
     { key: "server", amount: num(raw.serverCost) },
     { key: "network", amount: num(raw.networkInstallCost) },
     { key: "electrical", amount: num(raw.electricalInstallCost) },
@@ -433,9 +426,7 @@ export function computeResults(
 export function formatCurrency(amount: number, currency: string): string {
   const n = Number.isFinite(amount) ? amount : 0;
   const rounded = Math.round(n);
-  const formatted = Math.abs(rounded)
-    .toLocaleString("en-US")
-    .replace(/,/g, ",");
+  const formatted = Math.abs(rounded).toLocaleString("en-US").replace(/,/g, ",");
   return `${rounded < 0 ? "-" : ""}${currency} ${formatted}`;
 }
 

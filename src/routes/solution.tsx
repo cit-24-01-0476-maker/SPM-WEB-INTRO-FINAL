@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { Solution } from "@/components/site/Solution";
 import { HowItWorks } from "@/components/site/HowItWorks";
+import { ParkingJourney } from "@/components/site/ParkingJourney";
+import { ParkingCta } from "@/components/site/ParkingCta";
 
 export const Route = createFileRoute("/solution")({
   head: () => ({
@@ -10,13 +12,13 @@ export const Route = createFileRoute("/solution")({
       {
         name: "description",
         content:
-          "How SPM ECO System works: real-time availability, advance booking, dynamic pricing, ANPR gate automation, QR payment, and a step-by-step smart parking workflow.",
+          "How SPM ECO works: find parking, book a space, navigate to the facility and reserved slot, park and exit with a final receipt.",
       },
       { property: "og:title", content: "The Solution | SPM ECO System" },
       {
         property: "og:description",
         content:
-          "A unified smart parking solution — real-time availability, booking, ANPR gates, dynamic pricing, and QR payment — explained step by step.",
+          "One connected parking journey from finding and booking a space to custom map navigation, parking sessions and final billing.",
       },
     ],
   }),
@@ -28,7 +30,9 @@ function SolutionPage() {
   return (
     <div className="pt-20">
       <Solution />
+      <ParkingJourney />
       <HowItWorks />
+      <ParkingCta />
     </div>
   );
 }

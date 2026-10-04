@@ -52,9 +52,20 @@ export interface ReadSpec {
 }
 
 export type WriteSpec =
-  | { op: "insert"; table: string; values: Record<string, unknown> | Record<string, unknown>[]; select?: string; single?: boolean }
+  | {
+      op: "insert";
+      table: string;
+      values: Record<string, unknown> | Record<string, unknown>[];
+      select?: string;
+      single?: boolean;
+    }
   | { op: "update"; table: string; values: Record<string, unknown>; eq: [string, unknown][] }
-  | { op: "upsert"; table: string; values: Record<string, unknown> | Record<string, unknown>[]; onConflict?: string }
+  | {
+      op: "upsert";
+      table: string;
+      values: Record<string, unknown> | Record<string, unknown>[];
+      onConflict?: string;
+    }
   | { op: "delete"; table: string; eq: [string, unknown][] };
 
 export const adminRead = createServerFn({ method: "POST" })
@@ -66,15 +77,13 @@ export const adminRead = createServerFn({ method: "POST" })
 
     let query = supabaseAdmin
       .from(data.table)
-      .select(
-        data.select ?? "*",
-        data.headCount ? { count: "exact", head: true } : undefined,
-      );
+      .select(data.select ?? "*", data.headCount ? { count: "exact", head: true } : undefined);
 
     for (const [col, val] of data.eq ?? []) query = query.eq(col, val as never);
     for (const [col, val] of data.gte ?? []) query = query.gte(col, val as never);
     for (const [col, val] of data.lte ?? []) query = query.lte(col, val as never);
-    if (data.order) query = query.order(data.order.column, { ascending: data.order.ascending ?? true });
+    if (data.order)
+      query = query.order(data.order.column, { ascending: data.order.ascending ?? true });
     if (data.limit) query = query.limit(data.limit);
 
     const res = data.single ? await query.maybeSingle() : await query;
@@ -93,7 +102,9 @@ export const adminWrite = createServerFn({ method: "POST" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     // Table name is validated against WRITE_ROLES above; cast to a loose handle
     // because the table is resolved dynamically.
-    const table = (supabaseAdmin.from as (t: string) => any)(data.table);
+    const table = (supabaseAdmin.from as (t: string) => ReturnType<typeof supabaseAdmin.from>)(
+      data.table,
+    );
 
     if (data.op === "insert") {
       if (data.select) {

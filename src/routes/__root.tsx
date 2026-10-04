@@ -47,7 +47,7 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponent({ error, reset }: { error: unknown; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   const { tt } = useLanguage();
@@ -95,7 +95,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "SPM ECO System is a smart parking management platform for Sri Lanka with real-time parking availability, advance booking, ANPR gate automation, dynamic pricing, QR payment, retail parking abuse control, and an operator dashboard.",
+          "Find. Navigate. Park Smarter. Discover available parking, book a space and follow the connected SPM ECO parking journey.",
       },
       {
         name: "keywords",
@@ -110,7 +110,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "A complete software + hardware smart parking ecosystem: real-time booking, ANPR gate automation, dynamic pricing, QR payment, retail parking control, and operator analytics.",
+          "A connected parking software prototype: discovery, booking, outdoor and custom parking navigation, demo wallet, sessions and provider management.",
       },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "SPM ECO System" },
@@ -126,7 +126,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;500;600;700;800&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Sinhala:wght@400;500;600;700;800&display=swap",
       },
     ],
   }),
@@ -138,7 +138,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
         <script
@@ -163,20 +163,21 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const bare = isBareRoute(pathname);
+  const product = /^\/(app|provider|parking-admin)(\/|$)/.test(pathname);
   const presenceRef = useRef<PresenceHandle | null>(null);
 
   // Public-site analytics (skip admin/auth surfaces).
   useEffect(() => {
-    if (bare) return;
+    if (bare || product) return;
     resetScrollTracking();
     void trackPageView(pathname);
     const cleanup = initScrollTracking();
     return cleanup;
-  }, [pathname, bare]);
+  }, [pathname, bare, product]);
 
   // Real live-visitor presence (Firebase Realtime Database) — public site only.
   useEffect(() => {
-    if (bare || typeof window === "undefined") return;
+    if (bare || product || typeof window === "undefined") return;
     const handle = startPresence(window.location.pathname, document.title);
     presenceRef.current = handle;
     setActivePresence(handle);
@@ -185,16 +186,16 @@ function RootComponent() {
       presenceRef.current = null;
       setActivePresence(null);
     };
-  }, [bare]);
+  }, [bare, product]);
 
   // Update the current page on client navigation without restarting presence.
   useEffect(() => {
-    if (bare) return;
+    if (bare || product) return;
     presenceRef.current?.updatePage(
       pathname,
       typeof document !== "undefined" ? document.title : "",
     );
-  }, [pathname, bare]);
+  }, [pathname, bare, product]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -204,14 +205,20 @@ function RootComponent() {
         ) : (
           <PublicSettingsProvider>
             <LanguageProvider>
-              <div className="flex min-h-screen flex-col bg-background">
-                <Navbar />
-                <main className="flex-1">
-                  {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+              <div className="eco-site flex min-h-screen flex-col bg-background">
+                {product ? (
                   <Outlet />
-                </main>
-                <Footer />
-                <WhatsAppButton />
+                ) : (
+                  <>
+                    <Navbar />
+                    <main className="flex-1">
+                      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+                      <Outlet />
+                    </main>
+                    <Footer />
+                    <WhatsAppButton />
+                  </>
+                )}
               </div>
             </LanguageProvider>
           </PublicSettingsProvider>

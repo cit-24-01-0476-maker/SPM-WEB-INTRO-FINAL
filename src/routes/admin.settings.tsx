@@ -140,7 +140,11 @@ function SettingsPage() {
               <Input value={form.website_name} onChange={(v) => set("website_name", v)} />
             </Field>
             <Field label="Website URL">
-              <Input value={form.website_url} onChange={(v) => set("website_url", v)} placeholder="https://…" />
+              <Input
+                value={form.website_url}
+                onChange={(v) => set("website_url", v)}
+                placeholder="https://…"
+              />
             </Field>
             <Field label="Time zone">
               <Select value={form.timezone} onValueChange={(v) => set("timezone", v)}>
@@ -148,11 +152,13 @@ function SettingsPage() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {["Asia/Colombo", "UTC", "Asia/Kolkata", "Asia/Dubai", "Europe/London"].map((tz) => (
-                    <SelectItem key={tz} value={tz}>
-                      {tz}
-                    </SelectItem>
-                  ))}
+                  {["Asia/Colombo", "UTC", "Asia/Kolkata", "Asia/Dubai", "Europe/London"].map(
+                    (tz) => (
+                      <SelectItem key={tz} value={tz}>
+                        {tz}
+                      </SelectItem>
+                    ),
+                  )}
                 </SelectContent>
               </Select>
             </Field>

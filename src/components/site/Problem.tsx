@@ -5,28 +5,53 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 const PROBLEMS = [
   {
     icon: Clock,
-    title: "Peak-Hour Parking Discovery",
-    body: "Drivers have no reliable way to know whether spaces are available before reaching a location, causing repeated circling, wasted time, congestion, and frustration during peak hours.",
+    title: "Time lost searching",
+    body: "Drivers circle around looking for a free parking space.",
   },
   {
     icon: CalendarX,
-    title: "No Advance Booking System",
-    body: "Most locations run first-come, first-served. Drivers cannot reserve ahead, and operators miss revenue from premium, guaranteed parking.",
-  },
-  {
-    icon: ReceiptText,
-    title: "Manual Ticketing & Revenue Leakage",
-    body: "Paper tickets and hand calculations create human errors, fake tickets, slow vehicle movement, and poor revenue tracking.",
-  },
-  {
-    icon: ShieldAlert,
-    title: "Unclassified & Unauthorized Vehicles",
-    body: "Staff, delivery, walk-in, and unauthorized vehicles are not properly identified, causing security issues and operational confusion.",
+    title: "Uncertain availability",
+    body: "Drivers reach a facility without knowing whether a space is available.",
   },
   {
     icon: ShoppingCart,
-    title: "Retail Free Parking Abuse",
-    body: "Retail spaces are misused by non-customers who park for long hours, reducing availability for genuine shoppers and affecting store revenue.",
+    title: "Congested facilities",
+    body: "Busy parking areas create queues and unnecessary driving.",
+  },
+  {
+    icon: Clock,
+    title: "Finding the entrance",
+    body: "The correct parking entrance is not always easy to locate.",
+  },
+  {
+    icon: CalendarX,
+    title: "Finding the reserved space",
+    body: "A reservation is only useful when the driver can find its exact location.",
+  },
+  {
+    icon: ReceiptText,
+    title: "Manual process delays",
+    body: "Manual check-in and payment can slow down a parking journey.",
+  },
+  {
+    icon: ReceiptText,
+    title: "Inconvenient payments",
+    body: "Drivers need a clear running charge and a simple checkout.",
+  },
+  {
+    icon: Clock,
+    title: "Remembering the parked vehicle",
+    body: "Drivers may forget where they parked and need guidance back to their car.",
+  },
+  {
+    icon: ShieldAlert,
+    title: "Limited provider visibility",
+    body: "Providers need one consistent view of spaces, reservations and revenue.",
+  },
+  {
+    icon: CalendarX,
+    title: "Booking conflicts",
+    body: "Conflicting reservations can promise the same space to multiple drivers.",
   },
 ];
 

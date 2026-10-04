@@ -34,7 +34,10 @@ export const ROI_STRINGS = {
   "in.totalSpaces": { en: "Total Parking Spaces", si: "මුළු රථගාල ඉඩ ගණන" },
   "in.operatingDays": { en: "Operating Days / Month", si: "මාසයකට මෙහෙයුම් දින" },
   "in.currentOccupancy": { en: "Current Occupancy (%)", si: "වර්තමාන පරිහරණය (%)" },
-  "in.expectedOccupancy": { en: "Expected Occupancy After System (%)", si: "පද්ධතියෙන් පසු අපේක්ෂිත පරිහරණය (%)" },
+  "in.expectedOccupancy": {
+    en: "Expected Occupancy After System (%)",
+    si: "පද්ධතියෙන් පසු අපේක්ෂිත පරිහරණය (%)",
+  },
   "in.avgDuration": { en: "Average Parking Duration (hours)", si: "සාමාන්‍ය රථගාල කාලය (පැය)" },
   "in.hourlyFee": { en: "Average Hourly Parking Fee", si: "සාමාන්‍ය පැය රථගාල ගාස්තුව" },
   "in.currency": { en: "Currency", si: "මුදල් ඒකකය" },
@@ -47,12 +50,21 @@ export const ROI_STRINGS = {
   "in.cameraCount": { en: "Number of ANPR Cameras", si: "ANPR කැමරා ගණන" },
   "in.gateUnitCost": { en: "Barrier Gate Unit Cost", si: "බාධක ගේට්ටු ඒකක පිරිවැය" },
   "in.gateCount": { en: "Number of Barrier Gates", si: "බාධක ගේට්ටු ගණන" },
-  "in.sensorUnitCost": { en: "Parking Sensor Unit Cost", si: "රථගාල සංවේදක ඒකක පිරිවැය" },
-  "in.sensorCount": { en: "Number of Parking Sensors", si: "රථගාල සංවේදක ගණන" },
-  "in.serverCost": { en: "Edge Device / Server", si: "එජ් උපකරණය / සේවාදායකය" },
+  "in.sensorUnitCost": {
+    en: "Legacy integration unit cost (excluded)",
+    si: "පැරණි ඒකාබද්ධ කිරීමේ පිරිවැය (ඉවත් කර ඇත)",
+  },
+  "in.sensorCount": {
+    en: "Legacy integration count (excluded)",
+    si: "පැරණි ඒකාබද්ධ කිරීමේ ගණන (ඉවත් කර ඇත)",
+  },
+  "in.serverCost": { en: "Server / Hosting", si: "සේවාදායකය / සත්කාරක සේවාව" },
   "in.networkInstallCost": { en: "Network Installation", si: "ජාල ස්ථාපනය" },
   "in.electricalInstallCost": { en: "Electrical Installation", si: "විදුලි ස්ථාපනය" },
-  "in.paymentIntegrationCost": { en: "Payment System Integration", si: "ගෙවීම් පද්ධති ඒකාබද්ධ කිරීම" },
+  "in.paymentIntegrationCost": {
+    en: "Payment System Integration",
+    si: "ගෙවීම් පද්ධති ඒකාබද්ධ කිරීම",
+  },
   "in.trainingCost": { en: "Staff Training", si: "කාර්ය මණ්ඩල පුහුණුව" },
   "in.consultationCost": { en: "Consultation", si: "උපදේශනය" },
   "in.otherInitialCost": { en: "Other Initial Costs", si: "වෙනත් ආරම්භක පිරිවැය" },
@@ -69,12 +81,21 @@ export const ROI_STRINGS = {
 
   // Savings inputs
   "in.savingStaff": { en: "Reduced Staff Cost", si: "අඩු කළ කාර්ය මණ්ඩල පිරිවැය" },
-  "in.savingTicketPrinting": { en: "Reduced Ticket-Printing Cost", si: "අඩු කළ ටිකට් මුද්‍රණ පිරිවැය" },
+  "in.savingTicketPrinting": {
+    en: "Reduced Ticket-Printing Cost",
+    si: "අඩු කළ ටිකට් මුද්‍රණ පිරිවැය",
+  },
   "in.savingRevenueLeakage": { en: "Reduced Revenue Leakage", si: "අඩු කළ ආදායම් කාන්දුව" },
-  "in.savingUnauthorized": { en: "Reduced Unauthorized Parking Loss", si: "අඩු කළ අනවසර රථගාල අලාභය" },
+  "in.savingUnauthorized": {
+    en: "Reduced Unauthorized Parking Loss",
+    si: "අඩු කළ අනවසර රථගාල අලාභය",
+  },
   "in.savingPaymentErrors": { en: "Reduced Payment Errors", si: "අඩු කළ ගෙවීම් දෝෂ" },
   "in.savingAdministration": { en: "Reduced Administration Cost", si: "අඩු කළ පරිපාලන පිරිවැය" },
-  "in.savingSecurityMonitoring": { en: "Reduced Security Monitoring Cost", si: "අඩු කළ ආරක්ෂක අධීක්ෂණ පිරිවැය" },
+  "in.savingSecurityMonitoring": {
+    en: "Reduced Security Monitoring Cost",
+    si: "අඩු කළ ආරක්ෂක අධීක්ෂණ පිරිවැය",
+  },
   "in.savingOther": { en: "Other Monthly Savings", si: "වෙනත් මාසික ඉතිරිකිරීම්" },
 
   // Expense inputs
@@ -116,8 +137,14 @@ export const ROI_STRINGS = {
   },
 
   // Charts
-  "chart.investmentVsReturn": { en: "Investment vs Cumulative Return", si: "ආයෝජනය එදිරිව සමුච්චිත ප්‍රතිලාභය" },
-  "chart.revenueVsCost": { en: "Monthly Revenue vs Operating Cost", si: "මාසික ආදායම එදිරිව මෙහෙයුම් පිරිවැය" },
+  "chart.investmentVsReturn": {
+    en: "Investment vs Cumulative Return",
+    si: "ආයෝජනය එදිරිව සමුච්චිත ප්‍රතිලාභය",
+  },
+  "chart.revenueVsCost": {
+    en: "Monthly Revenue vs Operating Cost",
+    si: "මාසික ආදායම එදිරිව මෙහෙයුම් පිරිවැය",
+  },
   "chart.cashFlow": { en: "Five-Year Cash-Flow Projection", si: "වර්ෂ 5 මුදල් ගලනය පුරෝකථනය" },
   "chart.revenueBreakdown": { en: "Revenue Breakdown", si: "ආදායම් විස්තරය" },
   "chart.expenseBreakdown": { en: "Expense Breakdown", si: "වියදම් විස්තරය" },
@@ -158,14 +185,26 @@ export const ROI_STRINGS = {
   "sens.reset": { en: "Reset sliders", si: "ස්ලයිඩර යළි සකසන්න" },
 
   // Actions
-  "action.downloadPdf": { en: "Download Feasibility Report (PDF)", si: "ශක්‍යතා වාර්තාව බාගන්න (PDF)" },
-  "action.downloadCsv": { en: "Download 5-Year Projection (CSV)", si: "වර්ෂ 5 පුරෝකථනය බාගන්න (CSV)" },
-  "action.requestStudy": { en: "Request a Detailed Feasibility Study", si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න" },
+  "action.downloadPdf": {
+    en: "Download Feasibility Report (PDF)",
+    si: "ශක්‍යතා වාර්තාව බාගන්න (PDF)",
+  },
+  "action.downloadCsv": {
+    en: "Download 5-Year Projection (CSV)",
+    si: "වර්ෂ 5 පුරෝකථනය බාගන්න (CSV)",
+  },
+  "action.requestStudy": {
+    en: "Request a Detailed Feasibility Study",
+    si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න",
+  },
   "action.reset": { en: "Reset to defaults", si: "පෙරනිමියට යළි සකසන්න" },
   "action.close": { en: "Close", si: "වසන්න" },
 
   // Lead form
-  "lead.title": { en: "Request a Detailed Feasibility Study", si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න" },
+  "lead.title": {
+    en: "Request a Detailed Feasibility Study",
+    si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න",
+  },
   "lead.name": { en: "Full Name", si: "සම්පූර්ණ නම" },
   "lead.organization": { en: "Organization", si: "ආයතනය" },
   "lead.email": { en: "Email", si: "විද්‍යුත් තැපෑල" },
@@ -173,19 +212,46 @@ export const ROI_STRINGS = {
   "lead.notes": { en: "Notes", si: "සටහන්" },
   "lead.submit": { en: "Send Request", si: "ඉල්ලීම යවන්න" },
   "lead.sending": { en: "Sending…", si: "යවමින්…" },
-  "lead.success": { en: "Request sent — our team will contact you shortly.", si: "ඉල්ලීම යවන ලදී — අපගේ කණ්ඩායම ඉක්මනින් සම්බන්ධ වනු ඇත." },
-  "lead.error": { en: "Could not send request. Please try again.", si: "ඉල්ලීම යැවිය නොහැකි විය. කරුණාකර නැවත උත්සාහ කරන්න." },
-  "lead.summaryNote": { en: "Your calculation summary will be attached automatically.", si: "ඔබගේ ගණනය කිරීමේ සාරාංශය ස්වයංක්‍රීයව අමුණනු ඇත." },
+  "lead.success": {
+    en: "Request sent — our team will contact you shortly.",
+    si: "ඉල්ලීම යවන ලදී — අපගේ කණ්ඩායම ඉක්මනින් සම්බන්ධ වනු ඇත.",
+  },
+  "lead.error": {
+    en: "Could not send request. Please try again.",
+    si: "ඉල්ලීම යැවිය නොහැකි විය. කරුණාකර නැවත උත්සාහ කරන්න.",
+  },
+  "lead.summaryNote": {
+    en: "Your calculation summary will be attached automatically.",
+    si: "ඔබගේ ගණනය කිරීමේ සාරාංශය ස්වයංක්‍රීයව අමුණනු ඇත.",
+  },
 
   // Validation
-  "val.spaces": { en: "Total parking spaces must be greater than zero.", si: "මුළු රථගාල ඉඩ ශුන්‍යයට වඩා වැඩි විය යුතුය." },
-  "val.occupancy": { en: "Occupancy must be between 0 and 100.", si: "පරිහරණය 0 සහ 100 අතර විය යුතුය." },
-  "val.operatingDays": { en: "Operating days must be between 1 and 31.", si: "මෙහෙයුම් දින 1 සහ 31 අතර විය යුතුය." },
-  "val.duration": { en: "Average duration must be greater than zero.", si: "සාමාන්‍ය කාලය ශුන්‍යයට වඩා වැඩි විය යුතුය." },
+  "val.spaces": {
+    en: "Total parking spaces must be greater than zero.",
+    si: "මුළු රථගාල ඉඩ ශුන්‍යයට වඩා වැඩි විය යුතුය.",
+  },
+  "val.occupancy": {
+    en: "Occupancy must be between 0 and 100.",
+    si: "පරිහරණය 0 සහ 100 අතර විය යුතුය.",
+  },
+  "val.operatingDays": {
+    en: "Operating days must be between 1 and 31.",
+    si: "මෙහෙයුම් දින 1 සහ 31 අතර විය යුතුය.",
+  },
+  "val.duration": {
+    en: "Average duration must be greater than zero.",
+    si: "සාමාන්‍ය කාලය ශුන්‍යයට වඩා වැඩි විය යුතුය.",
+  },
   "val.negative": { en: "Value must not be negative.", si: "අගය සෘණ නොවිය යුතුය." },
-  "val.locations": { en: "Number of locations must be at least 1.", si: "ස්ථාන ගණන අවම වශයෙන් 1 විය යුතුය." },
+  "val.locations": {
+    en: "Number of locations must be at least 1.",
+    si: "ස්ථාන ගණන අවම වශයෙන් 1 විය යුතුය.",
+  },
   "val.name": { en: "Please enter your name.", si: "කරුණාකර ඔබගේ නම ඇතුළත් කරන්න." },
-  "val.email": { en: "Please enter a valid email.", si: "කරුණාකර වලංගු විද්‍යුත් තැපෑලක් ඇතුළත් කරන්න." },
+  "val.email": {
+    en: "Please enter a valid email.",
+    si: "කරුණාකර වලංගු විද්‍යුත් තැපෑලක් ඇතුළත් කරන්න.",
+  },
 
   // Misc
   "misc.estimateNote": {
@@ -230,7 +296,6 @@ const BREAKDOWN_LABELS: Record<string, Entry> = {
   mobileApp: { en: "Mobile App", si: "ජංගම යෙදුම" },
   cameras: { en: "ANPR Cameras", si: "ANPR කැමරා" },
   gates: { en: "Barrier Gates", si: "බාධක ගේට්ටු" },
-  sensors: { en: "Sensors", si: "සංවේදක" },
   server: { en: "Server / Edge", si: "සේවාදායකය / එජ්" },
   network: { en: "Network", si: "ජාලය" },
   electrical: { en: "Electrical", si: "විදුලි" },

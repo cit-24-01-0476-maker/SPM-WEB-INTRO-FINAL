@@ -66,12 +66,7 @@ function mapFirebaseError(code: string): string {
 
 type AuthResult = "Not tested" | "Failed" | "Successful";
 type ProfileResult =
-  | "Not checked"
-  | "Missing"
-  | "Permission blocked"
-  | "Inactive"
-  | "Invalid role"
-  | "Valid";
+  "Not checked" | "Missing" | "Permission blocked" | "Inactive" | "Invalid role" | "Valid";
 
 function AdminLoginPage() {
   const navigate = useNavigate();
@@ -249,10 +244,7 @@ function AdminLoginPage() {
         await updateDoc(adminRef, { lastLoginAt: serverTimestamp() });
       } catch (writeErr) {
         if (import.meta.env.DEV) {
-          console.warn(
-            "Admin authenticated, but lastLoginAt could not be updated.",
-            writeErr,
-          );
+          console.warn("Admin authenticated, but lastLoginAt could not be updated.", writeErr);
         }
       }
 
@@ -281,7 +273,12 @@ function AdminLoginPage() {
     <div className="grid min-h-screen bg-navy lg:grid-cols-2">
       {/* Brand panel */}
       <div className="relative hidden overflow-hidden p-12 text-white lg:flex lg:flex-col lg:justify-between">
-        <img src={bgImage} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" />
+        <img
+          src={bgImage}
+          alt=""
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover"
+        />
         <div className="absolute inset-0 bg-gradient-navy opacity-90" />
         <div className="pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-primary/25 blur-[130px]" />
         <div className="pointer-events-none absolute bottom-0 right-0 h-80 w-80 rounded-full bg-cyan/20 blur-[140px]" />
@@ -304,15 +301,17 @@ function AdminLoginPage() {
             </span>
           </h1>
           <p className="mt-4 max-w-md text-sm text-white/75">
-            Manage website content, media, inquiries, analytics and system settings through one secure
-            centralized workspace.
+            Manage website content, media, inquiries, analytics and system settings through one
+            secure centralized workspace.
           </p>
           <ul className="mt-8 space-y-3 text-sm text-white/80">
-            {["Role-based access control", "Firebase-secured accounts", "Activity is recorded"].map((f) => (
-              <li key={f} className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 text-cyan" /> {f}
-              </li>
-            ))}
+            {["Role-based access control", "Firebase-secured accounts", "Activity is recorded"].map(
+              (f) => (
+                <li key={f} className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-cyan" /> {f}
+                </li>
+              ),
+            )}
           </ul>
         </div>
 
@@ -361,7 +360,10 @@ function AdminLoginPage() {
             <div>
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-foreground">Password</label>
-                <Link to="/admin/forgot-password" className="text-xs font-medium text-primary hover:underline">
+                <Link
+                  to="/admin/forgot-password"
+                  className="text-xs font-medium text-primary hover:underline"
+                >
                   Forgot Password?
                 </Link>
               </div>
@@ -459,7 +461,10 @@ function AdminLoginPage() {
             <p className="text-xs text-muted-foreground">
               Authorized administrators only. Administrative activity may be recorded.
             </p>
-            <Link to="/" className="inline-block text-xs text-muted-foreground hover:text-foreground">
+            <Link
+              to="/"
+              className="inline-block text-xs text-muted-foreground hover:text-foreground"
+            >
               ← Back to website
             </Link>
           </div>

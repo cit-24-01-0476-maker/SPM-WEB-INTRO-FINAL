@@ -1,4 +1,4 @@
-import retailImg from "@/assets/retail-parking.jpg";
+import { ParkingPhoto } from "./ParkingPhoto";
 import { Container, SectionHeading, Reveal } from "./primitives";
 import { Check } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
@@ -38,14 +38,7 @@ export function RetailAbuse() {
 
         <div className="mt-14 grid gap-8 lg:grid-cols-2">
           <Reveal className="overflow-hidden rounded-3xl border border-border shadow-card">
-            <img
-              src={retailImg}
-              alt="Aerial view of a retail supermarket parking lot"
-              width={1200}
-              height={912}
-              loading="lazy"
-              className="h-full w-full object-cover"
-            />
+            <ParkingPhoto className="h-full min-h-[320px] w-full" />
           </Reveal>
 
           <Reveal delay={120} className="flex flex-col gap-6">

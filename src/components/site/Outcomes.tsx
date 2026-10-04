@@ -1,14 +1,14 @@
-import garageImg from "@/assets/garage.jpg";
+import { ParkingPhoto } from "./ParkingPhoto";
 import { Container, SectionHeading, Reveal } from "./primitives";
 import { CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 const OUTCOMES = [
-  "A fully functional smart parking mobile application",
-  "ANPR-based automated entry and exit gate system",
-  "Dynamic pricing and QR payment workflow",
-  "Retail parking overstay detection module",
-  "Web-based operator dashboard",
+  "A responsive driver web application",
+  "Simulated ANPR / QR entry and exit verification",
+  "Configurable hourly billing and demo wallet",
+  "Custom SVG map and exact-slot demo navigation",
+  "Parking provider portal and operations dashboard",
   "Multi-location parking management",
   "Revenue analytics and trend reports",
   "Improved driver parking experience",
@@ -19,14 +19,14 @@ const OUTCOMES = [
 const DEMO = [
   "User searches parking location",
   "User books a parking slot",
-  "QR confirmation is generated",
-  "Vehicle number plate is recognized",
-  "Gate access is approved",
+  "Demo verification token is generated",
+  "Vehicle plate is verified in demo mode",
+  "Entry verification is approved",
   "Parking duration is tracked",
   "Overtime fee is calculated",
-  "QR payment is completed",
-  "Operator dashboard updates live data",
-  "Security alert is shown for unauthorized vehicle",
+  "Outstanding demo wallet payment is completed",
+  "Provider dashboard updates shared demo records",
+  "Final receipt and platform commission are recorded",
 ];
 
 export function Outcomes() {
@@ -43,7 +43,7 @@ export function Outcomes() {
                 eyebrow={tt("Outcomes")}
                 title={tt("Expected Project Outcomes")}
                 subtitle={tt(
-                  "What SPM ECO System delivers as a complete software + hardware solution.",
+                  "A complete parking software prototype with one consistent driver, provider and operations journey.",
                 )}
                 invert
               />
@@ -65,14 +65,7 @@ export function Outcomes() {
 
           <div>
             <Reveal className="overflow-hidden rounded-3xl border border-white/10 shadow-glow">
-              <img
-                src={garageImg}
-                alt="Modern smart parking garage interior with slot sensor lighting"
-                width={1200}
-                height={912}
-                loading="lazy"
-                className="h-56 w-full object-cover sm:h-64"
-              />
+              <ParkingPhoto className="h-56 w-full sm:h-64" />
             </Reveal>
             <Reveal
               delay={120}
@@ -81,7 +74,7 @@ export function Outcomes() {
               <h3 className="text-lg font-bold">{tt("Prototype Demonstration Plan")}</h3>
               <p className="mt-2 text-sm text-white/65">
                 {tt(
-                  "The prototype demonstrates the full journey from driver booking to gate automation and operator monitoring.",
+                  "The prototype demonstrates booking, custom navigation, simulated verification, parking sessions and shared provider reporting.",
                 )}
               </p>
               <ol className="mt-4 space-y-2">

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ParkingSquare } from "lucide-react";
+import { Menu, X, ParkingSquare, ArrowRight } from "lucide-react";
 import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./ThemeToggle";
 import { CmsButton } from "./CmsButton";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
@@ -17,8 +16,8 @@ import { safeNavHref, type NavItem } from "@/lib/cms/model";
  * safe fallback before Firestore data arrives.
  */
 export function Navbar() {
-  const { navigation, site, economicFeasibility } = usePublicSettings();
-  const { config: langConfig, switcherEnabled, t, tx, lang } = useLanguage();
+  const { navigation, site } = usePublicSettings();
+  const { config: langConfig, switcherEnabled, t, tt, lang } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -55,28 +54,23 @@ export function Navbar() {
   const isActive = (to: string) =>
     to === "/" ? pathname === "/" : to.startsWith("/") && pathname.startsWith(to);
 
-  const items = (navigation.items ?? []).filter((i) => i.enabled);
-
-  // Inject the admin-controlled ROI Calculator item from the economic
-  // feasibility settings (label is localized, visibility & order are managed
-  // in the Economic Feasibility admin page).
-  const roiItem: NavItem | null =
-    economicFeasibility.enabled && economicFeasibility.navEnabled
-      ? {
-          id: "roi-calculator",
-          label: tx(economicFeasibility.navLabel, "ROI Calculator"),
-          shortLabel: "ROI",
-          linkType: "internal",
-          to: "/roi-calculator",
-          enabled: true,
-          desktopVisible: economicFeasibility.navDesktopVisible,
-          mobileVisible: economicFeasibility.navMobileVisible,
-          newTab: false,
-        }
-      : null;
-  const allItems = roiItem ? [...items, roiItem] : items;
-  const desktopItems = allItems.filter((i) => i.desktopVisible);
-  const mobileItems = allItems.filter((i) => i.mobileVisible);
+  const items = (navigation.items ?? []).filter(
+    (i) => i.enabled && i.to.split(/[?#]/)[0].replace(/\/$/, "") !== "/roi-calculator",
+  );
+  if (!items.some((i) => i.to === "/app/demo"))
+    items.push({
+      id: "parking-demo",
+      label: lang === "si" ? "සජීවී නිදර්ශනය" : "Live Demo",
+      shortLabel: lang === "si" ? "නිදර්ශනය" : "Demo",
+      to: "/app/demo",
+      linkType: "internal",
+      enabled: true,
+      desktopVisible: true,
+      mobileVisible: true,
+      newTab: false,
+    });
+  const desktopItems = items.filter((i) => i.desktopVisible);
+  const mobileItems = items.filter((i) => i.mobileVisible);
 
   const linkTarget = (item: NavItem) =>
     item.newTab ? { target: "_blank", rel: "noopener noreferrer" as const } : {};
@@ -94,7 +88,12 @@ export function Navbar() {
   const showMobileSwitcher = switcherEnabled && langConfig.showInMobileMenu;
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 sm:pt-4">
+    <header
+      className={cn(
+        "eco-header fixed inset-x-0 top-0 z-50 px-4 sm:px-6",
+        scrolled && "eco-header-scrolled",
+      )}
+    >
       <nav
         className="relative mx-auto w-full max-w-[1440px]"
         style={{ paddingInline: "clamp(0px, 1vw, 8px)" }}
@@ -126,13 +125,8 @@ export function Navbar() {
               </span>
             )}
             {!navigation.logoUrl ? (
-              <span className="flex flex-col leading-none">
-                <span className="text-base font-bold tracking-tight text-foreground">
-                  {logoText}
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-                  {logoSubtitle}
-                </span>
+              <span className="eco-brand" title={`${logoText} — ${logoSubtitle}`}>
+                SPM ECO
               </span>
             ) : null}
           </a>
@@ -145,7 +139,7 @@ export function Navbar() {
             {desktopItems.map((l) => {
               const active = isActive(l.to);
               const hasShort = l.shortLabel && l.shortLabel !== l.label;
-              // Long labels (e.g. the Sinhala "ROI Calculator") only expand to the
+              // Long labels only expand to the
               // full form at the widest breakpoint; shorter labels expand at xl.
               const longLabel = (l.label?.length ?? 0) > 14;
               return (
@@ -166,13 +160,15 @@ export function Navbar() {
                 >
                   {hasShort ? (
                     <>
-                      <span className={longLabel ? "2xl:hidden" : "xl:hidden"}>{l.shortLabel}</span>
+                      <span className={longLabel ? "2xl:hidden" : "xl:hidden"}>
+                        {tt(l.shortLabel)}
+                      </span>
                       <span className={longLabel ? "hidden 2xl:inline" : "hidden xl:inline"}>
-                        {l.label}
+                        {tt(l.label)}
                       </span>
                     </>
                   ) : (
-                    l.label
+                    tt(l.label)
                   )}
                 </a>
               );
@@ -181,7 +177,6 @@ export function Navbar() {
 
           {/* CTA section */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            {navigation.showThemeToggle ? <ThemeToggle /> : null}
             {showHeaderSwitcher ? (
               <LanguageSwitcher variant="dropdown" className="hidden sm:block" />
             ) : null}
@@ -194,6 +189,7 @@ export function Navbar() {
                 className="hidden min-h-[44px] shrink-0 whitespace-nowrap text-sm font-bold uppercase tracking-wider sm:inline-flex"
               >
                 {ctaText}
+                <ArrowRight size={17} />
               </CmsButton>
             ) : null}
             <button
@@ -239,7 +235,7 @@ export function Navbar() {
                       : "text-muted-foreground hover:bg-secondary hover:text-foreground",
                   )}
                 >
-                  {l.shortLabel || l.label}
+                  {tt(l.shortLabel || l.label)}
                   {active ? (
                     <span className="h-1.5 w-1.5 rounded-full bg-gradient-primary" />
                   ) : null}

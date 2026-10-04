@@ -24,8 +24,8 @@ const FEATURES = [
   },
   {
     icon: Lock,
-    title: "Gate-blocking Action",
-    body: "Keep the barrier closed until security clears the vehicle.",
+    title: "Verification Failure",
+    body: "Failed demo checks do not approve the parking entry. Use the QR fallback or retry.",
   },
   {
     icon: Images,

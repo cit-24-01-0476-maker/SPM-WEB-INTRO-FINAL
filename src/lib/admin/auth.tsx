@@ -1,21 +1,10 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import type { User } from "firebase/auth";
 import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { firebaseAuth, firestore } from "@/lib/firebase/client";
 
-export type AppRole =
-  | "super_admin"
-  | "content_editor"
-  | "analytics_viewer"
-  | "inquiry_manager";
+export type AppRole = "super_admin" | "content_editor" | "analytics_viewer" | "inquiry_manager";
 
 export type AdminStatus = "active" | "disabled" | "suspended";
 
@@ -61,7 +50,12 @@ const AdminAuthContext = createContext<AdminAuthValue | null>(null);
 function toStringOrNull(v: unknown): string | null {
   if (typeof v === "string") return v;
   // Firestore Timestamp -> ISO string
-  if (v && typeof v === "object" && "toDate" in v && typeof (v as { toDate: unknown }).toDate === "function") {
+  if (
+    v &&
+    typeof v === "object" &&
+    "toDate" in v &&
+    typeof (v as { toDate: unknown }).toDate === "function"
+  ) {
     try {
       return (v as { toDate: () => Date }).toDate().toISOString();
     } catch {

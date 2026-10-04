@@ -23,7 +23,8 @@ function ForgotPasswordPage() {
 
     const trimmed = email.trim();
     if (!trimmed) return setError("Email is required.");
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return setError("Enter a valid email address.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed))
+      return setError("Enter a valid email address.");
 
     setLoading(true);
     try {

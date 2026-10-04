@@ -1,19 +1,19 @@
 import { Container, SectionHeading, Reveal } from "./primitives";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-
 const STACK = [
-  { area: "Mobile App", tech: "React Native for Android and iOS" },
-  { area: "Web Dashboard", tech: "React.js / Next.js" },
-  { area: "Backend API", tech: "Node.js / Express.js or NestJS" },
-  { area: "Database", tech: "PostgreSQL for relational data" },
-  { area: "Real-time Layer", tech: "Redis for live occupancy & caching" },
-  { area: "ANPR / Computer Vision", tech: "Python, OpenCV, Tesseract OCR & custom model" },
-  { area: "Payments", tech: "QR & card payment gateway integration" },
-  { area: "Cloud", tech: "AWS or GCP hosting, storage & notifications" },
-  { area: "Version Control", tech: "Git and GitHub" },
-  { area: "Design", tech: "Figma for UI/UX design & prototyping" },
+  { area: "Responsive Web App", tech: "React + TypeScript + TanStack Start" },
+  { area: "Design System", tech: "Tailwind CSS + accessible reusable components" },
+  { area: "Custom Parking Navigation", tech: "Editable SVG maps + Dijkstra route calculation" },
+  { area: "Location", tech: "Optional browser GPS + controlled demo positioning" },
+  { area: "Demo Data", tech: "Central typed repository + synchronized browser demo state" },
+  { area: "Website CMS", tech: "Existing Firebase authentication, Firestore and CMS services" },
+  { area: "Payments & Verification", tech: "Simulated wallet, ANPR and QR adapters" },
+  { area: "Smart Intelligence", tech: "Controlled assistant and transparent demo estimates" },
+  {
+    area: "Future Integrations",
+    tech: "Secure API, mobile client and validated vision/ML services",
+  },
 ];
-
 export function TechStack() {
   const { tt } = useLanguage();
   return (
@@ -22,24 +22,21 @@ export function TechStack() {
         <Reveal>
           <SectionHeading
             eyebrow={tt("Technology")}
-            title={tt("Technology Stack")}
+            title={tt("Built for a connected software journey")}
             subtitle={tt(
-              "A modern, scalable architecture spanning mobile, web, backend, computer vision, and cloud.",
+              "A responsive web prototype today, with replaceable services for future production integrations.",
             )}
           />
         </Reveal>
-
         <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {STACK.map((s, i) => (
             <Reveal
               key={s.area}
               delay={(i % 3) * 60}
-              className="rounded-2xl border border-border bg-card p-5 shadow-card transition-all hover:-translate-y-1 hover:border-primary/30"
+              className="rounded-2xl border border-border bg-card p-5"
             >
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-primary">
-                {tt(s.area)}
-              </p>
-              <p className="mt-2 text-sm font-medium text-foreground">{tt(s.tech)}</p>
+              <h3 className="text-sm font-bold text-primary">{tt(s.area)}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tt(s.tech)}</p>
             </Reveal>
           ))}
         </div>

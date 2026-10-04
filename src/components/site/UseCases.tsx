@@ -17,7 +17,7 @@ const CASES = [
   {
     icon: Building,
     title: "Colombo Commercial Parking",
-    body: "Automates ticketing and gate flow in high-demand Fort and Pettah zones.",
+    body: "Helps drivers discover, reserve and navigate busy city parking facilities.",
   },
   {
     icon: Store,
@@ -32,7 +32,7 @@ const CASES = [
   {
     icon: Briefcase,
     title: "Office Building Parking",
-    body: "Verifies staff and visitor vehicles automatically for secure access.",
+    body: "Connects visitor reservations with entry verification and exact-space guidance.",
   },
   {
     icon: Hospital,
@@ -42,17 +42,17 @@ const CASES = [
   {
     icon: GraduationCap,
     title: "University Parking",
-    body: "Classifies student, staff, and visitor vehicles across campus lots.",
+    body: "Demonstrates the complete SLTC campus journey from booking to receipt.",
   },
   {
     icon: Home,
     title: "Apartment Parking",
-    body: "Grants residents automatic access and blocks unauthorized vehicles.",
+    body: "Helps residents and visitors find reserved spaces on a custom facility map.",
   },
   {
     icon: Hotel,
     title: "Hotel Parking",
-    body: "Offers guests pre-booking, valet logging, and seamless QR checkout.",
+    body: "Connects guest pre-booking, parking guidance and a clear final receipt.",
   },
   {
     icon: MapPin,

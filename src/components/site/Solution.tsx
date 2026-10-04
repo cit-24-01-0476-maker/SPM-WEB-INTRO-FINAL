@@ -16,13 +16,13 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 const FEATURES = [
   { icon: MapPin, label: "Real-time Parking Availability" },
   { icon: CalendarCheck, label: "Advance Slot Booking" },
-  { icon: TrendingUp, label: "Dynamic Peak-Hour Pricing" },
-  { icon: ScanLine, label: "ANPR Number Plate Recognition" },
-  { icon: DoorOpen, label: "Automated Gate Control" },
-  { icon: QrCode, label: "QR-based Payment" },
-  { icon: Timer, label: "Retail Overstay Detection" },
-  { icon: LayoutDashboard, label: "Multi-location Dashboard" },
-  { icon: BellRing, label: "Security Alerts" },
+  { icon: TrendingUp, label: "Configurable Hourly Pricing" },
+  { icon: ScanLine, label: "ANPR / QR Verification Demo" },
+  { icon: DoorOpen, label: "Custom Parking Navigation" },
+  { icon: QrCode, label: "Demo Wallet & Receipt" },
+  { icon: Timer, label: "Parking Sessions" },
+  { icon: LayoutDashboard, label: "Provider Portal" },
+  { icon: BellRing, label: "Parking Notifications" },
   { icon: BarChart3, label: "Revenue Analytics" },
 ];
 
@@ -37,7 +37,7 @@ export function Solution() {
             eyebrow={tt("The Solution")}
             title={tt("What is SPM ECO System?")}
             subtitle={tt(
-              "A smart parking management platform combining a mobile application, ANPR camera automation, dynamic pricing, QR payment, vehicle classification, retail parking control, and a web-based operator dashboard into one integrated ecosystem.",
+              "One connected software prototype for finding parking, reserving a space, navigating to the facility and exact slot, managing the session and completing payment.",
             )}
           />
         </Reveal>

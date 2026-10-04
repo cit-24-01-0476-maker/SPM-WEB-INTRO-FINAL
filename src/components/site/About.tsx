@@ -6,7 +6,7 @@ const TEAM = [
   { icon: Smartphone, role: "Mobile App Development" },
   { icon: Server, role: "Backend & System Integration" },
   { icon: LayoutDashboard, role: "Web Dashboard Development" },
-  { icon: Cpu, role: "ANPR & Hardware Integration" },
+  { icon: Cpu, role: "Navigation & Verification" },
   { icon: PenTool, role: "UI/UX & Documentation" },
 ];
 
@@ -22,12 +22,12 @@ export function About() {
               eyebrow={tt("About")}
               title={tt("A University Technology Challenge Competition Project")}
               subtitle={tt(
-                "SPM ECO System is a software and hardware-based smart parking management solution developed for a University Technology Challenge Competition — engineered with real commercial potential.",
+                "SPM ECO is a smart parking software prototype developed for a University Technology Challenge Competition, connecting discovery, booking and custom parking navigation.",
               )}
             />
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               {tt(
-                "The system focuses on solving real parking problems in urban Sri Lanka using modern digital technologies, automation, computer vision, and cloud-based management — combining a driver mobile app, ANPR gate automation, dynamic pricing, retail parking control, and a multi-location operator dashboard into a single ecosystem.",
+                "The responsive driver web app, parking provider portal and parking operations dashboard share one connected demonstration dataset. ANPR and QR support entry and exit verification; precise internal positioning and payments are simulated.",
               )}
             </p>
             <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-semibold text-primary">

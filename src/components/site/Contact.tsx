@@ -323,10 +323,10 @@ export function Contact() {
                 </div>
               ))}
             <div className="rounded-2xl bg-gradient-navy p-5 text-white shadow-glow">
-              <p className="text-sm font-semibold">{tt("Software + Hardware Ecosystem")}</p>
+              <p className="text-sm font-semibold">{tt("Connected Parking Platform")}</p>
               <p className="mt-1 text-xs text-white/70">
                 {tt(
-                  "We tailor the mobile app, ANPR gates, pricing rules, and dashboard to your facility.",
+                  "Explore parking discovery, booking, custom navigation and provider management for your facility.",
                 )}
               </p>
             </div>

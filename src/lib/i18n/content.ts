@@ -19,6 +19,7 @@
 // Keep English keys byte-identical to what the components render (after trim).
 
 import type { LanguageCode } from "@/lib/cms/model";
+import { PARKING_PHRASES } from "./parking-phrases";
 
 export const PHRASES: Record<string, string> = {
   /* ---------------- Hero (status bar + CMS defaults) ---------------- */
@@ -300,9 +301,6 @@ export const PHRASES: Record<string, string> = {
   "Barrier Gate Controller": "බාධක දොරටු පාලකය",
   "Automatically opens and closes gates on system approval.":
     "පද්ධති අනුමැතිය මත දොරටු ස්වයංක්‍රීයව විවෘත කර වසයි.",
-  "Raspberry Pi / Edge Device": "Raspberry Pi / Edge උපකරණය",
-  "Performs on-site ANPR processing and local communication.":
-    "ස්ථානීය ANPR සැකසීම සහ දේශීය සන්නිවේදනය සිදු කරයි.",
   "QR Scanner": "QR ස්කෑනරය",
   "Scans booking confirmations, QR tickets, and payment codes.":
     "වෙන් කිරීමේ තහවුරු, QR ටිකට් සහ ගෙවීම් කේත ස්කෑන් කරයි.",
@@ -311,8 +309,6 @@ export const PHRASES: Record<string, string> = {
     "පැමිණෙන පරිශීලකයන් සඳහා ටිකට් සහ බිල්පත් මුද්‍රණය කරයි.",
   "Payment Terminal": "ගෙවීම් පර්යන්තය",
   "Supports card and QR-based payments.": "කාඩ්පත් සහ QR පදනම් ගෙවීම් සඳහා සහාය දෙයි.",
-  "Vehicle Detection Sensor": "වාහන හඳුනාගැනීමේ සංවේදකය",
-  "Detects vehicle presence near the gate.": "දොරටුව අසල වාහන පැවැත්ම හඳුනා ගනී.",
   "Operator Control Device": "ක්‍රියාකරු පාලන උපකරණය",
   "Used by officers for manual approval and alert handling.":
     "අත්කම් අනුමැතිය සහ ඇඟවීම් හැසිරවීම සඳහා නිලධාරීන් විසින් භාවිතා කරයි.",
@@ -620,6 +616,6 @@ export const PHRASES: Record<string, string> = {
 export function translatePhrase(text: string, lang: LanguageCode): string {
   if (typeof text !== "string" || text.trim() === "") return text;
   if (lang !== "si") return text;
-  const hit = PHRASES[text.trim()];
+  const hit = PARKING_PHRASES[text.trim()] ?? PHRASES[text.trim()];
   return hit && hit.trim() !== "" ? hit : text;
 }

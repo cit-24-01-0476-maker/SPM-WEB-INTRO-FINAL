@@ -5,17 +5,17 @@ import { Dashboard } from "@/components/site/Dashboard";
 export const Route = createFileRoute("/dashboard")({
   head: () => ({
     meta: [
-      { title: "Operator Dashboard | SPM ECO System" },
+      { title: "Provider Dashboard Demo | SPM ECO" },
       {
         name: "description",
         content:
-          "The SPM ECO System operator dashboard: live occupancy, multi-branch monitoring, bookings, payments, security alerts, retail overstay, and revenue analytics in one place.",
+          "Explore the SPM ECO provider dashboard demo: shared availability, bookings, parking sessions, revenue and configurable platform commission.",
       },
-      { property: "og:title", content: "Operator Dashboard | SPM ECO System" },
+      { property: "og:title", content: "Provider Dashboard Demo | SPM ECO" },
       {
         property: "og:description",
         content:
-          "Live occupancy, multi-branch monitoring, payments, security alerts, and revenue analytics in one operator dashboard.",
+          "Shared demo bookings, occupancy, completed revenue and commission in one provider dashboard.",
       },
     ],
   }),

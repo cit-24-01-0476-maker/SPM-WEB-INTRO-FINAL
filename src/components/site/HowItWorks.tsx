@@ -1,54 +1,28 @@
 import { Container, SectionHeading, Reveal } from "./primitives";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-
 const STEPS = [
   {
     n: 1,
-    title: "Driver Opens Mobile App",
-    body: "Checks nearby parking locations, distance, live availability, and price.",
+    title: "Find",
+    body: "Search nearby facilities, compare availability, opening hours and prices.",
   },
   {
     n: 2,
-    title: "Driver Books a Slot",
-    body: "Selects arrival time and duration; the system calculates the fee with dynamic pricing.",
+    title: "Book",
+    body: "Choose a vehicle and an available space, then confirm with your demo wallet.",
   },
   {
     n: 3,
-    title: "QR Confirmation Issued",
-    body: "After payment, the user receives a QR-coded booking confirmation.",
+    title: "Navigate",
+    body: "Follow outdoor demo navigation to the entrance, verify entry, then use the custom map to reach your reserved space.",
   },
-  {
-    n: 4,
-    title: "Vehicle Arrives at Gate",
-    body: "The ANPR camera reads the vehicle number plate automatically.",
-  },
+  { n: 4, title: "Park", body: "Start a session, view your running charge and use Find My Car." },
   {
     n: 5,
-    title: "System Verifies Vehicle",
-    body: "Checks whether the vehicle is pre-booked, staff, walk-in, delivery, or unauthorized.",
-  },
-  {
-    n: 6,
-    title: "Gate Opens Automatically",
-    body: "If verified, the barrier lifts and the vehicle is directed to its allocated slot.",
-  },
-  {
-    n: 7,
-    title: "Parking Duration Tracked",
-    body: "The system tracks entry time, exit time, overtime, and parking charges.",
-  },
-  {
-    n: 8,
-    title: "Payment & Checkout",
-    body: "At exit, the final or overtime fee is calculated; pay via QR or card.",
-  },
-  {
-    n: 9,
-    title: "Reports Generated",
-    body: "The dashboard updates occupancy, vehicle count, revenue, and security logs in real time.",
+    title: "Exit",
+    body: "Follow the exit route, verify your vehicle and settle the outstanding charge to receive a receipt.",
   },
 ];
-
 export function HowItWorks() {
   const { tt } = useLanguage();
   return (
@@ -57,31 +31,28 @@ export function HowItWorks() {
         <Reveal>
           <SectionHeading
             eyebrow={tt("How It Works")}
-            title={tt("Complete Parking Lifecycle Automation")}
+            title={tt("Find. Book. Navigate. Park. Exit.")}
             subtitle={tt(
-              "From driver booking to gate automation and live operator monitoring — every step is connected.",
+              "Outdoor navigation reaches the facility. Custom parking navigation takes you from the entrance to your exact reserved space.",
             )}
           />
         </Reveal>
-
         <div className="mt-14 grid gap-5 md:grid-cols-3">
           {STEPS.map((s, i) => (
             <Reveal
               key={s.n}
-              delay={(i % 3) * 80}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-card transition-all hover:-translate-y-1 hover:border-primary/30"
+              delay={(i % 3) * 60}
+              className="rounded-2xl border border-border bg-card p-6"
             >
-              <span className="text-5xl font-bold text-primary/10">
-                {String(s.n).padStart(2, "0")}
-              </span>
-              <h3 className="mt-1 text-lg font-bold text-foreground">{tt(s.title)}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{tt(s.body)}</p>
-              <span className="absolute right-5 top-6 grid h-8 w-8 place-items-center rounded-full bg-gradient-primary text-sm font-bold text-white">
-                {s.n}
-              </span>
+              <span className="text-5xl font-bold text-primary/15">0{s.n}</span>
+              <h3 className="mt-4 text-xl font-bold">{tt(s.title)}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tt(s.body)}</p>
             </Reveal>
           ))}
         </div>
+        <a href="/app/demo" className="eco-button mt-8">
+          {tt("Explore Live Demo")} →
+        </a>
       </Container>
     </section>
   );

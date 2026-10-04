@@ -844,17 +844,16 @@ export interface HeroSettings {
 }
 
 export const DEFAULT_HERO: HeroSettings = {
-  eyebrow: "AI-Powered Smart Parking Ecosystem",
-  headline: "Intelligent Parking. Seamless Mobility.",
+  eyebrow: "SMART PARKING. BETTER CITIES.",
+  headline: "Find. Navigate. Park Smarter.",
   supporting:
-    "SPM ECO System connects real-time parking availability, advance reservations, ANPR-powered access, dynamic pricing, secure payments, retail parking control, and multi-location analytics through one intelligent platform.",
-  primaryCtaLabel: "Request a System Demo",
-  primaryCtaLink: "/contact",
-  secondaryCtaLabel: "Explore the Platform",
-  secondaryCtaLink: "/solution",
-  trustStatement:
-    "Built for modern parking facilities, retail chains, commercial properties, and multi-location operators across Sri Lanka.",
-  mediaType: "video",
+    "Discover available parking, reserve your space and navigate directly to your parking slot with SPM ECO.",
+  primaryCtaLabel: "Explore Live Demo",
+  primaryCtaLink: "/app/demo",
+  secondaryCtaLabel: "Find Parking",
+  secondaryCtaLink: "/app/parking",
+  trustStatement: "University prototype · Simulated payments, location and verification",
+  mediaType: "image",
   backgroundImage: "",
   backgroundVideo: "",
   posterImage: "",
@@ -878,7 +877,7 @@ export const DEFAULT_HERO: HeroSettings = {
     category: "Pre-Booked",
     bookingStatus: "Verified",
     accessStatus: "Approved",
-    barrierStatus: "Barrier Opening",
+    barrierStatus: "Demo entry approved",
   },
   occupancy: {
     enabled: true,
@@ -1110,11 +1109,7 @@ export const DEFAULT_LANGUAGES: LanguageSettings = {
  *   3. the provided fallback (default "")
  * A plain string is treated as English.
  */
-export function getLocalizedText(
-  value: MaybeLocalized,
-  lang: LanguageCode,
-  fallback = "",
-): string {
+export function getLocalizedText(value: MaybeLocalized, lang: LanguageCode, fallback = ""): string {
   if (value == null) return fallback;
   if (typeof value === "string") return value;
   if (typeof value === "object") {
@@ -1207,7 +1202,10 @@ export const DEFAULT_ECONOMIC: EconomicFeasibilitySettings = {
     en: "Results are estimates based on the values you enter. Actual outcomes vary by facility, pricing, and usage.",
     si: "ප්‍රතිඵල ඔබ ඇතුළත් කරන අගයන් මත පදනම් ඇස්තමේන්තු වේ. සැබෑ ප්‍රතිඵල පහසුකම, මිලකරණය සහ භාවිතය අනුව වෙනස් වේ.",
   },
-  ctaLabel: { en: "Request a Detailed Feasibility Study", si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න" },
+  ctaLabel: {
+    en: "Request a Detailed Feasibility Study",
+    si: "විස්තරාත්මක ශක්‍යතා අධ්‍යයනයක් ඉල්ලන්න",
+  },
   ctaLink: "/contact",
 
   showCharts: true,

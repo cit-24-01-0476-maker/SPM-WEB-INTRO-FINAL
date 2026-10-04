@@ -64,7 +64,9 @@ export function LeadDialog({
     e.preventDefault();
     const parsed = leadSchema.safeParse({ name, email });
     if (!parsed.success) {
-      setErr(!name.trim() || name.trim().length < 2 ? roiT(lang, "val.name") : roiT(lang, "val.email"));
+      setErr(
+        !name.trim() || name.trim().length < 2 ? roiT(lang, "val.name") : roiT(lang, "val.email"),
+      );
       return;
     }
     setErr(null);
@@ -118,8 +120,18 @@ export function LeadDialog({
         <p className="mb-4 text-xs text-muted-foreground">{roiT(lang, "lead.summaryNote")}</p>
         <form onSubmit={submit} className="space-y-3">
           <Field label={roiT(lang, "lead.name")} value={name} onChange={setName} required />
-          <Field label={roiT(lang, "lead.organization")} value={organization} onChange={setOrganization} />
-          <Field label={roiT(lang, "lead.email")} value={email} onChange={setEmail} type="email" required />
+          <Field
+            label={roiT(lang, "lead.organization")}
+            value={organization}
+            onChange={setOrganization}
+          />
+          <Field
+            label={roiT(lang, "lead.email")}
+            value={email}
+            onChange={setEmail}
+            type="email"
+            required
+          />
           <Field label={roiT(lang, "lead.phone")} value={phone} onChange={setPhone} type="tel" />
           <label className="block">
             <span className="text-xs font-medium text-foreground">{roiT(lang, "lead.notes")}</span>

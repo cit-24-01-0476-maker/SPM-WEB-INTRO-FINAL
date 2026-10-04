@@ -31,13 +31,7 @@ import {
 } from "./model";
 
 export type SettingsKey =
-  | "site"
-  | "design"
-  | "hero"
-  | "contact"
-  | "navigation"
-  | "languages"
-  | "economicFeasibility";
+  "site" | "design" | "hero" | "contact" | "navigation" | "languages" | "economicFeasibility";
 
 export const PUBLIC_COLLECTION = "publicSettings";
 export const DRAFT_COLLECTION = "adminDrafts";

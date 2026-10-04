@@ -18,11 +18,7 @@ import {
   YAxis,
 } from "recharts";
 import type { LanguageCode } from "@/lib/cms/model";
-import {
-  formatCompact,
-  formatCurrency,
-  type EFResults,
-} from "@/lib/roi/calc";
+import { formatCompact, formatCurrency, type EFResults } from "@/lib/roi/calc";
 import { breakdownLabel, roiT } from "@/lib/roi/i18n";
 
 const PIE_COLORS = [
@@ -120,15 +116,30 @@ export function RoiCharts({
       <div className="md:col-span-2">
         <ChartCard title={roiT(lang, "chart.investmentVsReturn")}>
           <ResponsiveContainer>
-            <ComposedChart data={cumulativeData} margin={{ top: 10, right: 12, bottom: 4, left: 0 }}>
+            <ComposedChart
+              data={cumulativeData}
+              margin={{ top: 10, right: 12, bottom: 4, left: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis
                 dataKey="month"
                 tick={{ fontSize: 11 }}
-                label={{ value: roiT(lang, "chart.month"), position: "insideBottom", offset: -2, fontSize: 11 }}
+                label={{
+                  value: roiT(lang, "chart.month"),
+                  position: "insideBottom",
+                  offset: -2,
+                  fontSize: 11,
+                }}
               />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCompact(v, cur)} width={64} />
-              <Tooltip formatter={(v: number) => tip(v)} labelFormatter={(l) => `${roiT(lang, "chart.month")} ${l}`} />
+              <YAxis
+                tick={{ fontSize: 11 }}
+                tickFormatter={(v) => formatCompact(v, cur)}
+                width={64}
+              />
+              <Tooltip
+                formatter={(v: number) => tip(v)}
+                labelFormatter={(l) => `${roiT(lang, "chart.month")} ${l}`}
+              />
               <Legend wrapperStyle={{ fontSize: 12 }} />
               <Area
                 type="monotone"
@@ -150,7 +161,12 @@ export function RoiCharts({
                   x={Math.round(results.paybackMonths)}
                   stroke="#16a66a"
                   strokeWidth={2}
-                  label={{ value: roiT(lang, "chart.recoveredAt"), fontSize: 10, fill: "#16a66a", position: "top" }}
+                  label={{
+                    value: roiT(lang, "chart.recoveredAt"),
+                    fontSize: 10,
+                    fill: "#16a66a",
+                    position: "top",
+                  }}
                 />
               ) : null}
             </ComposedChart>
@@ -164,12 +180,31 @@ export function RoiCharts({
           <BarChart data={revVsCost} margin={{ top: 10, right: 12, bottom: 4, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-            <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCompact(v, cur)} width={64} />
+            <YAxis
+              tick={{ fontSize: 11 }}
+              tickFormatter={(v) => formatCompact(v, cur)}
+              width={64}
+            />
             <Tooltip formatter={(v: number) => tip(v)} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
-            <Bar dataKey="revenue" name={roiT(lang, "chart.revenue")} fill="#176bff" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="cost" name={roiT(lang, "chart.cost")} fill="#e5484d" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="net" name={roiT(lang, "chart.net")} fill="#16a66a" radius={[4, 4, 0, 0]} />
+            <Bar
+              dataKey="revenue"
+              name={roiT(lang, "chart.revenue")}
+              fill="#176bff"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="cost"
+              name={roiT(lang, "chart.cost")}
+              fill="#e5484d"
+              radius={[4, 4, 0, 0]}
+            />
+            <Bar
+              dataKey="net"
+              name={roiT(lang, "chart.net")}
+              fill="#16a66a"
+              radius={[4, 4, 0, 0]}
+            />
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
@@ -180,11 +215,21 @@ export function RoiCharts({
           <AreaChart data={cashFlow} margin={{ top: 10, right: 12, bottom: 4, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
             <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-            <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCompact(v, cur)} width={64} />
+            <YAxis
+              tick={{ fontSize: 11 }}
+              tickFormatter={(v) => formatCompact(v, cur)}
+              width={64}
+            />
             <Tooltip formatter={(v: number) => tip(v)} />
             <Legend wrapperStyle={{ fontSize: 12 }} />
             <ReferenceLine y={0} stroke="#94a3b8" />
-            <Area type="monotone" dataKey="net" name={roiT(lang, "chart.net")} stroke="#19c6f4" fill="#19c6f433" />
+            <Area
+              type="monotone"
+              dataKey="net"
+              name={roiT(lang, "chart.net")}
+              stroke="#19c6f4"
+              fill="#19c6f433"
+            />
             <Area
               type="monotone"
               dataKey="cumulative"
@@ -201,7 +246,15 @@ export function RoiCharts({
         <ChartCard title={roiT(lang, "chart.revenueBreakdown")}>
           <ResponsiveContainer>
             <PieChart>
-              <Pie data={revenuePie} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={false}>
+              <Pie
+                data={revenuePie}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label={false}
+              >
                 {revenuePie.map((_, i) => (
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
@@ -218,7 +271,15 @@ export function RoiCharts({
         <ChartCard title={roiT(lang, "chart.expenseBreakdown")}>
           <ResponsiveContainer>
             <PieChart>
-              <Pie data={expensePie} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={false}>
+              <Pie
+                data={expensePie}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                label={false}
+              >
                 {expensePie.map((_, i) => (
                   <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
                 ))}
@@ -237,12 +298,31 @@ export function RoiCharts({
             <BarChart data={scenarioRows} margin={{ top: 10, right: 12, bottom: 4, left: 0 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-              <YAxis tick={{ fontSize: 11 }} tickFormatter={(v) => formatCompact(v, cur)} width={64} />
+              <YAxis
+                tick={{ fontSize: 11 }}
+                tickFormatter={(v) => formatCompact(v, cur)}
+                width={64}
+              />
               <Tooltip formatter={(v: number) => tip(v)} />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Bar dataKey="revenue" name={roiT(lang, "chart.revenue")} fill="#176bff" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="expenses" name={roiT(lang, "chart.cost")} fill="#e5484d" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="net" name={roiT(lang, "chart.net")} fill="#16a66a" radius={[4, 4, 0, 0]} />
+              <Bar
+                dataKey="revenue"
+                name={roiT(lang, "chart.revenue")}
+                fill="#176bff"
+                radius={[4, 4, 0, 0]}
+              />
+              <Bar
+                dataKey="expenses"
+                name={roiT(lang, "chart.cost")}
+                fill="#e5484d"
+                radius={[4, 4, 0, 0]}
+              />
+              <Bar
+                dataKey="net"
+                name={roiT(lang, "chart.net")}
+                fill="#16a66a"
+                radius={[4, 4, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>

@@ -98,7 +98,12 @@ function LocationsPage() {
       />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Countries" value={countries.filter((c) => c.code !== "Unknown").length} icon={Globe2} tone="primary" />
+        <StatCard
+          label="Countries"
+          value={countries.filter((c) => c.code !== "Unknown").length}
+          icon={Globe2}
+          tone="primary"
+        />
         <StatCard label="Total Sessions" value={sessions.length.toLocaleString()} icon={Users} />
         <StatCard label="Tracked Cities" value={cities.length} icon={MapPin} />
       </div>
@@ -118,7 +123,9 @@ function LocationsPage() {
               {countries.slice(0, 12).map((c) => (
                 <li key={c.code} className="flex items-center gap-3">
                   <span className="w-8 text-lg">{flag(c.code)}</span>
-                  <span className="w-16 shrink-0 text-sm font-semibold text-foreground">{c.code}</span>
+                  <span className="w-16 shrink-0 text-sm font-semibold text-foreground">
+                    {c.code}
+                  </span>
                   <div className="h-3 flex-1 overflow-hidden rounded-full bg-secondary">
                     <div
                       className="h-full rounded-full bg-gradient-primary"
@@ -136,7 +143,11 @@ function LocationsPage() {
 
         <AdminCard title="Top cities" description="Approximate">
           {cities.length === 0 ? (
-            <EmptyState icon={MapPin} title="No city data" description="City-level data is only available when the edge network provides it." />
+            <EmptyState
+              icon={MapPin}
+              title="No city data"
+              description="City-level data is only available when the edge network provides it."
+            />
           ) : (
             <ul className="divide-y divide-border">
               {cities.map((c, i) => (
@@ -157,9 +168,9 @@ function LocationsPage() {
 
       <div className="rounded-xl border border-dashed border-border bg-secondary/30 p-4 text-xs text-muted-foreground">
         <strong className="text-foreground">Privacy note:</strong> Visitor IP addresses are masked
-        (e.g. <code className="rounded bg-secondary px-1">192.168.10.xxx</code>) and hashed for unique
-        counting. Location is IP-approximate at the country level and must not be treated as an exact
-        user address.
+        (e.g. <code className="rounded bg-secondary px-1">192.168.10.xxx</code>) and hashed for
+        unique counting. Location is IP-approximate at the country level and must not be treated as
+        an exact user address.
       </div>
     </div>
   );
