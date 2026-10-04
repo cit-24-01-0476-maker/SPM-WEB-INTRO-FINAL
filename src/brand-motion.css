@@ -352,6 +352,73 @@
     opacity: 0;
   }
 }
+.spm-fpv-intro .spm-intro-real-video {
+  transition:
+    opacity 0.45s ease,
+    transform 0.65s ease;
+}
+.spm-fpv-intro[data-phase="brand"] .spm-intro-real-video,
+.spm-fpv-intro[data-phase="exit"] .spm-intro-real-video {
+  opacity: 0.28;
+  transform: translateZ(0) scale(1.06);
+}
+.spm-fpv-intro .spm-intro-brand {
+  transform: translateY(32px) scale(0.8);
+  transition:
+    opacity 0.3s ease,
+    transform 0.55s cubic-bezier(0.16, 1.25, 0.3, 1);
+}
+.spm-fpv-intro[data-phase="brand"] .spm-intro-brand,
+.spm-fpv-intro[data-phase="exit"] .spm-intro-brand {
+  opacity: 1;
+  transform: none;
+}
+.spm-fpv-intro[data-phase="brand"] .spm-intro-ring circle {
+  animation-duration: 0.8s;
+}
+.spm-fpv-intro[data-phase="brand"] .spm-intro-wordmark::after {
+  animation-duration: 0.7s;
+  animation-delay: 0.1s;
+}
+.spm-fpv-intro.is-playing .spm-intro-progress span {
+  animation-duration: 4.55s;
+}
+.spm-fpv-intro[data-phase="exit"] {
+  animation: spm-fpv-zoom-out 0.45s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+body.spm-intro-running.spm-intro-reveal .spm-public-site > main {
+  animation: spm-site-pop 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-play-state: running !important;
+}
+@keyframes spm-fpv-zoom-out {
+  to {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+@keyframes spm-site-pop {
+  from {
+    opacity: 0.5;
+    transform: translateY(18px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spm-fpv-intro .spm-intro-real-video,
+  .spm-fpv-intro .spm-intro-brand {
+    transition: none;
+  }
+  .spm-fpv-intro[data-phase="exit"] {
+    animation: none !important;
+    opacity: 0;
+  }
+  body.spm-intro-reveal .spm-public-site > main {
+    animation: none;
+  }
+}
 .spm-brand-intro {
   position: fixed;
   inset: 0;

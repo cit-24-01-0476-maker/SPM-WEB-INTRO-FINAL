@@ -3,15 +3,24 @@ import { ArrowRight, X } from "lucide-react";
 import { MotionLogo } from "./MotionLogo";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
-const INTRO_KEY = "spm-welcome-drone-v5";
+const INTRO_KEY = "spm-welcome-fpv-v6";
 
 export function BrandIntro({ pathname }: { pathname: string }) {
   const [visible, setVisible] = useState(false);
   const [run, setRun] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [compactVideo, setCompactVideo] = useState(false);
   const [phase, setPhase] = useState<"scene" | "brand" | "exit">("scene");
   const skipRef = useRef<HTMLButtonElement>(null);
   const { lang } = useLanguage();
+
+  const startWhenBuffered = (video: HTMLVideoElement) => {
+    if (!video.paused || video.ended || !Number.isFinite(video.duration) || !video.buffered.length)
+      return;
+    // This short clip can buffer completely before playing, avoiding mid-chase stalls.
+    if (video.buffered.end(video.buffered.length - 1) < video.duration - 0.1) return;
+    void video.play().catch(() => setVisible(false));
+  };
 
   useEffect(() => {
     if (pathname !== "/") {
@@ -26,6 +35,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
       /* The intro still works when browser storage is unavailable. */
     }
     setPlaying(false);
+    setCompactVideo(window.matchMedia("(max-width: 639px)").matches);
     setPhase("scene");
     setVisible(true);
   }, [pathname]);
@@ -33,6 +43,7 @@ export function BrandIntro({ pathname }: { pathname: string }) {
   useEffect(() => {
     const replay = () => {
       setPlaying(false);
+      setCompactVideo(window.matchMedia("(max-width: 639px)").matches);
       setPhase("scene");
       setRun((value) => value + 1);
       setVisible(true);
@@ -71,16 +82,21 @@ export function BrandIntro({ pathname }: { pathname: string }) {
     if (!visible || phase === "scene") return;
     const timer = window.setTimeout(
       () => (phase === "brand" ? setPhase("exit") : setVisible(false)),
-      phase === "brand" ? 1800 : 700,
+      phase === "brand" ? 1100 : 450,
     );
     return () => window.clearTimeout(timer);
   }, [visible, phase, run]);
+
+  useEffect(() => {
+    document.body.classList.toggle("spm-intro-reveal", visible && phase === "exit");
+    return () => document.body.classList.remove("spm-intro-reveal");
+  }, [visible, phase]);
 
   if (!visible) return null;
   return (
     <div
       key={run}
-      className={`spm-brand-intro spm-real-intro spm-drone-intro${playing ? " is-playing" : ""}`}
+      className={`spm-brand-intro spm-real-intro spm-drone-intro spm-fpv-intro${playing ? " is-playing" : ""}`}
       data-phase={phase}
       role="dialog"
       aria-modal="true"
@@ -95,16 +111,11 @@ export function BrandIntro({ pathname }: { pathname: string }) {
         muted
         playsInline
         preload="auto"
-        poster="/videos/spm-drone-poster.jpg"
+        poster="/videos/spm-fpv-poster.jpg"
         aria-hidden="true"
-        onCanPlayThrough={(event) => {
-          // Buffer enough footage before starting the reveal sequence.
-          void event.currentTarget.play().catch(() => setVisible(false));
-        }}
+        onCanPlayThrough={(event) => startWhenBuffered(event.currentTarget)}
+        onProgress={(event) => startWhenBuffered(event.currentTarget)}
         onPlaying={() => setPlaying(true)}
-        onTimeUpdate={(event) => {
-          if (event.currentTarget.currentTime >= 5 && phase === "scene") setPhase("brand");
-        }}
         onEnded={() => {
           if (phase === "scene") setPhase("brand");
         }}
@@ -113,8 +124,11 @@ export function BrandIntro({ pathname }: { pathname: string }) {
           setVisible(false);
         }}
       >
-        <source src="/videos/spm-drone-enhanced.webm" type="video/webm" />
-        <source src="/videos/spm-drone-enhanced.mp4" type="video/mp4" />
+        <source
+          src={compactVideo ? "/videos/spm-fpv-intro-mobile.webm" : "/videos/spm-fpv-intro.webm"}
+          type="video/webm"
+        />
+        <source src="/videos/spm-fpv-intro.mp4" type="video/mp4" />
       </video>
       {!playing && (
         <span className="spm-intro-loading" role="status">

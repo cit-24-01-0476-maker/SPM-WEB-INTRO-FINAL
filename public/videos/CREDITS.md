@@ -1,4 +1,8 @@
-Current drone intro: user-supplied AI-generated video.
+Current FPV intro: first 3 seconds of the video supplied by the user.
+Source file: YTDown.com_YouTube_FPV-Drone-Car-Chase-Through-Rainforest-P_Media_16KzBjgMk54_001_1080p.mp4
+Website versions: silent 1920 × 1080 H.264 and VP8 WebM, plus a 1280 × 720 WebM for mobile playback. Original playback speed is retained.
+
+Previous drone intro (retained assets): user-supplied AI-generated video.
 Source file: WhatsApp Video 2026-10-04 at 9.38.02 AM.mp4
 Website versions: silent H.264 MP4 and VP9 WebM, retaining the original 848 × 478 resolution and 8-second duration.
 Smooth playback versions: motion-interpolated 48 fps with light sharpening, bounded H.264 bitrate and a lightweight VP8 WebM fallback. First-frame JPEG poster displays while buffering.
