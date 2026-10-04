@@ -129,6 +129,13 @@ export function Hero() {
             ) : (
               <ParkingPhoto />
             )}
+            <div className="eco-visual-route" aria-hidden="true">
+              <span><MapPin size={16} />{tt("Find Parking")}</span>
+              <i />
+              <span><CalendarCheck size={16} />{tt("Real-time booking")}</span>
+              <i />
+              <span><Navigation size={16} />{tt("Custom navigation")}</span>
+            </div>
             <span className="eco-art-caption">{tt("SPM ECO platform concept")}</span>
           </div>
         </Container>

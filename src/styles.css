@@ -496,6 +496,76 @@
   }
 }
 
+/* A wider, balanced public layout with an illustrated parking journey. */
+.eco-site .eco-hero {
+  position: relative;
+  background: radial-gradient(ellipse at 5% 15%, #e4efff 0, transparent 48%), #f4f7fb;
+  padding-bottom: 28px;
+}
+.eco-site .eco-hero-grid {
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  gap: clamp(24px, 3vw, 48px);
+  min-height: 610px;
+}
+.eco-site .eco-hero-copy { padding-block: 44px; }
+.eco-site .eco-hero h1 { font-size: clamp(44px, 5vw, 78px); letter-spacing: -.055em; }
+.eco-site .eco-hero-description { font-size: clamp(18px, 1.5vw, 22px); }
+.eco-site .eco-hero-art {
+  margin: 0;
+  min-width: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid #ffffff;
+  box-shadow: 0 24px 60px -30px #123b7060;
+}
+.eco-site .eco-hero-art .parking-photo { height: 100%; min-height: 580px; border-radius: 0; }
+.eco-site .eco-hero-art::after {
+  content: "";
+  position: absolute;
+  inset: 55% 0 0;
+  z-index: 0;
+  background: linear-gradient(transparent, #06182cc2);
+  pointer-events: none;
+}
+.eco-visual-route {
+  position: absolute;
+  bottom: 48px;
+  left: 20px;
+  right: 20px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 18px 16px;
+  border: 1px solid #ffffff50;
+  border-radius: 14px;
+  background: #071f3bc9;
+  backdrop-filter: blur(16px);
+  color: white;
+  box-shadow: 0 8px 28px #06182c30;
+}
+.eco-visual-route span { display: flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 600; }
+.eco-visual-route svg { flex-shrink: 0; color: #64dfff; }
+.eco-visual-route i { height: 1px; flex: 1; background: #64dfff70; }
+.eco-site .eco-art-caption { z-index: 1; right: 20px; bottom: 15px; background: transparent; color: #ffffffbf; }
+@media (max-width: 899px) {
+  .eco-site .eco-hero-grid { grid-template-columns: 1fr; gap: 0; min-height: 0; }
+  .eco-site .eco-hero-art { margin: 0; }
+  .eco-site .eco-hero-art .parking-photo { height: 500px; min-height: 0; }
+  .eco-site .eco-hero-copy { padding-block: 32px; }
+}
+@media (max-width: 639px) {
+  .eco-site .eco-hero { padding-bottom: 16px; }
+  .eco-site .eco-hero h1 { font-size: 46px; }
+  .eco-site .eco-hero-art { border-radius: 18px; }
+  .eco-site .eco-hero-art .parking-photo { height: 380px; }
+  .eco-visual-route { left: 12px; right: 12px; padding: 14px 10px; gap: 6px; }
+  .eco-visual-route span { font-size: 9px; gap: 4px; }
+  .eco-visual-route svg { width: 13px; }
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

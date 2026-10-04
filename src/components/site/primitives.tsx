@@ -85,8 +85,8 @@ export function Container({
   return (
     <div
       className={cn(
-        "mx-auto w-full px-4 sm:px-6 lg:px-8 xl:px-10",
-        wide ? "max-w-[1440px]" : "max-w-[1320px]",
+        "eco-container mx-auto w-full px-4 sm:px-6 lg:px-8",
+        wide ? "max-w-[1680px]" : "max-w-[1560px]",
         className,
       )}
     >
