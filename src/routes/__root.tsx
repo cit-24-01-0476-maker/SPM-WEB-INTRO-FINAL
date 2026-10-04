@@ -13,6 +13,8 @@ import appCss from "../styles.css?url";
 import { chunkRecoveryScript } from "@/lib/chunk-recovery";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/site/Navbar";
+import { BrandIntro } from "@/components/site/BrandIntro";
+import { MotionEffects } from "@/components/site/MotionEffects";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { PublicSettingsProvider } from "@/lib/cms/PublicSettings";
@@ -205,11 +207,15 @@ function RootComponent() {
         ) : (
           <PublicSettingsProvider>
             <LanguageProvider>
-              <div className="eco-site flex min-h-screen flex-col bg-background">
+              <div
+                className={`eco-site ${product ? "" : "spm-public-site"} flex min-h-screen flex-col bg-background`}
+              >
                 {product ? (
                   <Outlet />
                 ) : (
                   <>
+                    <BrandIntro pathname={pathname} />
+                    <MotionEffects pathname={pathname} />
                     <Navbar />
                     <main className="flex-1">
                       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}

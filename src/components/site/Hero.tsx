@@ -1,4 +1,13 @@
-import { ArrowRight, CalendarCheck, MapPin, QrCode, BarChart3, Navigation } from "lucide-react";
+import {
+  ArrowRight,
+  CalendarCheck,
+  MapPin,
+  QrCode,
+  BarChart3,
+  Navigation,
+  Play,
+} from "lucide-react";
+import { HeroMotion } from "./HeroMotion";
 import { Container } from "./primitives";
 import { ParkingPhoto } from "./ParkingPhoto";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
@@ -49,6 +58,7 @@ export function Hero() {
   return (
     <>
       <section id="home" className="eco-hero">
+        <HeroMotion />
         <Container className="eco-hero-grid">
           <div className="eco-hero-copy">
             <p className="eco-eyebrow">
@@ -97,6 +107,13 @@ export function Hero() {
               <br />
               {tt(trust)}
             </p>
+            <button
+              className="spm-replay-intro"
+              onClick={() => window.dispatchEvent(new Event("spm:replay-intro"))}
+            >
+              <Play size={13} fill="currentColor" />
+              {lang === "si" ? "SPM ECO හැඳින්වීම බලන්න" : "Watch the SPM ECO intro"}
+            </button>
           </div>
           <div className="eco-hero-art">
             {hero.mediaType === "video" && hero.backgroundVideo ? (
@@ -130,11 +147,20 @@ export function Hero() {
               <ParkingPhoto />
             )}
             <div className="eco-visual-route" aria-hidden="true">
-              <span><MapPin size={16} />{tt("Find Parking")}</span>
+              <span>
+                <MapPin size={16} />
+                {tt("Find Parking")}
+              </span>
               <i />
-              <span><CalendarCheck size={16} />{tt("Real-time booking")}</span>
+              <span>
+                <CalendarCheck size={16} />
+                {tt("Real-time booking")}
+              </span>
               <i />
-              <span><Navigation size={16} />{tt("Custom navigation")}</span>
+              <span>
+                <Navigation size={16} />
+                {tt("Custom navigation")}
+              </span>
             </div>
             <span className="eco-art-caption">{tt("SPM ECO platform concept")}</span>
           </div>

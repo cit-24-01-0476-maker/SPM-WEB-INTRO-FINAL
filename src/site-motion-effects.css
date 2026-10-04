@@ -1,0 +1,241 @@
+/* A quiet network motif connects the public sections without covering content. */
+.spm-public-site .eco-ambient-network {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  contain: strict;
+  mask-image: linear-gradient(
+    90deg,
+    #000 0%,
+    #0003 14%,
+    transparent 30%,
+    transparent 70%,
+    #0003 86%,
+    #000 100%
+  );
+}
+
+.eco-network-lines {
+  width: 100%;
+  height: 100%;
+  color: #176bff;
+  opacity: 0.09;
+}
+
+.eco-network-signal {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: eco-signal-breathe 5.4s ease-in-out infinite;
+}
+
+.eco-network-signal-right {
+  animation-delay: -2.7s;
+}
+
+.eco-ambient-glow {
+  position: absolute;
+  width: 440px;
+  height: 440px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #19c6f40d, transparent 68%);
+  animation: eco-ambient-drift 18s ease-in-out infinite alternate;
+}
+
+.eco-ambient-glow-one {
+  top: 15%;
+  left: -250px;
+}
+
+.eco-ambient-glow-two {
+  right: -260px;
+  bottom: 6%;
+  background: radial-gradient(circle, #176bff0c, transparent 68%);
+  animation-delay: -9s;
+}
+
+.spm-public-site main .eco-motion-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.eco-motion-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(420px, 42%);
+  height: min(360px, 100%);
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 100% 0%, #19c6f40c, transparent 67%),
+    repeating-radial-gradient(
+      ellipse at 115% -15%,
+      transparent 0 58px,
+      #176bff07 59px 60px,
+      transparent 61px 104px
+    );
+}
+
+.eco-motion-section:nth-of-type(even)::before {
+  right: auto;
+  left: 0;
+  transform: scaleX(-1);
+}
+
+.eco-motion-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 680ms ease,
+    transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eco-motion-reveal.eco-motion-shown,
+.eco-motion-reveal:focus-within,
+a:focus-visible > .eco-motion-reveal {
+  opacity: 1;
+  transform: none;
+}
+
+.eco-ambient-network[data-paused="true"] .eco-network-signal,
+.eco-ambient-network[data-paused="true"] .eco-ambient-glow {
+  animation-play-state: paused;
+}
+
+/* Pause only persistent decoration. The short entrance and intro replay remain usable. */
+.spm-public-site[data-motion-paused="true"] .eco-header .spm-motion-logo *,
+.spm-public-site[data-motion-paused="true"] .eco-header .spm-motion-logo *::after,
+.spm-public-site[data-motion-paused="true"] .spm-hero-roads *,
+.spm-public-site[data-motion-paused="true"] .eco-visual-route svg,
+.spm-public-site[data-motion-paused="true"] .eco-visual-route i::after,
+.spm-public-site[data-motion-paused="true"] .eco-ambient-network *,
+.spm-public-site[data-motion-paused="true"] main .float-slow,
+.spm-public-site[data-motion-paused="true"] main .live-ping,
+.spm-public-site[data-motion-paused="true"] main .anpr-scan-line,
+.spm-public-site[data-motion-paused="true"] [class*="motion-safe:animate-ping"] {
+  animation-play-state: paused !important;
+}
+
+.eco-motion-toggle {
+  position: fixed;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  left: 24px;
+  z-index: 70;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #dce5ef;
+  border-radius: 50%;
+  color: #0b2d57;
+  background: #ffffffed;
+  box-shadow: 0 6px 18px -9px #06182c42;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition:
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.eco-motion-toggle:hover {
+  border-color: #176bff80;
+  color: #176bff;
+}
+
+.eco-motion-toggle:focus-visible {
+  outline: 2px solid #176bff;
+  outline-offset: 4px;
+}
+
+.eco-motion-toggle:disabled {
+  color: #8291a3;
+  cursor: default;
+}
+
+.eco-motion-toggle-label {
+  position: absolute;
+  left: calc(100% + 10px);
+  padding: 8px 12px;
+  border: 1px solid #dce5ef;
+  border-radius: 8px;
+  color: #0b2d57;
+  background: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.eco-motion-toggle:hover .eco-motion-toggle-label,
+.eco-motion-toggle:focus-visible .eco-motion-toggle-label {
+  opacity: 1;
+}
+
+@keyframes eco-signal-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes eco-ambient-drift {
+  from {
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    transform: translate3d(28px, 55px, 0);
+  }
+}
+
+@media (max-width: 767px) {
+  .eco-motion-toggle {
+    left: 16px;
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+  .eco-motion-toggle-label {
+    display: none;
+  }
+  .eco-ambient-network {
+    opacity: 0.45;
+  }
+  .eco-ambient-glow {
+    display: none;
+  }
+  .eco-motion-section::before {
+    width: 52%;
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-motion-toggle,
+  .eco-motion-toggle-label {
+    transition: none;
+  }
+  .eco-network-signal,
+  .eco-ambient-glow {
+    animation: none;
+  }
+  .eco-motion-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .spm-public-site .reveal,
+  .spm-public-site .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    animation: none !important;
+  }
+}

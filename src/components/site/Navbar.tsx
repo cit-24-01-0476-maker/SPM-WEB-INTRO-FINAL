@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Menu, X, ParkingSquare, ArrowRight } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
+import { MotionLogo } from "./MotionLogo";
 import { useRouterState } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
 import { CmsButton } from "./CmsButton";
@@ -120,9 +121,7 @@ export function Navbar() {
                 className="h-9 w-auto max-w-[160px] object-contain"
               />
             ) : (
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-white shadow-glow transition-transform duration-300 group-hover:scale-105 group-hover:rotate-3">
-                <ParkingSquare className="h-5 w-5" />
-              </span>
+              <MotionLogo compact />
             )}
             {!navigation.logoUrl ? (
               <span className="eco-brand" title={`${logoText} — ${logoSubtitle}`}>
