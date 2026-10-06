@@ -71,7 +71,7 @@ export function Hero() {
             <p className="eco-hero-description">
               {lang === "si"
                 ? "SPM ECO app එකෙන් ළඟම parking සොයන්න, ඔබේ slot එක book කරන්න සහ ඔබේ parking ඉඩට navigate කරන්න. Android APK එක මෙතැනින් බාගන්න පුළුවන්—booking කරන්නේ mobile app එක තුළින්."
-                : "Find nearby parking, book your slot and navigate to your space with the SPM ECO mobile app. Get the Android APK here when released—parking bookings happen inside the app."}
+                : "Find nearby parking, book your slot and navigate to your space with the SPM ECO mobile app. Use the download section below to get the Android APK—parking bookings happen inside the app."}
             </p>
             <div className="eco-actions">
               <AppDownloadButton />

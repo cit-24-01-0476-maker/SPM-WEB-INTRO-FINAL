@@ -39,7 +39,7 @@ export function AppDownload() {
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               {si
                 ? "SPM ECO mobile app එකෙන් parking සොයන්න, ඔබට ගැළපෙන slot එක book කරන්න සහ එතැනට navigate කරන්න. මේ website එකෙන් app එක හඳුනාගෙන Android APK එක බාගන්න පුළුවන්. Parking bookings කරන්නේ app එක තුළින්."
-                : "Find parking, book your slot and navigate to it with the SPM ECO mobile app. This website introduces the product and provides its Android APK when released. Parking bookings happen inside the app."}
+                : "Find parking, book your slot and navigate to it with the SPM ECO mobile app. This website introduces the product and provides access to its Android APK. Parking bookings happen inside the app."}
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
               {available ? (
