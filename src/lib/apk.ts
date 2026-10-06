@@ -1,6 +1,19 @@
+import type { SiteSettings } from "@/lib/cms/model";
+export const BUNDLED_APK = {
+  apkUrl: "/downloads/SPM-Driver-App-1.0.0.apk",
+  apkVersion: "1.0.0",
+  apkFileName: "SPM-Driver-App.apk",
+  apkFileSize: 59570565,
+  apkDownloadEnabled: true,
+};
+/** The supplied release replaces the old blank placeholder. Explicit admin overrides win. */
+export function resolveApkRelease(site: SiteSettings): SiteSettings {
+  return site.apkReleaseManaged || site.apkUrl?.trim() ? site : { ...site, ...BUNDLED_APK };
+}
 export const APK_MAX_BYTES = 200 * 1024 * 1024;
 export const APK_CHUNK_BYTES = 1024 * 1024;
 export function apkUrl(value: string): string {
+  if (value === BUNDLED_APK.apkUrl) return value;
   try {
     const url = new URL(value);
     return url.protocol === "https:" && !url.username && !url.password ? url.href : "";

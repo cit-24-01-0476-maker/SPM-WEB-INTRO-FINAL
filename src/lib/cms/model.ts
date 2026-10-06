@@ -899,6 +899,7 @@ export const DEFAULT_HERO: HeroSettings = {
  * ------------------------------------------------------------------ */
 
 export interface SiteSettings {
+  apkReleaseManaged: boolean;
   apkUrl: string;
   apkVersion: string;
   apkFileName: string;
@@ -913,6 +914,7 @@ export interface SiteSettings {
 }
 
 export const DEFAULT_SITE: SiteSettings = {
+  apkReleaseManaged: false,
   apkUrl: "",
   apkVersion: "",
   apkFileName: "",

@@ -67,9 +67,19 @@ function downloadMarkup(site) {
   return renderToStaticMarkup(jsx.jsx(component.AppDownload,{}));
 }
 test('unreleased or disabled APK stays coming soon without a download link',()=>{
-  for(const site of [{},{apkDownloadEnabled:false,apkUrl:'https://example.com/app.apk'},{apkDownloadEnabled:true,apkUrl:'javascript:alert(1)'}]){
+  for(const site of [{apkReleaseManaged:true},{apkDownloadEnabled:false,apkUrl:'https://example.com/app.apk'},{apkDownloadEnabled:true,apkUrl:'javascript:alert(1)'}]){
     const html=downloadMarkup(site);assert.match(html,/Android APK coming soon/);assert.doesNotMatch(html,/download=/);
   }
+});
+
+test('bundled release upgrades legacy placeholders and respects explicit admin changes',()=>{
+  const html=downloadMarkup({});
+  assert.match(html,/href="\/downloads\/SPM-Driver-App-1.0.0.apk"/);
+  assert.match(html,/Version 1.0.0/);
+  assert.equal(apk.resolveApkRelease({apkReleaseManaged:true,apkDownloadEnabled:false}).apkDownloadEnabled,false);
+  assert.equal(apk.resolveApkRelease({apkReleaseManaged:true,apkUrl:''}).apkUrl,'');
+  assert.equal(apk.apkUrl('/downloads/SPM-Driver-App-1.0.0.apk'),'/downloads/SPM-Driver-App-1.0.0.apk');
+  assert.equal(apk.apkUrl('/other.apk'),'');
 });
 test('published enabled APK exposes its download link and version',()=>{
   const html=downloadMarkup({apkDownloadEnabled:true,apkUrl:'https://example.com/app.apk',apkVersion:'1.2.0',apkFileName:'SPM.apk',apkFileSize:100});

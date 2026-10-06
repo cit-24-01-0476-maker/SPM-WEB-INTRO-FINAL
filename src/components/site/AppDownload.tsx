@@ -2,10 +2,11 @@ import { Download, Smartphone, Search, CalendarCheck, Navigation, ArrowRight } f
 import { Container } from "./primitives";
 import { usePublicSettings } from "@/lib/cms/PublicSettings";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { apkUrl } from "@/lib/apk";
+import { apkUrl, resolveApkRelease } from "@/lib/apk";
 import { formatBytes } from "@/lib/media/types";
 export function AppDownloadButton({ className = "eco-button" }: { className?: string }) {
-  const { site } = usePublicSettings();
+  const { site: storedSite } = usePublicSettings();
+  const site = resolveApkRelease(storedSite);
   const { lang } = useLanguage();
   const available = site.apkDownloadEnabled && apkUrl(site.apkUrl || "");
   return available ? (
@@ -21,7 +22,8 @@ export function AppDownloadButton({ className = "eco-button" }: { className?: st
   );
 }
 export function AppDownload() {
-  const { site } = usePublicSettings();
+  const { site: storedSite } = usePublicSettings();
+  const site = resolveApkRelease(storedSite);
   const { lang } = useLanguage();
   const si = lang === "si";
   const available = site.apkDownloadEnabled && apkUrl(site.apkUrl || "");

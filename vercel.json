@@ -1,5 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm ci",
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build",
+  "headers": [{
+    "source": "/downloads/SPM-Driver-App-1.0.0.apk",
+    "headers": [
+      {"key": "Content-Type", "value": "application/vnd.android.package-archive"},
+      {"key": "Content-Disposition", "value": "attachment; filename=\"SPM-Driver-App.apk\""},
+      {"key": "X-Content-Type-Options", "value": "nosniff"}
+    ]
+  }]
 }

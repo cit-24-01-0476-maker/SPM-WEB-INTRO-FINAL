@@ -3,12 +3,12 @@ import { toast } from "sonner";
 import { UploadCloud, Loader2 } from "lucide-react";
 import { FieldCard, TextField, ToggleField } from "./editor";
 import { firebaseAuth } from "@/lib/firebase/client";
-import { APK_CHUNK_BYTES, apkUrl, validateApk } from "@/lib/apk";
+import { APK_CHUNK_BYTES, apkUrl, validateApk, resolveApkRelease } from "@/lib/apk";
 import type { SiteSettings } from "@/lib/cms/model";
 import { formatBytes } from "@/lib/media/types";
 export function ApkReleaseEditor({
-  value,
-  onChange,
+  value: storedValue,
+  onChange: update,
   canUpload,
   disabled,
   onBusyChange,
@@ -19,6 +19,16 @@ export function ApkReleaseEditor({
   disabled: boolean;
   onBusyChange: (busy: boolean) => void;
 }) {
+  const value = resolveApkRelease(storedValue);
+  const onChange = (patch: Partial<SiteSettings>) => update({
+    apkUrl: value.apkUrl,
+    apkVersion: value.apkVersion,
+    apkFileName: value.apkFileName,
+    apkFileSize: value.apkFileSize,
+    apkDownloadEnabled: value.apkDownloadEnabled,
+    ...patch,
+    apkReleaseManaged: true,
+  });
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [progress, setProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
